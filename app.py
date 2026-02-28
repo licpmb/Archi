@@ -34,10 +34,13 @@ from archimate.xml_generator import generate_archimate_xml
 # ---------------------------------------------------------------------------
 
 def _create_provider():
-    api_key = os.getenv("ANTHROPIC_API_KEY", "").strip()
-    if api_key:
-        return ClaudeProvider(api_key=api_key)
-    return OllamaProvider()
+    # Priority 1: Anthropic Claude (best quality)
+    if os.getenv("ANTHROPIC_API_KEY", "").strip():
+        return ClaudeProvider(api_key=os.getenv("ANTHROPIC_API_KEY").strip())
+    # Priority 2: Ollama Cloud (OLLAMA_API_KEY set)
+    ollama_key = os.getenv("OLLAMA_API_KEY", "").strip()
+    # Priority 3: Ollama local (no key)
+    return OllamaProvider(api_key=ollama_key if ollama_key else None)
 
 
 AI_PROVIDER = _create_provider()
@@ -128,7 +131,8 @@ async def status():
 
     if is_ollama:
         ollama_available, ollama_models = await check_ollama_available(
-            os.getenv("OLLAMA_URL", "http://localhost:11434")
+            base_url=AI_PROVIDER._base_url,
+            api_key=AI_PROVIDER._api_key,
         )
 
     return {
