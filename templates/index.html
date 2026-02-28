@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ArchiMate AI Generator</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+/* ── Reset & Variables ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0f172a;
+  --surface:   #1e293b;
+  --surface2:  #273548;
+  --border:    #334155;
+  --accent:    #38bdf8;
+  --accent2:   #0ea5e9;
+  --text:      #e2e8f0;
+  --text-muted:#94a3b8;
+  --user-bg:   #1d4ed8;
+  --ai-bg:     #1e293b;
+  --danger:    #ef4444;
+  --success:   #22c55e;
+
+  /* Layer colours */
+  --c-motivation:  #a855f7;
+  --c-strategy:    #f59e0b;
+  --c-business:    #fb923c;
+  --c-application: #38bdf8;
+  --c-technology:  #34d399;
+  --c-physical:    #a78bfa;
+  --c-impl:        #f87171;
+  --c-other:       #94a3b8;
+}
+
+html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+/* ── Layout ────────────────────────────────────────────────────────── */
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+/* Header */
+.header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--accent);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 16px; color: var(--accent);
+  white-space: nowrap;
+}
+.logo-icon { font-size: 22px; }
+
+.model-name-wrap { flex: 1; min-width: 140px; max-width: 260px; }
+.model-name-input {
+  width: 100%;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); border-radius: 6px; padding: 6px 10px;
+  font-size: 13px;
+}
+.model-name-input:focus { outline: none; border-color: var(--accent); }
+
+.provider-badge {
+  font-size: 11px; color: var(--text-muted);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 3px 9px; white-space: nowrap;
+}
+.provider-badge.ollama { border-color: var(--success); color: var(--success); }
+.provider-badge.claude { border-color: var(--accent); color: var(--accent); }
+.provider-badge.error  { border-color: var(--danger); color: var(--danger); }
+
+.header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  cursor: pointer; border: none; border-radius: 6px;
+  padding: 7px 14px; font-size: 13px; font-weight: 500;
+  transition: opacity .15s, background .15s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { opacity: .85; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primary   { background: var(--accent2); color: #fff; }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-danger    { background: #7f1d1d; color: #fca5a5; border: 1px solid var(--danger); }
+.btn-sm        { padding: 5px 10px; font-size: 12px; }
+
+/* Main area */
+.main { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ───────────────────────────────────────────────────────── */
+.sidebar {
+  width: 270px; min-width: 200px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-header {
+  padding: 12px 14px 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sidebar-header h3 { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.sidebar-body { flex: 1; overflow-y: auto; padding: 8px 0; }
+.sidebar-footer {
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--text-muted);
+  display: flex; gap: 12px;
+}
+
+.layer-section { margin-bottom: 4px; }
+.layer-header {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 14px; cursor: pointer;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .4px; color: var(--text-muted);
+  user-select: none;
+}
+.layer-header:hover { background: var(--surface2); }
+.layer-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.layer-count { margin-left: auto; background: var(--surface2); border-radius: 10px; padding: 1px 6px; font-size: 10px; }
+.layer-items { display: none; }
+.layer-items.open { display: block; }
+.element-item {
+  padding: 4px 14px 4px 28px;
+  font-size: 12px; color: var(--text);
+  display: flex; align-items: center; gap: 6px;
+  cursor: default;
+}
+.element-item:hover { background: var(--surface2); }
+.element-type-badge {
+  font-size: 10px; color: var(--text-muted);
+  background: var(--surface2); border-radius: 3px;
+  padding: 0 4px; margin-left: auto; flex-shrink: 0;
+  max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.empty-sidebar { padding: 24px 14px; color: var(--text-muted); font-size: 13px; line-height: 1.6; text-align: center; }
+
+/* ── Chat area ─────────────────────────────────────────────────────── */
+.chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+.messages {
+  flex: 1; overflow-y: auto; padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* Message bubbles */
+.msg { display: flex; flex-direction: column; max-width: 82%; }
+.msg.user   { align-self: flex-end; }
+.msg.ai     { align-self: flex-start; }
+.msg.system { align-self: center; max-width: 100%; }
+.msg.error  { align-self: flex-start; }
+
+.bubble {
+  border-radius: 12px; padding: 11px 15px;
+  line-height: 1.6; font-size: 14px;
+}
+.msg.user  .bubble { background: var(--user-bg); color: #fff; border-bottom-right-radius: 3px; }
+.msg.ai    .bubble { background: var(--ai-bg); border: 1px solid var(--border); border-bottom-left-radius: 3px; }
+.msg.error .bubble { background: #450a0a; border: 1px solid var(--danger); color: #fca5a5; border-bottom-left-radius: 3px; }
+.msg.system .bubble { background: var(--surface2); font-size: 12px; color: var(--text-muted); border-radius: 8px; padding: 8px 14px; }
+
+/* Markdown inside bubbles */
+.bubble p  { margin: 0 0 8px; }
+.bubble p:last-child { margin-bottom: 0; }
+.bubble ul, .bubble ol { padding-left: 20px; margin: 4px 0; }
+.bubble li { margin: 2px 0; }
+.bubble code { background: rgba(255,255,255,.1); border-radius: 3px; padding: 1px 5px; font-family: monospace; font-size: 12px; }
+.bubble pre  { background: rgba(0,0,0,.3); border-radius: 6px; padding: 10px; overflow-x: auto; margin: 8px 0; }
+.bubble pre code { background: none; padding: 0; }
+.bubble strong { color: var(--accent); }
+.bubble h3, .bubble h4 { margin: 8px 0 4px; color: var(--accent); }
+
+/* Added badge */
+.added-badge {
+  font-size: 11px; color: var(--success);
+  margin-top: 4px; padding-left: 4px;
+}
+
+/* Timestamp */
+.msg-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.msg.user .msg-meta { text-align: right; }
+
+/* Typing indicator */
+.typing { display: flex; gap: 4px; align-items: center; padding: 14px 16px; }
+.typing span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted);
+  animation: bounce 1.2s infinite;
+}
+.typing span:nth-child(2) { animation-delay: .2s; }
+.typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-6px); }
+}
+
+/* ── Input area ────────────────────────────────────────────────────── */
+.input-area {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  display: flex; gap: 10px; align-items: flex-end;
+}
+.input-wrap { flex: 1; position: relative; }
+.msg-input {
+  width: 100%; resize: none;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); border-radius: 10px;
+  padding: 10px 14px; font-size: 14px; font-family: inherit;
+  line-height: 1.5; max-height: 160px; overflow-y: auto;
+  transition: border-color .2s;
+}
+.msg-input:focus { outline: none; border-color: var(--accent); }
+.msg-input::placeholder { color: var(--text-muted); }
+
+.send-btn {
+  background: var(--accent2); border: none; border-radius: 10px;
+  width: 42px; height: 42px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 18px; flex-shrink: 0;
+  transition: opacity .15s, background .15s;
+}
+.send-btn:hover:not(:disabled) { background: var(--accent); }
+.send-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Quick prompts ─────────────────────────────────────────────────── */
+.quick-prompts {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 6px 16px 0;
+}
+.quick-btn {
+  font-size: 12px; color: var(--text-muted);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 4px 12px; cursor: pointer;
+  transition: all .15s;
+}
+.quick-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Utility ───────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ──────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      ArchiMate AI
+    </div>
+
+    <div class="model-name-wrap">
+      <input id="modelNameInput" class="model-name-input"
+             type="text" value="Modelo ArchiMate"
+             placeholder="Nombre del modelo…"
+             title="Nombre del modelo ArchiMate"/>
+    </div>
+
+    <span id="providerBadge" class="provider-badge">Cargando…</span>
+
+    <div class="header-actions">
+      <button id="btnArchimate" class="btn btn-primary btn-sm" disabled
+              onclick="downloadFile('archimate')">
+        ↓ .archimate
+      </button>
+      <button id="btnExchange" class="btn btn-secondary btn-sm" disabled
+              onclick="downloadFile('exchange')">
+        ↓ Exchange XML
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="newSession()">
+        ↺ Nueva sesión
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Main ────────────────────────────────────────────────────────── -->
+  <div class="main">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>Modelo actual</h3>
+      </div>
+      <div class="sidebar-body" id="sidebarBody">
+        <div class="empty-sidebar">
+          El modelo está vacío.<br/>
+          Empezá describiendo tu arquitectura en el chat.
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <span id="elemCount">0 elementos</span>
+        <span id="relCount">0 relaciones</span>
+      </div>
+    </aside>
+
+    <!-- Chat -->
+    <div class="chat-area">
+      <div class="messages" id="messages"></div>
+
+      <!-- Quick prompts -->
+      <div class="quick-prompts" id="quickPrompts">
+        <button class="quick-btn" onclick="usePrompt('Describí la arquitectura de tu sistema (negocio, aplicaciones y tecnología)')">¿Cómo empiezo?</button>
+        <button class="quick-btn" onclick="usePrompt('Tengo una aplicación web con frontend, API REST y base de datos PostgreSQL')">App web típica</button>
+        <button class="quick-btn" onclick="usePrompt('Agregá una capa de motivación con los objetivos estratégicos principales')">Capa motivación</button>
+        <button class="quick-btn" onclick="usePrompt('Mostrá un resumen de todos los elementos del modelo actual')">Ver modelo</button>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-wrap">
+          <textarea id="msgInput" class="msg-input" rows="2"
+            placeholder="Describí tu arquitectura… (Enter para enviar, Shift+Enter para nueva línea)"></textarea>
+        </div>
+        <button id="sendBtn" class="send-btn" onclick="sendMessage()" title="Enviar (Enter)">
+          &#10148;
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Configuration ───────────────────────────────────────────────────────────
+const SESSION_KEY = 'archi_session_id';
+const LAYER_META = {
+  motivation:              { label: 'Motivación',           color: '#a855f7' },
+  strategy:                { label: 'Estrategia',           color: '#f59e0b' },
+  business:                { label: 'Negocio',              color: '#fb923c' },
+  application:             { label: 'Aplicación',           color: '#38bdf8' },
+  technology:              { label: 'Tecnología',           color: '#34d399' },
+  physical:                { label: 'Física',               color: '#a78bfa' },
+  implementation_migration:{ label: 'Implementación',       color: '#f87171' },
+  other:                   { label: 'Otro',                 color: '#94a3b8' },
+};
+
+// ── State ───────────────────────────────────────────────────────────────────
+const STATE = {
+  sessionId: localStorage.getItem(SESSION_KEY),
+  loading: false,
+};
+
+// ── DOM refs ────────────────────────────────────────────────────────────────
+const $messages    = document.getElementById('messages');
+const $msgInput    = document.getElementById('msgInput');
+const $sendBtn     = document.getElementById('sendBtn');
+const $sidebarBody = document.getElementById('sidebarBody');
+const $elemCount   = document.getElementById('elemCount');
+const $relCount    = document.getElementById('relCount');
+const $badge       = document.getElementById('providerBadge');
+const $btnA        = document.getElementById('btnArchimate');
+const $btnE        = document.getElementById('btnExchange');
+const $modelName   = document.getElementById('modelNameInput');
+const $quickPrompts= document.getElementById('quickPrompts');
+
+// ── Utilities ───────────────────────────────────────────────────────────────
+function now() {
+  return new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function setLoading(on) {
+  STATE.loading = on;
+  $sendBtn.disabled = on;
+  $msgInput.disabled = on;
+}
+
+// ── Messages ────────────────────────────────────────────────────────────────
+function appendMsg(role, html, meta) {
+  const wrap = document.createElement('div');
+  wrap.className = `msg ${role}`;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = html;
+  wrap.appendChild(bubble);
+
+  if (meta) {
+    const m = document.createElement('div');
+    m.className = 'msg-meta';
+    m.textContent = meta;
+    wrap.appendChild(m);
+  }
+
+  $messages.appendChild(wrap);
+  $messages.scrollTop = $messages.scrollHeight;
+  return wrap;
+}
+
+function appendBadge(wrap, text) {
+  const b = document.createElement('div');
+  b.className = 'added-badge';
+  b.textContent = text;
+  wrap.appendChild(b);
+}
+
+let typingEl = null;
+function showTyping() {
+  typingEl = document.createElement('div');
+  typingEl.className = 'msg ai';
+  typingEl.innerHTML = `
+    <div class="bubble">
+      <div class="typing">
+        <span></span><span></span><span></span>
+      </div>
+    </div>`;
+  $messages.appendChild(typingEl);
+  $messages.scrollTop = $messages.scrollHeight;
+}
+function hideTyping() {
+  if (typingEl) { typingEl.remove(); typingEl = null; }
+}
+
+// ── Sidebar ─────────────────────────────────────────────────────────────────
+function updateSidebar(tree, elemCount, relCount) {
+  $elemCount.textContent = `${elemCount} elemento${elemCount !== 1 ? 's' : ''}`;
+  $relCount.textContent  = `${relCount} relación${relCount !== 1 ? 'es' : ''}`;
+
+  const layers = Object.keys(LAYER_META).filter(k => tree[k] && tree[k].length > 0);
+  if (!layers.length) {
+    $sidebarBody.innerHTML = `<div class="empty-sidebar">El modelo está vacío.</div>`;
+    return;
+  }
+
+  $sidebarBody.innerHTML = '';
+  for (const layer of layers) {
+    const elems = tree[layer];
+    const meta  = LAYER_META[layer] || { label: layer, color: '#94a3b8' };
+
+    const section = document.createElement('div');
+    section.className = 'layer-section';
+
+    const header = document.createElement('div');
+    header.className = 'layer-header';
+    header.innerHTML = `
+      <span class="layer-dot" style="background:${meta.color}"></span>
+      <span>${meta.label}</span>
+      <span class="layer-count">${elems.length}</span>`;
+    header.onclick = () => items.classList.toggle('open');
+
+    const items = document.createElement('div');
+    items.className = 'layer-items open';
+
+    for (const el of elems) {
+      const item = document.createElement('div');
+      item.className = 'element-item';
+      item.innerHTML = `
+        <span title="${escHtml(el.name)}">${escHtml(el.name)}</span>
+        <span class="element-type-badge" title="${escHtml(el.type)}">${escHtml(el.type)}</span>`;
+      items.appendChild(item);
+    }
+
+    section.appendChild(header);
+    section.appendChild(items);
+    $sidebarBody.appendChild(section);
+  }
+}
+
+// ── Provider badge ───────────────────────────────────────────────────────────
+function updateBadge(provider) {
+  $badge.textContent = provider;
+  if (provider.toLowerCase().includes('ollama')) {
+    $badge.className = 'provider-badge ollama';
+  } else if (provider.toLowerCase().includes('claude')) {
+    $badge.className = 'provider-badge claude';
+  } else {
+    $badge.className = 'provider-badge error';
+  }
+}
+
+// ── Download ─────────────────────────────────────────────────────────────────
+function downloadFile(format) {
+  if (!STATE.sessionId) return;
+  const ext = format === 'archimate' ? 'archimate' : 'xml';
+  window.location.href = `/api/session/${STATE.sessionId}/${format}`;
+}
+
+function enableDownloads() {
+  $btnA.disabled = false;
+  $btnE.disabled = false;
+}
+
+// ── Send message ─────────────────────────────────────────────────────────────
+async function sendMessage() {
+  const text = $msgInput.value.trim();
+  if (!text || STATE.loading) return;
+
+  $msgInput.value = '';
+  $msgInput.style.height = 'auto';
+  $quickPrompts.classList.add('hidden');
+  setLoading(true);
+
+  appendMsg('user', escHtml(text), now());
+  showTyping();
+
+  const body = {
+    session_id: STATE.sessionId,
+    message: text,
+    model_name: $modelName.value.trim() || undefined,
+  };
+
+  try {
+    const resp = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ detail: resp.statusText }));
+      throw new Error(err.detail || `HTTP ${resp.status}`);
+    }
+
+    const data = await resp.json();
+
+    // Persist session
+    STATE.sessionId = data.session_id;
+    localStorage.setItem(SESSION_KEY, data.session_id);
+
+    hideTyping();
+
+    // Render AI response (markdown)
+    const html = marked.parse(data.response || '(Sin respuesta)');
+    const msgEl = appendMsg('ai', html, `${now()} · ${data.provider}`);
+
+    // Badge for added elements/relationships
+    if (data.added_elements > 0 || data.added_relationships > 0) {
+      const parts = [];
+      if (data.added_elements > 0) parts.push(`+${data.added_elements} elemento${data.added_elements!==1?'s':''}`);
+      if (data.added_relationships > 0) parts.push(`+${data.added_relationships} relación${data.added_relationships!==1?'es':''}`);
+      appendBadge(msgEl, parts.join('  ·  ') + ' agregados al modelo');
+      enableDownloads();
+    }
+
+    updateSidebar(data.model_tree, data.element_count, data.relationship_count);
+    updateBadge(data.provider);
+
+    if (data.element_count > 0) {
+      enableDownloads();
+    }
+
+  } catch (err) {
+    hideTyping();
+    appendMsg('error', `<strong>Error:</strong> ${escHtml(err.message)}`, now());
+  } finally {
+    setLoading(false);
+    $msgInput.focus();
+  }
+}
+
+// ── Quick prompts ─────────────────────────────────────────────────────────────
+function usePrompt(text) {
+  $msgInput.value = text;
+  $msgInput.focus();
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+$msgInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// Auto-resize textarea
+$msgInput.addEventListener('input', () => {
+  $msgInput.style.height = 'auto';
+  $msgInput.style.height = Math.min($msgInput.scrollHeight, 160) + 'px';
+});
+
+// ── New session ───────────────────────────────────────────────────────────────
+function newSession() {
+  if (STATE.loading) return;
+  if (!confirm('¿Iniciar una nueva sesión? Se perderá el modelo actual (podés descargarlo antes).')) return;
+  if (STATE.sessionId) {
+    fetch(`/api/session/${STATE.sessionId}`, { method: 'DELETE' }).catch(() => {});
+  }
+  localStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+// ── Initialisation ────────────────────────────────────────────────────────────
+async function init() {
+  // Check status / provider
+  try {
+    const status = await fetch('/api/status').then(r => r.json());
+    updateBadge(status.provider);
+
+    if (status.is_ollama && !status.ollama_available) {
+      appendMsg('system',
+        `⚠️ <strong>Ollama no está disponible</strong> en localhost:11434.<br>
+         Instalá <a href="https://ollama.ai" target="_blank" style="color:var(--accent)">Ollama</a>,
+         descargá un modelo (<code>ollama pull llama3.1</code>) y ejecutá <code>ollama serve</code>.<br>
+         O configurá una clave <code>ANTHROPIC_API_KEY</code> en el archivo <code>.env</code>.`
+      );
+    }
+  } catch (e) {
+    $badge.textContent = 'Sin conexión';
+    $badge.className = 'provider-badge error';
+  }
+
+  // Restore existing session model
+  if (STATE.sessionId) {
+    try {
+      const model = await fetch(`/api/session/${STATE.sessionId}/model`).then(r => {
+        if (!r.ok) throw new Error('session gone');
+        return r.json();
+      });
+      if (model.element_count > 0) {
+        updateSidebar(model.tree, model.element_count, model.relationship_count);
+        enableDownloads();
+        if (model.name) $modelName.value = model.name;
+      }
+    } catch {
+      STATE.sessionId = null;
+      localStorage.removeItem(SESSION_KEY);
+    }
+  }
+
+  // Welcome message
+  appendMsg('ai', marked.parse(`
+¡Hola! Soy tu asistente para crear modelos **ArchiMate**. Puedo ayudarte a:
+
+- 📊 Modelar arquitecturas de negocio, aplicación y tecnología
+- 🔗 Identificar relaciones entre elementos ArchiMate
+- 📄 Generar archivos **.archimate** para importar en Archi 4.x
+- 📋 Exportar en formato **Open Exchange** (estándar del Open Group)
+
+**¿Cómo empezar?** Describime tu arquitectura con tus palabras. Por ejemplo:
+- *"Tenemos un sistema CRM que usan los vendedores para gestionar clientes"*
+- *"La app tiene un frontend React, una API REST en Node y una base de datos PostgreSQL en AWS"*
+- *"Los objetivos son reducir costos y mejorar la experiencia del cliente"*
+
+¿Qué arquitectura querés modelar?
+  `));
+
+  $msgInput.focus();
+}
+
+init();
+</script>
+</body>
+</html>
