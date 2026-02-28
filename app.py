@@ -143,6 +143,45 @@ async def status():
     }
 
 
+class SelectModelRequest(BaseModel):
+    model: str
+
+
+@app.get("/api/models")
+async def list_models():
+    """List models available on the current Ollama instance (local or cloud)."""
+    if not isinstance(AI_PROVIDER, OllamaProvider):
+        return {
+            "current": AI_PROVIDER.display_name,
+            "available": [],
+            "is_ollama": False,
+            "reachable": True,
+        }
+    reachable, models = await check_ollama_available(
+        base_url=AI_PROVIDER._base_url,
+        api_key=AI_PROVIDER._api_key,
+    )
+    return {
+        "current": AI_PROVIDER._model,
+        "available": models,
+        "is_ollama": True,
+        "reachable": reachable,
+    }
+
+
+@app.post("/api/models/select")
+async def select_model(req: SelectModelRequest):
+    """Switch the active Ollama model at runtime (no restart needed)."""
+    if not isinstance(AI_PROVIDER, OllamaProvider):
+        raise HTTPException(400, "Solo Ollama soporta cambio de modelo dinámico")
+    AI_PROVIDER._model = req.model.strip()
+    return {
+        "ok": True,
+        "model": AI_PROVIDER._model,
+        "display": AI_PROVIDER.display_name,
+    }
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest):
     session_id, session = _get_session(req.session_id)

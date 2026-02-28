@@ -76,6 +76,13 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
 .provider-badge.claude { border-color: var(--accent); color: var(--accent); }
 .provider-badge.error  { border-color: var(--danger); color: var(--danger); }
 
+.model-select {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); border-radius: 6px; padding: 4px 8px;
+  font-size: 12px; cursor: pointer; max-width: 180px;
+}
+.model-select:focus { outline: none; border-color: var(--accent); }
+
 .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .btn {
@@ -272,6 +279,9 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
     </div>
 
     <span id="providerBadge" class="provider-badge">Cargando…</span>
+    <select id="modelSelect" class="model-select hidden"
+            onchange="switchModel(this.value)"
+            title="Modelos de IA disponibles — hacé click para cambiar"></select>
 
     <div class="header-actions">
       <button id="btnArchimate" class="btn btn-primary btn-sm" disabled
@@ -560,7 +570,19 @@ async function sendMessage() {
 
   } catch (err) {
     hideTyping();
-    appendMsg('error', `<strong>Error:</strong> ${escHtml(err.message)}`, now());
+    let errHtml = `<strong>Error:</strong> ${escHtml(err.message)}`;
+    // Si el error es "modelo no encontrado", mostrar modelos disponibles
+    const isModelError = err.message.includes('not found') || err.message.includes('no encontrado') || err.message.includes('404');
+    if (isModelError) {
+      const md = await fetch('/api/models').then(r => r.json()).catch(() => null);
+      if (md && md.available && md.available.length > 0) {
+        errHtml += `<br><br>📋 <strong>Modelos disponibles en tu cuenta — hacé click para usar:</strong><br>`;
+        errHtml += md.available.map(m =>
+          `<button class="quick-btn" style="margin:3px 2px" onclick="switchModel('${escHtml(m)}').then(()=>this.closest('.msg').remove())">${escHtml(m)}</button>`
+        ).join('');
+      }
+    }
+    appendMsg('error', errHtml, now());
   } finally {
     setLoading(false);
     $msgInput.focus();
@@ -586,6 +608,39 @@ $msgInput.addEventListener('input', () => {
   $msgInput.style.height = 'auto';
   $msgInput.style.height = Math.min($msgInput.scrollHeight, 160) + 'px';
 });
+
+// ── Model selector ────────────────────────────────────────────────────────────
+async function switchModel(model) {
+  if (!model) return;
+  await fetch('/api/models/select', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model }),
+  }).catch(() => {});
+  document.getElementById('modelSelect').value = model;
+  const status = await fetch('/api/status').then(r => r.json()).catch(() => null);
+  if (status) updateBadge(status.provider);
+}
+
+async function loadModelSelector() {
+  const md = await fetch('/api/models').then(r => r.json()).catch(() => null);
+  if (!md || !md.is_ollama || md.available.length === 0) return;
+
+  const $sel = document.getElementById('modelSelect');
+  $sel.innerHTML = md.available.map(m =>
+    `<option value="${escHtml(m)}" ${m === md.current ? 'selected' : ''}>${escHtml(m)}</option>`
+  ).join('');
+  $sel.classList.remove('hidden');
+
+  // Si el modelo configurado no está en la lista, auto-cambiar al primero
+  if (!md.available.includes(md.current)) {
+    await switchModel(md.available[0]);
+    appendMsg('system',
+      `ℹ️ El modelo <strong>${escHtml(md.current)}</strong> no está disponible en tu cuenta. ` +
+      `Se cambió automáticamente a <strong>${escHtml(md.available[0])}</strong>.`
+    );
+  }
+}
 
 // ── New session ───────────────────────────────────────────────────────────────
 function newSession() {
