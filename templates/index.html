@@ -298,6 +298,35 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
 .file-chip-remove:hover { color: var(--danger); }
 .file-chip-uploading { opacity: .5; }
 .no-files-msg { font-size: 11px; color: var(--text-muted); }
+
+/* ── Preview modal ─────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.78);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; width: 93vw; max-width: 1400px; height: 84vh;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.modal-header-title { font-weight: 600; font-size: 14px; }
+.modal-header-actions { display: flex; align-items: center; gap: 8px; }
+.modal-body {
+  flex: 1; overflow: auto; background: #0a1628; padding: 20px;
+  display: flex; align-items: flex-start; justify-content: flex-start;
+}
+.modal-body svg { display: block; }
+.modal-close {
+  background: none; border: none; color: var(--text-muted);
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0 2px;
+}
+.modal-close:hover { color: var(--text); }
+.modal-hint { font-size: 11px; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -323,6 +352,10 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
             title="Modelos de IA disponibles — hacé click para cambiar"></select>
 
     <div class="header-actions">
+      <button id="btnPreview" class="btn btn-secondary btn-sm" disabled
+              onclick="openPreview()">
+        ◉ Vista previa
+      </button>
       <button id="btnArchimate" class="btn btn-primary btn-sm" disabled
               onclick="downloadFile('archimate')">
         ↓ .archimate
@@ -397,6 +430,23 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
           &#10148;
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Preview modal ────────────────────────────────────────────────── -->
+<div id="previewModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">◉ Vista previa del diagrama</span>
+      <div class="modal-header-actions">
+        <span class="modal-hint">Scroll para ver todo · </span>
+        <button class="btn btn-secondary btn-sm" onclick="refreshPreview()">↺ Actualizar</button>
+        <button class="modal-close" onclick="closePreview()" title="Cerrar (Esc)">×</button>
+      </div>
+    </div>
+    <div class="modal-body" id="previewBody">
+      <div style="color:var(--text-muted);padding:60px;text-align:center">Cargando…</div>
     </div>
   </div>
 </div>
@@ -623,6 +673,17 @@ async function sendMessage() {
 
     if (data.element_count > 0) {
       enableDownloads();
+      document.getElementById('btnPreview').disabled = false;
+    }
+
+    // Show image warning if AI couldn't process images
+    if (data.image_warning) {
+      appendMsg('system', `⚠️ ${escHtml(data.image_warning)}`);
+    }
+
+    // Auto-refresh preview if modal is open
+    if (!document.getElementById('previewModal').classList.contains('hidden')) {
+      refreshPreview();
     }
 
   } catch (err) {
@@ -698,6 +759,35 @@ async function loadModelSelector() {
     );
   }
 }
+
+// ── Diagram preview ───────────────────────────────────────────────────────────
+async function openPreview() {
+  document.getElementById('previewModal').classList.remove('hidden');
+  await refreshPreview();
+}
+
+function closePreview() {
+  document.getElementById('previewModal').classList.add('hidden');
+}
+
+async function refreshPreview() {
+  if (!STATE.sessionId) return;
+  const $body = document.getElementById('previewBody');
+  $body.innerHTML = '<div style="color:var(--text-muted);padding:60px;text-align:center">Generando diagrama…</div>';
+  try {
+    const resp = await fetch(`/api/session/${STATE.sessionId}/svg`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    $body.innerHTML = await resp.text();
+  } catch (e) {
+    $body.innerHTML = `<div style="color:var(--danger);padding:40px">Error al generar vista previa: ${escHtml(e.message)}</div>`;
+  }
+}
+
+// Close modal on Esc key or overlay click
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePreview(); });
+document.getElementById('previewModal').addEventListener('click', function(e) {
+  if (e.target === this) closePreview();
+});
 
 // ── File uploads ──────────────────────────────────────────────────────────────
 const STATE_FILES = []; // [{id, name, mime_type, size, is_image, has_text}]
@@ -867,6 +957,7 @@ async function init() {
       if (model.element_count > 0) {
         updateSidebar(model.tree, model.element_count, model.relationship_count);
         enableDownloads();
+        document.getElementById('btnPreview').disabled = false;
         if (model.name) $modelName.value = model.name;
       }
     } catch {
