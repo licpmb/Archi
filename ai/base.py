@@ -105,6 +105,14 @@ requisito                   → Requirement
 capacidad                   → Capability
 paquete de trabajo          → WorkPackage
 
+== DOCUMENT / IMAGE ANALYSIS ==
+If the user uploads a document or image (provided in the context below or as an image attachment),
+analyze its content and extract ArchiMate elements and relationships from it.
+Images may include architecture diagrams, network topologies, UML diagrams, or infrastructure schemas.
+Documents may include requirements, system descriptions, or architecture specifications.
+Extract all components, services, actors, data objects, and connections you can identify.
+Use action "add" to add the extracted elements to the model.
+
 == CURRENT MODEL CONTEXT ==
 {model_summary}
 """

@@ -259,6 +259,45 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
 
 /* ── Utility ───────────────────────────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ── File uploads ─────────────────────────────────────────────────── */
+.sidebar-files {
+  border-top: 1px solid var(--border);
+  padding: 10px 14px;
+  flex-shrink: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.sidebar-files-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .4px; color: var(--text-muted); margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.upload-btn {
+  background: transparent; border: 1px dashed var(--border);
+  color: var(--text-muted); border-radius: 6px; padding: 5px 10px;
+  cursor: pointer; font-size: 11px; width: 100%; margin-top: 6px;
+  text-align: center; transition: border-color .15s, color .15s;
+}
+.upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+.file-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 8px; background: var(--surface2); border-radius: 6px;
+  margin-bottom: 4px; font-size: 11px; min-width: 0;
+}
+.file-chip-icon { font-size: 13px; flex-shrink: 0; }
+.file-chip-name {
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text);
+}
+.file-chip-size { color: var(--text-muted); flex-shrink: 0; font-size: 10px; }
+.file-chip-remove {
+  cursor: pointer; color: var(--text-muted); flex-shrink: 0;
+  font-size: 15px; line-height: 1; padding: 0 2px;
+}
+.file-chip-remove:hover { color: var(--danger); }
+.file-chip-uploading { opacity: .5; }
+.no-files-msg { font-size: 11px; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -315,6 +354,24 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sa
       <div class="sidebar-footer">
         <span id="elemCount">0 elementos</span>
         <span id="relCount">0 relaciones</span>
+      </div>
+
+      <!-- Files panel -->
+      <div class="sidebar-files">
+        <div class="sidebar-files-title">
+          <span>Archivos adjuntos</span>
+          <span id="filesCount" class="layer-count" style="display:none">0</span>
+        </div>
+        <div id="filesList">
+          <span class="no-files-msg">Sin archivos adjuntos</span>
+        </div>
+        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+          + Adjuntar documento o imagen
+        </button>
+        <input type="file" id="fileInput"
+               accept=".pdf,.docx,.txt,.png,.jpg,.jpeg,.webp"
+               multiple style="display:none"
+               onchange="handleFilesSelected(this.files)">
       </div>
     </aside>
 
@@ -642,6 +699,133 @@ async function loadModelSelector() {
   }
 }
 
+// ── File uploads ──────────────────────────────────────────────────────────────
+const STATE_FILES = []; // [{id, name, mime_type, size, is_image, has_text}]
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function fileIcon(mimeType) {
+  if (mimeType === 'application/pdf') return '📄';
+  if (mimeType && mimeType.includes('word')) return '📝';
+  if (mimeType && mimeType.startsWith('image/')) return '🖼️';
+  return '📁';
+}
+
+function renderFilesList() {
+  const $list = document.getElementById('filesList');
+  const $count = document.getElementById('filesCount');
+
+  if (STATE_FILES.length === 0) {
+    $list.innerHTML = '<span class="no-files-msg">Sin archivos adjuntos</span>';
+    $count.style.display = 'none';
+    return;
+  }
+
+  $count.textContent = STATE_FILES.length;
+  $count.style.display = '';
+  $list.innerHTML = '';
+  for (const f of STATE_FILES) {
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.id = `file-chip-${f.id}`;
+    chip.innerHTML = `
+      <span class="file-chip-icon">${fileIcon(f.mime_type)}</span>
+      <span class="file-chip-name" title="${escHtml(f.name)}">${escHtml(f.name)}</span>
+      <span class="file-chip-size">${formatSize(f.size)}</span>
+      <span class="file-chip-remove" onclick="removeFile('${escHtml(f.id)}')" title="Eliminar">×</span>`;
+    $list.appendChild(chip);
+  }
+}
+
+async function handleFilesSelected(fileList) {
+  if (!fileList || fileList.length === 0) return;
+
+  if (!STATE.sessionId) {
+    appendMsg('system', 'ℹ️ Enviá un mensaje primero para iniciar la sesión y luego adjuntá archivos.');
+    document.getElementById('fileInput').value = '';
+    return;
+  }
+
+  for (const file of fileList) {
+    if (STATE_FILES.length >= 5) {
+      appendMsg('system', '⚠️ Máximo 5 archivos por sesión. Eliminá alguno antes de subir otro.');
+      break;
+    }
+
+    // Temporary chip while uploading
+    const $list = document.getElementById('filesList');
+    if ($list.querySelector('.no-files-msg')) $list.innerHTML = '';
+    const tmpChip = document.createElement('div');
+    tmpChip.className = 'file-chip file-chip-uploading';
+    tmpChip.innerHTML = `
+      <span class="file-chip-icon">⏳</span>
+      <span class="file-chip-name">${escHtml(file.name)}</span>
+      <span class="file-chip-size">subiendo…</span>`;
+    $list.appendChild(tmpChip);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const resp = await fetch(`/api/session/${STATE.sessionId}/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      tmpChip.remove();
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ detail: resp.statusText }));
+        appendMsg('error', `<strong>Error al subir ${escHtml(file.name)}:</strong> ${escHtml(err.detail || resp.statusText)}`);
+        continue;
+      }
+
+      const data = await resp.json();
+      STATE_FILES.push(data);
+      renderFilesList();
+
+      const typeLabel = data.is_image
+        ? 'imagen (análisis visual)'
+        : (data.has_text ? 'documento (texto extraído)' : 'archivo');
+      appendMsg('system',
+        `📎 <strong>${escHtml(data.name)}</strong> adjuntado como ${typeLabel}. ` +
+        'La IA lo tendrá en cuenta en tu próximo mensaje.');
+
+    } catch (err) {
+      tmpChip.remove();
+      appendMsg('error', `<strong>Error al subir ${escHtml(file.name)}:</strong> ${escHtml(err.message)}`);
+    }
+  }
+
+  document.getElementById('fileInput').value = '';
+}
+
+async function removeFile(fileId) {
+  if (!STATE.sessionId) return;
+  try {
+    await fetch(`/api/session/${STATE.sessionId}/files/${fileId}`, { method: 'DELETE' });
+  } catch (e) {}
+  const idx = STATE_FILES.findIndex(f => f.id === fileId);
+  if (idx !== -1) STATE_FILES.splice(idx, 1);
+  renderFilesList();
+}
+
+async function loadExistingFiles() {
+  if (!STATE.sessionId) return;
+  try {
+    const resp = await fetch(`/api/session/${STATE.sessionId}/files`);
+    if (!resp.ok) return;
+    const data = await resp.json();
+    STATE_FILES.length = 0;
+    STATE_FILES.push(...(data.files || []));
+    renderFilesList();
+  } catch (e) {}
+}
+
 // ── New session ───────────────────────────────────────────────────────────────
 function newSession() {
   if (STATE.loading) return;
@@ -691,6 +875,9 @@ async function init() {
     }
   }
 
+  // Load existing files for restored session
+  await loadExistingFiles();
+
   // Welcome message
   appendMsg('ai', marked.parse(`
 ¡Hola! Soy tu asistente para crear modelos **ArchiMate**. Puedo ayudarte a:
@@ -699,11 +886,11 @@ async function init() {
 - 🔗 Identificar relaciones entre elementos ArchiMate
 - 📄 Generar archivos **.archimate** para importar en Archi 4.x
 - 📋 Exportar en formato **Open Exchange** (estándar del Open Group)
+- 📎 Analizar **documentos e imágenes** que adjuntés (PDF, DOCX, imágenes)
 
-**¿Cómo empezar?** Describime tu arquitectura con tus palabras. Por ejemplo:
+**¿Cómo empezar?** Describime tu arquitectura, o adjuntá un documento/diagrama desde el panel lateral izquierdo.
 - *"Tenemos un sistema CRM que usan los vendedores para gestionar clientes"*
 - *"La app tiene un frontend React, una API REST en Node y una base de datos PostgreSQL en AWS"*
-- *"Los objetivos son reducir costos y mejorar la experiencia del cliente"*
 
 ¿Qué arquitectura querés modelar?
   `));
