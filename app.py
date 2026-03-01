@@ -35,6 +35,7 @@ from archimate.model import (
     ArchiModel,
 )
 from archimate.xml_generator import generate_archimate_xml
+from archimate.svg_generator import generate_svg
 
 # ---------------------------------------------------------------------------
 # Provider initialisation
@@ -103,6 +104,7 @@ class ChatResponse(BaseModel):
     element_count: int
     relationship_count: int
     provider: str
+    image_warning: Optional[str] = None
 
 
 class RenameRequest(BaseModel):
@@ -237,7 +239,7 @@ async def upload_file(session_id: str, file: UploadFile = File(...)):
     session.files[file_id] = file_info
 
     return {
-        "file_id": file_id,
+        "id": file_id,
         "name": file_info["name"],
         "mime_type": file_info["mime_type"],
         "size": file_info["size"],
@@ -373,11 +375,22 @@ async def chat(req: ChatRequest):
     # Build messages for AI (may include image attachments for last message)
     messages_for_ai = _build_messages_with_files(session.history, session.files)
 
-    # Call AI
+    # Call AI (with automatic image-retry for non-vision Ollama models)
+    image_warning: str | None = None
     try:
         raw = await AI_PROVIDER.chat(messages=messages_for_ai, system=system)
     except RuntimeError as exc:
-        raise HTTPException(status_code=502, detail=str(exc))
+        err_msg = str(exc)
+        if "image" in err_msg.lower() and isinstance(AI_PROVIDER, OllamaProvider):
+            # Model doesn't support vision — retry without images
+            raw = await AI_PROVIDER.chat(messages=list(session.history), system=system)
+            image_warning = (
+                "Este modelo de Ollama no soporta análisis de imágenes. "
+                "El mensaje fue procesado sin las imágenes adjuntas. "
+                "Para análisis visual, configurá Claude (ANTHROPIC_API_KEY)."
+            )
+        else:
+            raise HTTPException(status_code=502, detail=err_msg)
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Error del proveedor de IA: {exc}")
 
@@ -464,7 +477,16 @@ async def chat(req: ChatRequest):
         element_count=len(session.model.elements),
         relationship_count=len(session.model.relationships),
         provider=AI_PROVIDER.display_name,
+        image_warning=image_warning,
     )
+
+
+@app.get("/api/session/{session_id}/svg")
+async def get_svg(session_id: str):
+    """Return an SVG diagram preview of the current model."""
+    session = _require_session(session_id)
+    svg = generate_svg(session.model)
+    return Response(content=svg, media_type="image/svg+xml")
 
 
 @app.get("/api/session/{session_id}/archimate")
