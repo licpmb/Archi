@@ -1,0 +1,96 @@
+name: One-time Archipam security refactor v3
+
+on:
+  push:
+    branches:
+      - security/archipam-hardening
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: archify/package-lock.json
+
+      - name: Apply validated rename and hardening
+        run: python .github/archipam-refactor.py .
+
+      - name: Refresh patched dependency lock
+        working-directory: archipam
+        run: npm install --package-lock-only --ignore-scripts
+
+      - name: Build deterministic renamed package
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f archipam.zip
+          git add -A
+          scripts/build-zip.sh archipam.zip
+          git add archipam.zip
+
+      - name: Install dependencies
+        working-directory: archipam
+        run: npm ci
+
+      - name: Security audit
+        working-directory: archipam
+        run: npm audit --audit-level=high
+
+      - name: Full test suite
+        working-directory: archipam
+        run: npm test
+
+      - name: Package smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_root="$RUNNER_TEMP/archipam-package"
+          rm -rf "$package_root"
+          mkdir -p "$package_root"
+          unzip -q archipam.zip -d "$package_root"
+          node scripts/package-smoke.mjs "$package_root/archipam"
+
+      - name: Verify renderer errors do not expose stack traces
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '{bad json' > "$RUNNER_TEMP/bad.json"
+          set +e
+          node archipam/bin/archipam.mjs render architecture "$RUNNER_TEMP/bad.json" "$RUNNER_TEMP/out.html" 2> "$RUNNER_TEMP/error.log"
+          status=$?
+          set -e
+          test "$status" -ne 0
+          ! grep -Eq 'file:///|[[:space:]]at[[:space:]].*\(' "$RUNNER_TEMP/error.log"
+
+      - name: Verify legacy product text is gone
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -n -i archify -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!.github/archipam-refactor.py' ':!.github/workflows/archipam-one-time-refactor.yml' ':!.github/workflows/archipam-refactor-v2.yml' ':!.github/workflows/archipam-refactor-v3.yml'; then
+            echo '::error::legacy Archify text remains'
+            exit 1
+          fi
+
+      - name: Commit tested result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/archipam-refactor.py \
+            .github/workflows/archipam-one-time-refactor.yml \
+            .github/workflows/archipam-refactor-v2.yml \
+            .github/workflows/archipam-refactor-v3.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat: rename Archify to Archipam and harden security'
+          git push origin HEAD:security/archipam-hardening
