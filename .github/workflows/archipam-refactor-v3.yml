@@ -89,7 +89,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git grep -n -i archify -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!.github/archipam-refactor.py' ':!.github/workflows/archipam-one-time-refactor.yml' ':!.github/workflows/archipam-refactor-v2.yml' ':!.github/workflows/archipam-refactor-v3.yml'; then
+          if git grep -n -i archify -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!.github/archipam-refactor.py' ':!.github/workflows/archipam-refactor-v3.yml'; then
             echo '::error::legacy Archify text remains'
             exit 1
           fi
@@ -99,8 +99,6 @@ jobs:
         run: |
           set -euo pipefail
           git rm .github/archipam-refactor.py \
-            .github/workflows/archipam-one-time-refactor.yml \
-            .github/workflows/archipam-refactor-v2.yml \
             .github/workflows/archipam-refactor-v3.yml
           git add -A
           git config user.name 'github-actions[bot]'
