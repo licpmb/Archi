@@ -48,7 +48,20 @@ jobs:
 
       - name: Full test suite
         working-directory: archipam
-        run: npm test
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee "$RUNNER_TEMP/archipam-test.log"
+          status=${PIPESTATUS[0]}
+          if [[ "$status" -ne 0 ]]; then
+            while IFS= read -r line; do
+              escaped="${line//'%'/'%25'}"
+              escaped="${escaped//$'\r'/'%0D'}"
+              escaped="${escaped//$'\n'/'%0A'}"
+              echo "::error::$escaped"
+            done < <(tail -n 80 "$RUNNER_TEMP/archipam-test.log")
+            exit "$status"
+          fi
 
       - name: Package smoke
         shell: bash
