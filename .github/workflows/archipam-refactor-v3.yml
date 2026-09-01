@@ -34,6 +34,13 @@ jobs:
             exit 1
           fi
 
+      - name: Keep workflow files outside bot migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git restore --source=HEAD --staged --worktree .github/workflows
+          git clean -fd .github/workflows
+
       - name: Refresh patched dependency lock
         working-directory: archipam
         run: npm install --package-lock-only --ignore-scripts
@@ -109,12 +116,12 @@ jobs:
           test "$status" -ne 0
           ! grep -Eq 'file:///|[[:space:]]at[[:space:]].*\(' "$RUNNER_TEMP/error.log"
 
-      - name: Verify legacy product text is gone
+      - name: Verify legacy product text is gone outside workflows
         shell: bash
         run: |
           set -euo pipefail
-          if git grep -n -i archify -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!.github/archipam-refactor.py' ':!.github/workflows/archipam-refactor-v3.yml'; then
-            echo '::error::legacy Archify text remains'
+          if git grep -n -i archify -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!.github/archipam-refactor.py' ':!.github/workflows/*'; then
+            echo '::error::legacy Archify text remains outside workflows'
             exit 1
           fi
 
@@ -122,8 +129,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git rm .github/archipam-refactor.py \
-            .github/workflows/archipam-refactor-v3.yml
+          git rm .github/archipam-refactor.py
           git add -A
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
