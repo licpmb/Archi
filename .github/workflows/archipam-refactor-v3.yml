@@ -46,22 +46,25 @@ jobs:
         working-directory: archipam
         run: npm audit --audit-level=high
 
-      - name: Full test suite
+      - name: Test brand marks
         working-directory: archipam
-        shell: bash
-        run: |
-          set -o pipefail
-          npm test 2>&1 | tee "$RUNNER_TEMP/archipam-test.log"
-          status=${PIPESTATUS[0]}
-          if [[ "$status" -ne 0 ]]; then
-            while IFS= read -r line; do
-              escaped="${line//'%'/'%25'}"
-              escaped="${escaped//$'\r'/'%0D'}"
-              escaped="${escaped//$'\n'/'%0A'}"
-              echo "::error::$escaped"
-            done < <(tail -n 80 "$RUNNER_TEMP/archipam-test.log")
-            exit "$status"
-          fi
+        run: npm run check:brand-marks
+
+      - name: Test generated validators
+        working-directory: archipam
+        run: npm run check:validators
+
+      - name: Test release identity
+        working-directory: archipam
+        run: npm run check:release-identity
+
+      - name: Test golden files
+        working-directory: archipam
+        run: node test/golden.mjs
+
+      - name: Test remaining suite
+        working-directory: archipam
+        run: node ../scripts/run-tests.mjs
 
       - name: Package smoke
         shell: bash
