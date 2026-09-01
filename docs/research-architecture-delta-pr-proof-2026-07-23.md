@@ -1,11 +1,11 @@
 # Architecture Delta / PR Proof：研究结论与实现合同
 
 日期：2026-07-23（Asia/Shanghai）
-Archify 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe8421f41a6f3`
+ArchiPam 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe8421f41a6f3`
 
 ## 结论
 
-下一项值得做的用户可见切片是一个 **Architecture Delta**：给它两份已经存在、已经通过 Archify 校验的 `architecture` JSON，它生成一个离线、自包含、可验证的 HTML，默认回答“架构事实改了什么”，并可切换 Before / Delta / After。**PR Proof 是这个产物的使用场景，不是新的事实来源**；首版不访问 GitHub、不拉取仓库、不分析代码影响，也不声称某个 PR 安全。
+下一项值得做的用户可见切片是一个 **Architecture Delta**：给它两份已经存在、已经通过 ArchiPam 校验的 `architecture` JSON，它生成一个离线、自包含、可验证的 HTML，默认回答“架构事实改了什么”，并可切换 Before / Delta / After。**PR Proof 是这个产物的使用场景，不是新的事实来源**；首版不访问 GitHub、不拉取仓库、不分析代码影响，也不声称某个 PR 安全。
 
 它成立的前提不是再加一种红绿风格，而是先冻结四件事：
 
@@ -25,7 +25,7 @@ Archify 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe84
 - `prdiff.py` 从两个 Git ref 提取 changed `.drawio`，为修改文件生成 base / head / diff 三张 PNG，再汇总为 PR Markdown；新增或删除文件只有存在的一侧。([source](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/scripts/prdiff.py#L2-L18), [pipeline](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/scripts/prdiff.py#L30-L110))
 - PR bot 用固定 HTML marker 更新同一条 sticky comment，避免每次 push 产生新评论；缺 draw.io CLI 时仍输出文件清单但没有图片。([source](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/references/pr-bot.md#L1-L25), [degradation and sticky comment](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/references/pr-bot.md#L49-L62))
 
-对 Archify 的含义：**吸收 base / delta / head 的评审信息架构和稳定 ID 原则；不吸收按标签猜身份、全图重排、扁平化容器、外部 draw.io / Graphviz 依赖和核心能力对 CLI 缺失的静默降级。**
+对 ArchiPam 的含义：**吸收 base / delta / head 的评审信息架构和稳定 ID 原则；不吸收按标签猜身份、全图重排、扁平化容器、外部 draw.io / Graphviz 依赖和核心能力对 CLI 缺失的静默降级。**
 
 ### GitNexus：事实变化与推断影响必须分层
 
@@ -36,7 +36,7 @@ Archify 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe84
 - 它把 diff hunk 与符号范围的重叠标为 `touched`，再单独聚合执行流；查询失败会返回 `partial: true`，避免缺失数据伪装成低风险。([source](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/gitnexus/src/mcp/local/local-backend.ts#L4213-L4335))
 - `impact` 的 blast radius 是另一套合同，输出 direct / transitive depth、process、module 和 LOW–CRITICAL / UNKNOWN；模糊目标会要求用 UID 消歧，而不是静默挑一个。([tool contract](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/gitnexus/src/mcp/tools.ts#L432-L468), [risk calculation](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/gitnexus/src/mcp/local/local-backend.ts#L6075-L6123))
 
-对 Archify 的含义：Architecture Delta 可以证明“输入模型的哪些事实不同”，但没有代码知识图、运行链和可信映射时，**不得**输出 blast radius、风险等级、“will break”或“safe to merge”。若未来消费 GitNexus 回执，也必须把外部 impact 证据与本地 authored delta 分层展示。
+对 ArchiPam 的含义：Architecture Delta 可以证明“输入模型的哪些事实不同”，但没有代码知识图、运行链和可信映射时，**不得**输出 blast radius、风险等级、“will break”或“safe to merge”。若未来消费 GitNexus 回执，也必须把外部 impact 证据与本地 authored delta 分层展示。
 
 ### GitDiagram：路径化诊断、有限审计值得吸收，模型重试不属于 Delta
 
@@ -46,15 +46,15 @@ Archify 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe84
 - 图规划最多三次；失败后只把上一份 raw graph 和精确 validation feedback 送入下一次，并为每次尝试保存状态、分类和反馈。([limits and audit shape](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/features/diagram/graph.ts#L7-L21), [attempt audit](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/features/diagram/graph.ts#L96-L138), [bounded planner](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/server/generate/graph-planner.ts#L72-L225))
 - 终态审计会去掉成功结果里重复的大对象，失败时保留原始输出和验证反馈，避免回执膨胀但不丢失失败证据。([source](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/server/generate/session-audit.ts#L36-L84))
 
-对 Archify 的含义：复用现有 `schemaVersion: 1` repair receipt 的方向，新增 delta 专属的 code / subject / evidence / supportedFixes；**不引入 LLM、重试、provider、SSE、R2/Redis 或托管状态**。比较是纯确定性操作，一次失败就给出可修复诊断。
+对 ArchiPam 的含义：复用现有 `schemaVersion: 1` repair receipt 的方向，新增 delta 专属的 code / subject / evidence / supportedFixes；**不引入 LLM、重试、provider、SSE、R2/Redis 或托管状态**。比较是纯确定性操作，一次失败就给出可修复诊断。
 
 ### 标准约束：模型 ID、差异种类、删除占位与 PR 基线
 
 - The Open Group 的 ArchiMate Exchange XSD 为 element 与 relationship 分别建立 identifier key，并用 keyref 约束 relationship source / target；这说明架构交换合同把节点和关系身份都当作第一等事实。([official schema documentation](https://www.opengroup.org/xsd/archimate/3.0/html-model/))
 - Eclipse EMF Compare 的默认 match phase 优先用对象标识符，差异分为 ADD / DELETE / CHANGE / MOVE；其图形比较用 phantom placeholder 标出被删除对象原来的位置。([developer guide](https://help.eclipse.org/latest/topic/org.eclipse.emf.compare.doc/help/developer/developer-guide.html), [user guide](https://eclipse.dev/emfcompare/documentation/latest/user/user-guide.html), [DifferenceKind API](https://help.eclipse.org/latest/topic/org.eclipse.emf.compare.doc/help/developer/javadoc/org/eclipse/emf/compare/DifferenceKind.html))
 - GitHub PR 使用 three-dot comparison，以 merge base 到 topic head 表达“这个 PR 引入了什么”；two-dot 是 base tip 与 head tip 的直接比较。([GitHub Docs](https://docs.github.com/en/pull-requests/reference/branches#three-dot-and-two-dot-git-diff-comparisons))
-- Git 的 raw diff format 把 A/C/D/M/R 等状态分开，并为 copy/rename 报告相似度分数；rename detection 本身是可配置的相似度推断。因此 Archify 只有显式稳定 ID 才能声称同一实体发生变化，不能把相似 label 当 rename。([Git diff format](https://git-scm.com/docs/diff-format.html), [git-diff](https://git-scm.com/docs/git-diff))
-- RFC 8785 说明要对 JSON 做可重复哈希，必须先有不变的规范化表示和确定的属性排序。Archify 不应声称兼容 JCS，除非实现并通过完整兼容测试；但 compare IR 必须采用同样的“先规范化、再哈希”原则。([RFC 8785](https://www.rfc-editor.org/rfc/rfc8785.html))
+- Git 的 raw diff format 把 A/C/D/M/R 等状态分开，并为 copy/rename 报告相似度分数；rename detection 本身是可配置的相似度推断。因此 ArchiPam 只有显式稳定 ID 才能声称同一实体发生变化，不能把相似 label 当 rename。([Git diff format](https://git-scm.com/docs/diff-format.html), [git-diff](https://git-scm.com/docs/git-diff))
+- RFC 8785 说明要对 JSON 做可重复哈希，必须先有不变的规范化表示和确定的属性排序。ArchiPam 不应声称兼容 JCS，除非实现并通过完整兼容测试；但 compare IR 必须采用同样的“先规范化、再哈希”原则。([RFC 8785](https://www.rfc-editor.org/rfc/rfc8785.html))
 
 ## 冻结合同
 
@@ -66,13 +66,13 @@ Archify 基线：`codex/architecture-delta-proof@5302d2251ff2aaca56f7c08818ebe84
 2. 两侧必须都是 `schema_version: 1`、`diagram_type: "architecture"`。类型或 schema 版本不同直接失败。
 3. 两侧至少有一个完全相同的 `components[].id`。零共享节点意味着没有证据证明它们描述同一系统；返回 `delta/no-shared-component-id`，不把全图猜成 remove + add。
 4. `meta.repository` 两侧都存在时，规范化后的 repository URL 必须完全相同；不同仓库返回 `delta/repository-mismatch`。只有一侧有 repository 或两侧都没有时仍可比较，但 `proofLevel` 必须是 `authored`。
-5. 两侧 repository URL 相同且 revision 都是 40 位 SHA 时，`proofLevel` 可为 `revision-pinned`；这只证明输入声明并通过了 Archify 既有 repository-evidence gate，不能称为 GitHub PR、merge-base 或代码影响验证。
+5. 两侧 repository URL 相同且 revision 都是 40 位 SHA 时，`proofLevel` 可为 `revision-pinned`；这只证明输入声明并通过了 ArchiPam 既有 repository-evidence gate，不能称为 GitHub PR、merge-base 或代码影响验证。
 6. 首版命令只比较两个本地 JSON 文件，不接受 Git ref、URL 或 PR number。未来若增加 Git wrapper，PR 模式必须把 baseline 解析为 merge-base（three-dot 语义），并把解析后的 base/head SHA 写入回执，不能把 two-dot 偷换成 PR diff。
 
 建议入口：
 
 ```text
-archify compare architecture <base.json> <head.json> [output.html] [--json] [--repo-root path]
+archipam compare architecture <base.json> <head.json> [output.html] [--json] [--repo-root path]
 ```
 
 它不是第六种 diagram type，也不是普通 `render` 的默认行为。
@@ -118,14 +118,14 @@ archify compare architecture <base.json> <head.json> [output.html] [--json] [--r
 7. 若 removed 与 added 恰好重叠，保持真实几何并在 receipt 分列两项；视觉上用双描边和符号区分，不猜测 replacement/rename。
 8. 首版只做静态、即时切换，不增加循环动画。Still / reduced motion 与普通模式信息等价。
 
-这直接吸收 EMF Compare 的 deleted phantom 思路，同时保留 Archify 最强的“作者几何是真相”边界。
+这直接吸收 EMF Compare 的 deleted phantom 思路，同时保留 ArchiPam 最强的“作者几何是真相”边界。
 
 ### 5. 确定性输出与回执
 
 - 比较器是纯函数：相同已解析输入 → 相同 compare IR；不得读取当前时间、绝对路径、Git 状态、网络、随机数或 locale 排序。
 - 所有 ID、changed field JSON Pointer、diagnostic 和 receipt 数组按 Unicode code-point 顺序稳定排序；不能依赖输入数组顺序、对象插入顺序或文件系统顺序。
 - 每侧同时记录 `rawSha256` / bytes（证明精确输入）与 `semanticSha256`（对规范化 compare IR 哈希）。语义等价但空白、object key 或实体数组顺序不同的输入，raw hash 可不同，semantic hash 和 HTML 必须相同。
-- canonical form 是版本化的 Archify contract（例如 `canonicalVersion: 1`）。除非实现 RFC 8785 全部要求并用官方向量验证，否则文档只称“deterministic canonical JSON”，不称 JCS-compliant。
+- canonical form 是版本化的 ArchiPam contract（例如 `canonicalVersion: 1`）。除非实现 RFC 8785 全部要求并用官方向量验证，否则文档只称“deterministic canonical JSON”，不称 JCS-compliant。
 - 成功 `--json` 回执最小形状：
 
 ```json
@@ -190,9 +190,9 @@ Share Card 固定从 canonical Delta 状态生成，不取决于用户当前停�
 
 ## 不复制什么
 
-1. **Agents365 的 `--by-label`**：重复 label 会折叠，rename/同名组件会被错配。Archify 宁可给出修复提示，也不猜身份。
+1. **Agents365 的 `--by-label`**：重复 label 会折叠，rename/同名组件会被错配。ArchiPam 宁可给出修复提示，也不猜身份。
 2. **Graphviz 全图重排 diff**：它适合扁平摘要，但会让未变节点位移、删除位置丢失，破坏 reviewer 的空间记忆。
-3. **扁平化容器、丢边标签和换统一矩形**：region/security-group、机制标签和 semantic sigil 是 Archify 的事实，不是装饰。
+3. **扁平化容器、丢边标签和换统一矩形**：region/security-group、机制标签和 semantic sigil 是 ArchiPam 的事实，不是装饰。
 4. **缺渲染器时仍发布“proof”**：文件清单可作普通 CI 信息，但 Architecture Delta artifact 必须完整校验后才成功。
 5. **GitNexus 风险分数和 blast-radius 文案**：没有代码图与执行流证据时，这些都是过度声明。
 6. **GitDiagram 的 LLM 修复循环与托管状态**：Delta 不需要模型、provider、quota、SSE、R2、Redis 或私仓 token。
@@ -204,7 +204,7 @@ Share Card 固定从 canonical Delta 状态生成，不取决于用户当前停�
 
 第一版只交付一个窄而完整的垂直切片：
 
-1. 新增零依赖 `archify compare architecture base.json head.json output.html --json [--repo-root path]`。
+1. 新增零依赖 `archipam compare architecture base.json head.json output.html --json [--repo-root path]`。
 2. 复用现有 architecture loader、schema、engineering profile、renderer、artifact checker、atomic delivery 和 share-card pipeline。
 3. 新增纯 `compareArchitecture(base, head)`，输出冻结的 versioned compare IR；renderer 只消费 IR，不在 DOM 中重新推断差异。
 4. HTML 默认 Delta，顶部现有控制区内放一个紧凑三段切换 `Before | Delta | After` 和 `Δ +A ~C −R`；不增加侧栏。
@@ -213,7 +213,7 @@ Share Card 固定从 canonical Delta 状态生成，不取决于用户当前停�
 7. canonical export、print 与 Share Card 固定到完整、静态的 Delta 状态；运行时选择和动画状态不进入 hash。
 8. Skill 必须先问用户选择 base/head，并说明 relationship ID 是比较前置；不把 compare 设为普通 architecture 生成的默认能力。
 
-这个切片已经足够形成对外价值：用户可以把一份真正自包含、可审计的架构变更图放进 PR、issue 或设计评审，而 Archify 仍保持离线、稳定、零依赖和不过度声明。
+这个切片已经足够形成对外价值：用户可以把一份真正自包含、可审计的架构变更图放进 PR、issue 或设计评审，而 ArchiPam 仍保持离线、稳定、零依赖和不过度声明。
 
 ## 验收门
 

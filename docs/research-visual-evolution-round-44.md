@@ -26,7 +26,7 @@ resolved semantic relationships + final visible path primitives + typed frames
 
 The receipt is more valuable than another visual control. It converts “this
 looks busy” into a stable author repair loop, makes Gallery proof honest, and
-lets Archify tighten polished examples without rejecting legitimate engineering
+lets ArchiPam tighten polished examples without rejecting legitimate engineering
 topologies.
 
 ## Current-worktree audit
@@ -47,8 +47,8 @@ Those checks do not measure:
 - a route running on a container, stage, group, or lane border; or
 - whether a Gallery artifact satisfies a named polished-delivery profile.
 
-`archify/renderers/shared/layout-report.mjs` serializes component and connection
-geometry only for architecture. `archify inspect` and `validate --layout-json`
+`archipam/renderers/shared/layout-report.mjs` serializes component and connection
+geometry only for architecture. `archipam inspect` and `validate --layout-json`
 are likewise architecture-only. The other four renderers already compute exact
 routes but do not expose a common layout or composition report. The current
 Gallery receipt is therefore an artifact-integrity receipt, not a composition
@@ -133,7 +133,7 @@ violation.
 **Borrow:** named delivery profiles, structured metrics, and the rule that a
 successful render is not yet polished delivery.
 **Adapt:** verify shared *semantic* endpoints and renderer route classes instead
-of trusting coordinate equality; use Archify's real corpus to calibrate warning
+of trusting coordinate equality; use ArchiPam's real corpus to calibrate warning
 budgets.
 **Skip:** the six-node total-bend budget, a topology-dependent 0–100 score, and
 an unconditional copy of every showcase number.
@@ -166,7 +166,7 @@ treats boundary crossing as a configurable routing cost, not an unconditional
 error.
 
 **Borrow:** explicit issue classes and junction semantics.
-**Adapt:** only border-*collinearity* is universally wrong in Archify today;
+**Adapt:** only border-*collinearity* is universally wrong in ArchiPam today;
 necessary perpendicular entry/exit through a container remains legal.
 **Skip:** guessing a junction from a T touch or coordinate coincidence.
 
@@ -219,7 +219,7 @@ bridge decoration.
 ### Adapt
 
 - Validate semantic endpoint identity, not just coordinate equality.
-- Keep shared-source/target channels measurable and non-blocking until Archify
+- Keep shared-source/target channels measurable and non-blocking until ArchiPam
   has explicit ports or junctions.
 - Compute visible crossings from final `M/L/H/V/Q` geometry, while computing
   bends and segment lengths from the normalized route skeleton.
@@ -242,7 +242,7 @@ bridge decoration.
 
 ### Product sentence
 
-**Archify tells an author whether a diagram is safe, whether it is polished,
+**ArchiPam tells an author whether a diagram is safe, whether it is polished,
 and exactly which route decision keeps it from the next quality profile.**
 
 ### Profiles
@@ -267,13 +267,13 @@ classification without becoming public JSON API.
 | `composition/unrelated-overlap` | positive-length collinear overlap with no shared semantic endpoint | warning | error | likely accidental, but standard must not guess an undeclared junction |
 | `composition/touch` | endpoint/T touch without explicit junction | warning | warning | ambiguous until junction semantics exist |
 | `composition/shared-channel` | positive overlap with shared semantic source/target | metric | metric | Graphviz/ELK show it can be intentional |
-| `composition/stacked-arrowhead` | multiple business arrowheads at the same endpoint coordinate | warning | warning | Fireworks rejects it, but Archify lacks port-offset controls today |
+| `composition/stacked-arrowhead` | multiple business arrowheads at the same endpoint coordinate | warning | warning | Fireworks rejects it, but ArchiPam lacks port-offset controls today |
 | `composition/bend-budget` | normalized direction changes above suggested budget | warning | warning | eight real routes currently use three bends legitimately |
 | `composition/stretch-budget` | route/direct Manhattan ratio above suggested budget | warning | warning | feedback and bottom corridors need route-class context |
 | `composition/short-segment` | positive normalized segment below suggested budget | warning | warning | endpoint stubs need renderer calibration |
 | `composition/boundary-crossing-count` | required frame entries/exits | metric | metric | crossing a container is not itself a defect |
 
-After explicit `port`, `junction`, and route-role semantics exist, Archify can
+After explicit `port`, `junction`, and route-role semantics exist, ArchiPam can
 promote undeclared touches and stacked arrowheads to `showcase` errors. Doing so
 before authors have a precise repair control would turn the validator into a
 dead end.
@@ -380,7 +380,7 @@ of the canonical semantic path/frame records in the receipt.
 
 ### CLI
 
-- `archify validate <type> <input> --json` returns `checks` plus
+- `archipam validate <type> <input> --json` returns `checks` plus
   `compositionReceipt` for all five types.
 - Human output becomes, for example,
   `ok workflow ... (artifact 5/5; composition standard: 0 errors, 2 warnings)`.
@@ -549,7 +549,7 @@ At desktop 1280×720 and mobile 390×844:
 
 ## Success criteria
 
-Round 44 is successful when Archify can truthfully say:
+Round 44 is successful when ArchiPam can truthfully say:
 
 > Every artifact carries a deterministic composition receipt. Safety defects
 > always fail; polished showcase defects fail by profile; legitimate shared and

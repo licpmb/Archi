@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Build the distributable skill archive from the archify/ folder.
+# Build the distributable skill archive from the archipam/ folder.
 # Usage: scripts/build-zip.sh [output.zip]
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
-out="${1:-$repo_root/archify.zip}"
+out="${1:-$repo_root/archipam.zip}"
 if [[ "$out" != /* ]]; then
   out="$(pwd)/$out"
 fi
 
-# Runtime consumers support every Node version declared by archify/package.json,
+# Runtime consumers support every Node version declared by archipam/package.json,
 # but canonical ZIP bytes depend on the Node/zlib toolchain. CI and releases use
 # Node 22, so fail clearly instead of publishing different bytes from another
 # Node major.
@@ -17,7 +17,7 @@ canonical_node_major=22
 node_version="$(node -p 'process.versions.node')"
 node_major="${node_version%%.*}"
 if [[ "$node_major" != "$canonical_node_major" ]]; then
-  echo "canonical archify.zip builds require Node $canonical_node_major (current: $node_version)" >&2
+  echo "canonical archipam.zip builds require Node $canonical_node_major (current: $node_version)" >&2
   exit 1
 fi
 
@@ -28,8 +28,8 @@ stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
 node "$repo_root/scripts/stage-clean-skill.mjs" \
   --root "$repo_root" \
-  --dest "$stage/archify" >/dev/null
+  --dest "$stage/archipam" >/dev/null
 
-node "$repo_root/scripts/write-deterministic-zip.mjs" "$stage/archify" "$out"
+node "$repo_root/scripts/write-deterministic-zip.mjs" "$stage/archipam" "$out"
 
 echo "built $out"

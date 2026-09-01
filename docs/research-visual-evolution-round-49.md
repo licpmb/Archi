@@ -21,15 +21,15 @@ inspection already tells, while closing a concrete identity bug first.
 
 The shared viewer already has the right pieces, but they do not meet:
 
-- [`relationshipTokenKind()` and `relationshipTokenGeometry()`](../archify/assets/template.html)
+- [`relationshipTokenKind()` and `relationshipTokenGeometry()`](../archipam/assets/template.html)
   classify one exact relationship as call, data, event, security, or state and
   move a compact token on its authored `path`, `line`, or `polyline` geometry;
-- [`storyStep()` and `pulseStoryStep()`](../archify/assets/template.html) build
+- [`storyStep()` and `pulseStoryStep()`](../archipam/assets/template.html) build
   ordered Story Beats and animate the generic Story Trail flow;
-- [`storyMotionAllowed()`](../archify/assets/template.html) rejects every embed,
+- [`storyMotionAllowed()`](../archipam/assets/template.html) rejects every embed,
   even when the URL explicitly requested the existing `?embed=1&play=1` share
   contract;
-- [`followStoryStep()`](../archify/assets/template.html), by contrast, correctly
+- [`followStoryStep()`](../archipam/assets/template.html), by contrast, correctly
   permits an embed only when `data-share-playback="true"`, so the camera and
   captions advance while the exact-edge carrier is absent.
 
@@ -48,7 +48,7 @@ Authoritative local evidence:
 
 - [Agent Tool Call story source](gallery/sources/agent-tool-call.workflow.json)
 - [compiled Agent Tool Call artifact](gallery/artifacts/agent-tool-call.workflow.html)
-- [shared Story Beat implementation](../archify/assets/template.html)
+- [shared Story Beat implementation](../archipam/assets/template.html)
 
 The first implementation action must therefore be **deduplicate semantic edge
 records by `data-edge-key` before deciding `forward`, `reverse`, or `multiple`**.
@@ -75,7 +75,7 @@ static geometry
 
 **Borrow:** one meaningful carrier on an exact, immutable source route; fail
 closed when route identity is ambiguous.
-**Adapt:** Archify already has stronger stable `data-edge-key` / optional
+**Adapt:** ArchiPam already has stronger stable `data-edge-key` / optional
 relationship IDs and five cross-renderer tokens, so reuse those instead of
 adding Fireworks' scene metadata matrix.
 **Skip:** 5.75-second infinitely looping GIF operation, per-style schedules,
@@ -110,7 +110,7 @@ Its separate path-in example shows a bounded path reveal with an explicit
 
 **Borrow:** keep the moving mark owned by the exact relationship geometry, and
 make lifetime explicit.
-**Adapt:** one carrier per selected Story Beat, with Archify's existing cleanup
+**Adapt:** one carrier per selected Story Beat, with ArchiPam's existing cleanup
 and motion governor.
 **Skip:** the graph runtime, custom-edge registry, infinite iterations, and
 persistent ant-line/fly-marker decoration.

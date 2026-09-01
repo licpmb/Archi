@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="generator" content="archify 2.11.0">
+  <meta name="generator" content="archipam 2.11.0">
   <title>Agent Tool Call Workflow Diagram</title>
   <script>
     // Resolve the theme before first paint so light-preference users don't
@@ -16,7 +16,7 @@
           if (param === 'light' || param === 'dark') theme = param;
         } catch (_) {}
         if (!theme) {
-          try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
+          try { theme = localStorage.getItem('archipam-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
           theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -25,15 +25,8 @@
       } catch (_) {}
     })();
   </script>
-  <!-- Async font load: a blackholed network must not block first paint.
-       The body font stack falls back to system monospace until it lands. -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </noscript>
-  <style>
+  <!-- Offline-safe font policy: use the local/system monospace stack only. -->
+<style>
     /* ==========================================================
        THEME VARIABLES — switch by toggling [data-theme] on <html>
        ========================================================== */
@@ -289,7 +282,7 @@
       pointer-events: none;
       background: linear-gradient(115deg, transparent 28%, rgba(103, 232, 249, 0.035) 48%, transparent 68%);
       transform: translateX(-70%);
-      animation: archify-signal-scan 6s ease-in-out infinite;
+      animation: archipam-signal-scan 6s ease-in-out infinite;
     }
 
     svg {
@@ -402,7 +395,7 @@
       }
       body { background: #ffffff !important; padding: 0; }
       .container { max-width: none; }
-      .toolbar, .archify-toast, .no-print { display: none !important; }
+      .toolbar, .archipam-toast, .no-print { display: none !important; }
       .diagram-container, .card { box-shadow: none; border-color: #e2e8f0; }
       html[data-preset="signal-flow"] .diagram-container,
       html[data-preset="signal-flow"] .card { background: #ffffff; }
@@ -486,7 +479,7 @@
     }
 
     /* Toast — brief feedback for actions like "copied" */
-    .archify-toast {
+    .archipam-toast {
       position: fixed;
       top: 1rem;
       left: 50%;
@@ -504,7 +497,7 @@
       pointer-events: none;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-    .archify-toast.show {
+    .archipam-toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
@@ -594,13 +587,13 @@
     svg[data-animation="trace"] [data-animate="edge"] {
       stroke-dasharray: 10 8;
       stroke-dashoffset: 54;
-      animation: archify-edge-flow 2.4s linear infinite;
+      animation: archipam-edge-flow 2.4s linear infinite;
       animation-delay: calc(var(--step, 0) * 160ms);
     }
     svg[data-animation="trace"] [data-animate="node"] {
       transform-box: fill-box;
       transform-origin: center;
-      animation: archify-node-pulse 3.6s ease-in-out infinite;
+      animation: archipam-node-pulse 3.6s ease-in-out infinite;
       animation-delay: calc(var(--step, 0) * 160ms);
     }
     svg[data-preset="signal-flow"][data-animation="trace"] [data-animate="edge"] {
@@ -611,17 +604,17 @@
     svg[data-preset="signal-flow"][data-animation="trace"] [data-animate="node"] {
       animation-duration: 3.1s;
     }
-    @keyframes archify-edge-flow {
+    @keyframes archipam-edge-flow {
       to { stroke-dashoffset: 0; }
     }
-    @keyframes archify-node-pulse {
+    @keyframes archipam-node-pulse {
       0%, 72%, 100% { filter: none; stroke-width: 1.5; }
       18%, 36% {
         filter: drop-shadow(0 0 8px var(--arrow-emphasis));
         stroke-width: 2.4;
       }
     }
-    @keyframes archify-signal-scan {
+    @keyframes archipam-signal-scan {
       0%, 18% { transform: translateX(-70%); }
       70%, 100% { transform: translateX(70%); }
     }
@@ -635,7 +628,7 @@
       }
     }
   </style>
-  <style id="archify-visual-evolution-prototype">
+  <style id="archipam-visual-evolution-prototype">
     /* PROTOTYPE ONLY — intentionally isolated from the production template. */
     html { --prototype-accent: #67e8f9; }
     body { background-attachment: fixed; }
@@ -1167,7 +1160,7 @@
 
     <!-- Footer -->
     <p class="footer">
-      Workflow diagram &bull; Built with Archify<span class="no-print"> &bull; Press <kbd>T</kbd> for theme and <kbd>E</kbd> for export</span>
+      Workflow diagram &bull; Built with ArchiPam<span class="no-print"> &bull; Press <kbd>T</kbd> for theme and <kbd>E</kbd> for export</span>
     </p>
   </div>
 
@@ -1175,10 +1168,10 @@
     /* ============================================================
        Theme toggle — persists to localStorage, respects system pref
        ============================================================ */
-    var Archify = {};
+    var ArchiPam = {};
 
-    Archify.theme = (function () {
-      var STORAGE_KEY = 'archify-theme';
+    ArchiPam.theme = (function () {
+      var STORAGE_KEY = 'archipam-theme';
       var html = document.documentElement;
       var btn = document.getElementById('btn-theme');
       var icon = document.getElementById('theme-icon');
@@ -1314,7 +1307,7 @@
             try { rules = sheet.cssRules; } catch (_) { return; } // cross-origin
             if (!rules) return;
             Array.prototype.forEach.call(rules, function (rule) {
-              if (rule.type === 7 && /^archify-/.test(rule.name || '')) {
+              if (rule.type === 7 && /^archipam-/.test(rule.name || '')) {
                 out.push(rule.cssText);
                 return;
               }
@@ -1518,7 +1511,7 @@
       }
 
       // Record the live CSS animation without Puppeteer, ffmpeg, or a network
-      // dependency. The serialized SVG keeps Archify's animation keyframes;
+      // dependency. The serialized SVG keeps ArchiPam's animation keyframes;
       // one Image instance advances its timeline while each frame is painted
       // into a MediaRecorder-backed canvas.
       function recordWebm(options) {
@@ -1639,7 +1632,7 @@
       // A live region only announces CHANGES to an existing node, so the toast
       // element is created once up front and updated in place.
       var toastEl = document.createElement('div');
-      toastEl.className = 'archify-toast';
+      toastEl.className = 'archipam-toast';
       toastEl.setAttribute('role', 'status');
       document.body.appendChild(toastEl);
       var toastTimer = null;
@@ -1771,8 +1764,8 @@
         if (formatBtn && !formatBtn.disabled) { runExport(formatBtn.dataset.format); }
       });
 
-      Archify.motion = { canRecord: canRecordMotion, recordWebm: recordWebm };
-      Archify.exportMenu = { open: open, close: close, isOpen: isOpen, run: runExport };
+      ArchiPam.motion = { canRecord: canRecordMotion, recordWebm: recordWebm };
+      ArchiPam.exportMenu = { open: open, close: close, isOpen: isOpen, run: runExport };
 
       // Auto-open on page load for demo/screenshot purposes: ?openExport=1
       // Wait for fonts (so the menu doesn't flash before typography lands)
@@ -1804,10 +1797,10 @@
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
-        Archify.theme.toggle();
+        ArchiPam.theme.toggle();
       } else if (e.key === 'e' || e.key === 'E') {
         e.preventDefault();
-        if (!Archify.exportMenu.isOpen()) Archify.exportMenu.open();
+        if (!ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.open();
       }
     });
   </script>

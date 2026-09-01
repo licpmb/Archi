@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { validateStableUpdateManifest } from '../archify/scripts/update-contract.mjs';
+import { validateStableUpdateManifest } from '../archipam/scripts/update-contract.mjs';
 
 const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -42,10 +42,10 @@ if (sourceRef !== 'HEAD' && sourceRef !== tag) {
   fail(`--source-ref must be HEAD or the exact release tag ${JSON.stringify(tag)}; found ${JSON.stringify(sourceRef)}.`);
 }
 
-const packageJson = readJson('archify/package.json');
-const manifest = readJson('docs/skill-updates/archify/stable.json');
+const packageJson = readJson('archipam/package.json');
+const manifest = readJson('docs/skill-updates/archipam/stable.json');
 if (version && sourceRef === 'HEAD' && packageJson?.version !== version) {
-  fail(`archify/package.json ${packageJson?.version || '(missing)'} does not match ${tag}.`);
+  fail(`archipam/package.json ${packageJson?.version || '(missing)'} does not match ${tag}.`);
 }
 
 if (version) {
@@ -94,7 +94,7 @@ if (taggerTime && manifest?.publishedAt !== taggerTime) {
 
 let treeSha = null;
 try {
-  treeSha = execFileSync('git', ['-C', repoRoot, 'rev-parse', `${sourceRef}:archify`], {
+  treeSha = execFileSync('git', ['-C', repoRoot, 'rev-parse', `${sourceRef}:archipam`], {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
   }).trim();
@@ -102,7 +102,7 @@ try {
   fail(`could not resolve the release Skill tree at ${sourceRef}.`);
 }
 if (treeSha && manifest?.source?.treeSha !== treeSha) {
-  fail(`stable update manifest treeSha ${manifest?.source?.treeSha || '(missing)'} does not match ${sourceRef}:archify ${treeSha}.`);
+  fail(`stable update manifest treeSha ${manifest?.source?.treeSha || '(missing)'} does not match ${sourceRef}:archipam ${treeSha}.`);
 }
 
 let archiveSha = null;

@@ -15,9 +15,9 @@ Each event contains `schemaVersion`, `step`, the allow-listed source, diagram ty
 
 ## Privacy boundary
 
-Events are capped at the latest 24 entries in `sessionStorage` under `archify.start.events.v1`. The page also dispatches the same detail as the `archify:start-funnel` browser event and exposes a read-only snapshot through `window.ArchifyStartMetrics.snapshot()`.
+Events are capped at the latest 24 entries in `sessionStorage` under `archipam.start.events.v1`. The page also dispatches the same detail as the `archipam:start-funnel` browser event and exposes a read-only snapshot through `window.ArchiPamStartMetrics.snapshot()`.
 
-**No network request is made by Archify.** The page contains no `fetch`, `sendBeacon`, or XHR path. Closing the browser session discards the local receipt. A hosting operator must not attach an external event sink without a separate privacy decision, public disclosure, retention policy, and test update.
+**No network request is made by ArchiPam.** The page contains no `fetch`, `sendBeacon`, or XHR path. Closing the browser session discards the local receipt. A hosting operator must not attach an external event sink without a separate privacy decision, public disclosure, retention policy, and test update.
 
 ## Observable metrics
 
@@ -34,7 +34,7 @@ Count at most one occurrence of each step per browser session when reporting con
 
 ## What this does not prove
 
-**First-diagram success is not observable from this static page.** A successful copy is an intent signal, not proof that installation completed, the agent generated a candidate, validation passed, or the user retained Archify. Do not label these ratios “activation,” “success,” or “retention.”
+**First-diagram success is not observable from this static page.** A successful copy is an intent signal, not proof that installation completed, the agent generated a candidate, validation passed, or the user retained ArchiPam. Do not label these ratios “activation,” “success,” or “retention.”
 
 The Ordinary-Model Floor benchmark measures candidate quality independently. A future end-to-end activation metric would require an explicit, privacy-reviewed receipt boundary at the installed CLI or a voluntary user submission; it must not be inferred from Start-page clicks.
 

@@ -8,7 +8,7 @@ Date: 2026-07-23
 - [SocratiCode README](https://github.com/giancarloerra/SocratiCode#readme) presents blast-radius and call-flow overlays as core code-intelligence outputs, but those claims are backed by its AST/dependency index rather than by presentation geometry.
 - [SwarmVault README lines 670–676](https://github.com/swarmclawai/swarmvault/blob/main/README.md#L670-L676) pairs deterministic graph health/traversal outputs with a post-ready 1200×630 card and share bundle. The useful growth lesson is that a graph answer becomes more valuable when it is easy to carry into a post, issue, or review.
 
-Archify should combine the interaction and sharing patterns without copying their causal claims. Its graph is the relationship set authored into one diagram, not a complete code index.
+ArchiPam should combine the interaction and sharing patterns without copying their causal claims. Its graph is the relationship set authored into one diagram, not a complete code index.
 
 ## Product decision
 

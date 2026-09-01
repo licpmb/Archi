@@ -7,15 +7,15 @@ import { fileURLToPath } from 'node:url';
 
 const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REQUIRED_INPUTS = new Set([
-  'archify/renderers/shared/generated-validators.mjs',
-  'archify/scripts/check-update.mjs',
-  'archify/scripts/update-contract.mjs',
-  'archify/skill-release.json',
+  'archipam/renderers/shared/generated-validators.mjs',
+  'archipam/scripts/check-update.mjs',
+  'archipam/scripts/update-contract.mjs',
+  'archipam/skill-release.json',
 ]);
 const EXCLUDED_FILES = new Set([
-  'archify/package-lock.json',
-  'archify/scripts/generate-brand-marks.mjs',
-  'archify/scripts/generate-validators.mjs',
+  'archipam/package-lock.json',
+  'archipam/scripts/generate-brand-marks.mjs',
+  'archipam/scripts/generate-validators.mjs',
 ]);
 const EXCLUDED_SEGMENTS = new Set([
   '.DS_Store',
@@ -33,7 +33,7 @@ function decodeGitOutput(value) {
   try {
     return new TextDecoder('utf-8', { fatal: true }).decode(value);
   } catch {
-    throw new Error('tracked Archify paths must be valid UTF-8');
+    throw new Error('tracked ArchiPam paths must be valid UTF-8');
   }
 }
 
@@ -44,18 +44,18 @@ function gitFailureDetail(result) {
 }
 
 function trackedEntries(repoRoot) {
-  const result = spawnSync('git', ['ls-files', '--stage', '-z', '--', 'archify'], {
+  const result = spawnSync('git', ['ls-files', '--stage', '-z', '--', 'archipam'], {
     cwd: repoRoot,
     encoding: 'buffer',
   });
   if (result.status !== 0) {
-    throw new Error(`unable to enumerate tracked Archify files: ${gitFailureDetail(result)}`);
+    throw new Error(`unable to enumerate tracked ArchiPam files: ${gitFailureDetail(result)}`);
   }
   return decodeGitOutput(result.stdout).split('\0').filter(Boolean).map((record) => {
     const separator = record.indexOf('\t');
     const metadata = separator === -1 ? [] : record.slice(0, separator).split(' ');
     const relative = separator === -1 ? '' : record.slice(separator + 1);
-    if (metadata.length !== 3 || !relative.startsWith('archify/')) {
+    if (metadata.length !== 3 || !relative.startsWith('archipam/')) {
       throw new Error(`invalid tracked package record: ${JSON.stringify(record)}`);
     }
     return {
@@ -68,7 +68,7 @@ function trackedEntries(repoRoot) {
 
 function excluded(relative) {
   if (EXCLUDED_FILES.has(relative)) return true;
-  const insideSkill = relative.slice('archify/'.length);
+  const insideSkill = relative.slice('archipam/'.length);
   if (insideSkill === 'test' || insideSkill.startsWith('test/')) return true;
   return insideSkill.split('/').some((segment) => (
     EXCLUDED_SEGMENTS.has(segment) || segment.startsWith('.validator-check-')
@@ -205,7 +205,7 @@ export function stageCleanSkill({ repoRoot = scriptRoot, destination }) {
   let fileCount = 0;
   try {
     for (const entry of packageEntries) {
-      const relativeInsideSkill = entry.relative.slice('archify/'.length);
+      const relativeInsideSkill = entry.relative.slice('archipam/'.length);
       const target = path.join(resolvedDestination, ...relativeInsideSkill.split('/'));
       fs.mkdirSync(path.dirname(target), { recursive: true });
       fs.writeFileSync(target, entry.content);

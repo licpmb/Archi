@@ -10,28 +10,28 @@
 - Model selection: `auto` (Cursor CLI default)
 - OS: macOS 26.5.2 (`25F84`)
 - Skills CLI: `skills@1.5.20`
-- Archify source: `codex/cursor-onboarding`, based on `e7e22a1`
+- ArchiPam source: `codex/cursor-onboarding`, based on `e7e22a1`
 
 ## Installation and discovery
 
-The acceptance workspace was a new temporary directory. Archify was installed with the reproducible project command:
+The acceptance workspace was a new temporary directory. ArchiPam was installed with the reproducible project command:
 
 ```bash
-npx -y skills@1.5.20 add /path/to/archify \
-  --skill archify --agent cursor --copy --yes
+npx -y skills@1.5.20 add /path/to/archipam \
+  --skill archipam --agent cursor --copy --yes
 ```
 
-`skills list --agent cursor --json` reported one project-scoped `Cursor` installation at `.agents/skills/archify`. A new Cursor Agent session then independently reported that it had discovered:
+`skills list --agent cursor --json` reported one project-scoped `Cursor` installation at `.agents/skills/archipam`. A new Cursor Agent session then independently reported that it had discovered:
 
 ```text
-.agents/skills/archify/SKILL.md
+.agents/skills/archipam/SKILL.md
 ```
 
-The session ran `archify doctor` successfully before authoring. No Cursor-specific `SKILL.md`, renderer, schema, or prompt fork was present.
+The session ran `archipam doctor` successfully before authoring. No Cursor-specific `SKILL.md`, renderer, schema, or prompt fork was present.
 
 ## End-to-end task
 
-Cursor was asked to use Archify to create a six-component local event-processing Architecture diagram containing:
+Cursor was asked to use ArchiPam to create a six-component local event-processing Architecture diagram containing:
 
 - Webhook Client
 - API Gateway
@@ -57,7 +57,7 @@ artifact.sha256: d4d443f160fafd7615234987a5572d7169916719b9a97b9231e9f48434c79e4
 artifact.bytes: 582743
 ```
 
-An independent Archify `validate --json` and `check --json` rerun matched the nine passing checks, zero composition findings, byte count, and SHA-256 receipt.
+An independent ArchiPam `validate --json` and `check --json` rerun matched the nine passing checks, zero composition findings, byte count, and SHA-256 receipt.
 
 ## Browser review
 
@@ -70,4 +70,4 @@ Result: **Cursor project installation, native Skill discovery, execution, verifi
 - `skills use ... --agent cursor` is not documented because `skills@1.5.20` rejects that launcher.
 - No physical `~/.cursor/skills` path is promised; Cursor also officially scans `.agents/skills`, which the verified installer uses.
 - Global installation is documented as user-wide, project installation as repository-local, and both use explicit copy mode.
-- This record does not benchmark other Cursor models, claim automatic updates, or replace Archify's deterministic and perceptual delivery gates.
+- This record does not benchmark other Cursor models, claim automatic updates, or replace ArchiPam's deterministic and perceptual delivery gates.

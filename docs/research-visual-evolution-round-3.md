@@ -1,4 +1,4 @@
-# Archify visual evolution research — round 3
+# ArchiPam visual evolution research — round 3
 
 Research date: 2026-07-19 (Asia/Shanghai)
 
@@ -12,7 +12,7 @@ an animated SVG and explicitly warns that too many boards confuse the viewer.
 Its CLI uses a fixed interval for short compositions. Fireworks Tech Graph
 independently demonstrates a useful motion constraint: nodes, labels,
 containers, and camera stay fixed while semantic routes change in a reviewed
-order. These are compatible with Archify's existing maximum-five `meta.views`
+order. These are compatible with ArchiPam's existing maximum-five `meta.views`
 contract and immutable base SVG geometry.
 
 Primary sources:
@@ -37,7 +37,7 @@ Primary sources:
 - Canonical SVG/raster/WebM exports continue to ignore temporary view and
   playback state.
 
-## Why this belongs in Archify
+## Why this belongs in ArchiPam
 
 The feature turns a technically dense artifact into a short product demo or
 review narrative without adding a second diagram model. It makes motion serve

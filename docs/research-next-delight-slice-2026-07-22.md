@@ -1,7 +1,7 @@
-# Archify 下一增长切片研究：Last-Good Live Preview
+# ArchiPam 下一增长切片研究：Last-Good Live Preview
 
 日期：2026-07-22（Asia/Shanghai）
-Archify 基线：`main@440e16d`；开放中的 [PR #44](https://github.com/tt-a1i/archify/pull/44) `@212639b` 已加入 opt-in Editable Source Capsule，五项远端检查全绿。**本建议只依赖 `main` 已有的 Atomic Delivery 与 Verified Open，可从 `main@440e16d` 独立落地，不以 PR #44 合并为前置。**
+ArchiPam 基线：`main@440e16d`；开放中的 [PR #44](https://github.com/licpmb/Archi/pull/44) `@212639b` 已加入 opt-in Editable Source Capsule，五项远端检查全绿。**本建议只依赖 `main` 已有的 Atomic Delivery 与 Verified Open，可从 `main@440e16d` 独立落地，不以 PR #44 合并为前置。**
 上游快照：Fireworks `50c819d`、draw.io MCP `c3fcfa5`、GitDiagram `20eea55`、D2 `2446e24`、Markmap `99fc93e`、Mermaid Live Editor `f8836bb`。
 
 ## 结论
@@ -9,13 +9,13 @@ Archify 基线：`main@440e16d`；开放中的 [PR #44](https://github.com/tt-a1
 下一刀推荐 **Last-Good Live Preview（保留最后有效成品的本地实时预览）**：
 
 ```bash
-archify preview <type> <input.json> \
+archipam preview <type> <input.json> \
   [--quality standard|showcase] [--no-open]
 ```
 
-它在仅监听 `127.0.0.1` 的随机端口打开一个桌面预览页；输入 JSON 变化后，先走 Archify 现有 renderer、composition gate 与 artifact checker，**只有完整通过才刷新浏览器**。非法或半写入输入只显示精确诊断，上一份已验证图继续留在画布上。修复后自动恢复。
+它在仅监听 `127.0.0.1` 的随机端口打开一个桌面预览页；输入 JSON 变化后，先走 ArchiPam 现有 renderer、composition gate 与 artifact checker，**只有完整通过才刷新浏览器**。非法或半写入输入只显示精确诊断，上一份已验证图继续留在画布上。修复后自动恢复。
 
-这是当前最合适的“好用 + 稳定 + 可展示”切片：D2 和 Mermaid Live Editor 已证明实时反馈是文本制图的核心体验；而 Archify 此前推迟 preview 所缺的 Atomic Delivery 与 Verified Open 前置条件现在已经在 `main` 具备。它改善的是作者从“改 JSON”到“看见可信结果”的循环，不再给已经很丰富的成品 Viewer 增加一个控件，也不读取或依赖 PR #44 的 Source Capsule。
+这是当前最合适的“好用 + 稳定 + 可展示”切片：D2 和 Mermaid Live Editor 已证明实时反馈是文本制图的核心体验；而 ArchiPam 此前推迟 preview 所缺的 Atomic Delivery 与 Verified Open 前置条件现在已经在 `main` 具备。它改善的是作者从“改 JSON”到“看见可信结果”的循环，不再给已经很丰富的成品 Viewer 增加一个控件，也不读取或依赖 PR #44 的 Source Capsule。
 
 ## 一手事实，不按 Star 数抄功能
 
@@ -25,7 +25,7 @@ archify preview <type> <input.json> \
 
 - 当前 README 展示 12 种风格、四个工程语义 profile、14 类 UML 映射、offline HTML 和 GIF motion；真正可迁移的不是“12”这个数字，而是所有风格共用 geometry、text-fit、routing 与 motion gate。[README](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/README.md#L43-L150) · [composition contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/composition-quality-contract.md#L1-L75)
 - v1.2.0 保留静态 1920px PNG regression baselines，并在发布门中运行 12 风格、852 项 Chromium compatibility comparisons；可选 GIF 才引入 Chromium/FFmpeg，静态路径不被拖重。[v1.2.0 release](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/releases/tag/v1.2.0)
-- Archify 已吸收这条纪律：三 preset 同拓扑、Semantic Sigils、有限 motion、确定性/感知式交付门。因此下一步不应再扩 style catalogue。
+- ArchiPam 已吸收这条纪律：三 preset 同拓扑、Semantic Sigils、有限 motion、确定性/感知式交付门。因此下一步不应再扩 style catalogue。
 
 ### D2 与 Mermaid Live Editor：即时反馈是作者体验，但监听和重渲并不简单
 
@@ -37,22 +37,22 @@ archify preview <type> <input.json> \
 
 - GitDiagram 的第一阶段要求 architecture brief 中的核心组件绑定 1–3 个真实 repo-relative paths；第二阶段才产出有上限的 graph schema。[prompts.ts](https://github.com/ahmedkhaleel2004/gitdiagram/blob/20eea559377fe3f110ac630856351382c4b5fcab/src/server/generate/prompts.ts#L1-L50)
 - Graph node 的 `path` 会先对真实 file tree 校验；失败会把精确 feedback 送入有界重试。[graph validation](https://github.com/ahmedkhaleel2004/gitdiagram/blob/20eea559377fe3f110ac630856351382c4b5fcab/src/server/generate/graph.ts#L90-L175) 通过后，compiler 才生成指向 GitHub blob/tree 的 click link。[deterministic compiler](https://github.com/ahmedkhaleel2004/gitdiagram/blob/20eea559377fe3f110ac630856351382c4b5fcab/src/server/generate/graph.ts#L323-L409)
-- 这使“Node → source evidence”值得进入候选，但 Archify 若没有 revision、private repo 与 opt-in privacy 合同，不能只复制可点击外观。
+- 这使“Node → source evidence”值得进入候选，但 ArchiPam 若没有 revision、private repo 与 opt-in privacy 合同，不能只复制可点击外观。
 
-### draw.io MCP：编辑回路很顺，但其编辑器/格式矩阵不是 Archify 的边界
+### draw.io MCP：编辑回路很顺，但其编辑器/格式矩阵不是 ArchiPam 的边界
 
 - 官方仓库提供 inline MCP App、打开 draw.io 的 MCP Tool、原生 `.drawio` Skill + CLI、零安装项目指令四条路径；导出 SVG/PNG/PDF 时可以嵌入 XML，让产物继续在 draw.io 编辑。[README](https://github.com/jgraph/drawio-mcp/blob/c3fcfa5a7227e873e9ee51451b54c291d81b0099/README.md#L7-L71)
 - MCP App 的价值是把预览放到创作入口附近并保留 `Open in draw.io` 的后路。[MCP App README](https://github.com/jgraph/drawio-mcp/blob/c3fcfa5a7227e873e9ee51451b54c291d81b0099/mcp-app-server/README.md#L1-L43)
-- PR #44 已为 Archify 提供更符合自身 IR 的 Source JSON 交接；再做 draw.io XML round-trip 会形成第二套真相和编辑器依赖。
+- PR #44 已为 ArchiPam 提供更符合自身 IR 的 Source JSON 交接；再做 draw.io XML round-trip 会形成第二套真相和编辑器依赖。
 
 ### Markmap：小而可组合的 Viewer 值得学，mindmap/插件扩张不值得现在学
 
 - Markmap 把 view package 与 transform package 分开以降低不需要浏览器侧能力时的安装体积；toolbar 只保留 zoom、fit、recursive toggle 和 dark mode 等少量动作。[markmap-view README](https://github.com/markmap/markmap/blob/99fc93e6efd4a1df01260232d818fb57955d71df/packages/markmap-view/README.md) · [toolbar source](https://github.com/markmap/markmap/blob/99fc93e6efd4a1df01260232d818fb57955d71df/packages/markmap-toolbar/src/toolbar.tsx#L55-L117)
-- 它的 README 同时列出 VS Code、Vim/Neovim、Emacs 与 MCP 集成。[README](https://github.com/markmap/markmap/blob/99fc93e6efd4a1df01260232d818fb57955d71df/README.md#L1-L27) 对 Archify 的当前启发是保持 preview 与生成 artifact 解耦，不是立刻做 mindmap 或插件矩阵。
+- 它的 README 同时列出 VS Code、Vim/Neovim、Emacs 与 MCP 集成。[README](https://github.com/markmap/markmap/blob/99fc93e6efd4a1df01260232d818fb57955d71df/README.md#L1-L27) 对 ArchiPam 的当前启发是保持 preview 与生成 artifact 解耦，不是立刻做 mindmap 或插件矩阵。
 
-## Archify 已有 / 缺口映射
+## ArchiPam 已有 / 缺口映射
 
-| 竞品中的有效模式 | Archify 当前状态 | 真正缺口 |
+| 竞品中的有效模式 | ArchiPam 当前状态 | 真正缺口 |
 |---|---|---|
 | Offline artifact、pan/zoom/theme/export | 已有，并且 Viewer 交互远多于竞品 | 无需继续叠普通 Viewer 控件 |
 | 多视觉语言 + 统一 gate | 已有 Classic / Signal Flow / Blueprint、Semantic Sigils、同拓扑回归 | 不缺第四 preset；缺的是让作者更快看到每次改动 |
@@ -79,7 +79,7 @@ archify preview <type> <input.json> \
 1. `preview` 是独立的交互命令，不给 `deliver` 增加 `--watch`，避免把一次性交付变成长生命周期进程。
 2. 默认只监听 IPv4 loopback `127.0.0.1`，让操作系统分配空闲端口；不接受 `0.0.0.0`、LAN host、上传或公网 URL。
 3. `--no-open` 只用于无 GUI、自动化测试或用户已自行打开 URL；否则复用 Verified Open 的安全参数数组和失败回退。
-4. Preview shell 与被预览 artifact 分离。artifact 仍是普通自包含 Archify HTML；preview runtime、reload token、错误 banner、source path 和端口都不能写进 canonical HTML/SVG/图片/WebM。
+4. Preview shell 与被预览 artifact 分离。artifact 仍是普通自包含 ArchiPam HTML；preview runtime、reload token、错误 banner、source path 和端口都不能写进 canonical HTML/SVG/图片/WebM。
 5. 首次输入合法时，只有 renderer + composition + checker 全部通过后才发布 revision 1。首次输入非法时仍打开 status shell，但不伪造空图或成功 receipt。
 6. 后续修改以**文件内容摘要**去重，不只信 mtime，也不依赖单次 `fs.watch` 事件；使用约 300–500ms 的有界稳定窗口吸收编辑器的 truncate/write/rename burst。
 7. 每一代只允许一个候选。新一代到达时让旧的未发布候选失效；迟到的旧结果永远不能覆盖更新结果。
@@ -123,13 +123,13 @@ archify preview <type> <input.json> \
 
 ## 明确拒绝或推迟
 
-- **第四/第五 preset、12-style 追数、vendor icon catalogue**：Archify 已有三种同拓扑视觉语言和 sigils；新增目录会成倍扩大主题、导出、动效与截图矩阵，却不缩短创作循环。
+- **第四/第五 preset、12-style 追数、vendor icon catalogue**：ArchiPam 已有三种同拓扑视觉语言和 sigils；新增目录会成倍扩大主题、导出、动效与截图矩阵，却不缩短创作循环。
 - **全量 UML / mindmap 类型扩张**：当前五种 typed renderer 的价值是清晰语义和强 gate；不要把竞品“类型数量”当增长 KPI。
 - **WYSIWYG、拖拽、draw.io XML round-trip、Open in editor**：会把 generator + viewer 变成第二个通用编辑器，并产生双格式真相。PR #44 的 opt-in Source JSON 已是更小、更真实的可编辑交接。
-- **Mermaid 式压缩源码 share URL / 托管保存**：需要 hosted decoder、URL/XSS/长度、隐私与持久化合同；Archify 的一个 HTML 文件已经是更强的离线分享边界。
+- **Mermaid 式压缩源码 share URL / 托管保存**：需要 hosted decoder、URL/XSS/长度、隐私与持久化合同；ArchiPam 的一个 HTML 文件已经是更强的离线分享边界。
 - **公网 repo ingestion / GitDiagram 克隆**：会引入 provider 成本、token、quota、缓存、私仓凭据和滥用面。Repo Evidence Passport 可在本地、revision-pinned 的小合同中另做。
 - **Obsidian、VS Code、浏览器扩展、MCP 平台矩阵**：Markmap/draw.io 已证明分发宽度有价值，但现在会把维护预算从核心首次成功路径分散出去。
-- **依赖原生 file watcher 或 WebSocket 作为唯一真相**：D2 源码已经展示其复杂度。Archify 应用内容摘要轮询 + debounce + generation token，server 只做本地预览，不引入新 npm 依赖。
+- **依赖原生 file watcher 或 WebSocket 作为唯一真相**：D2 源码已经展示其复杂度。ArchiPam 应用内容摘要轮询 + debounce + generation token，server 只做本地预览，不引入新 npm 依赖。
 - **独立移动端产品**：保持现有 contained fallback；preview 是桌面创作工具，不把手机布局加入验收门。
 
 ## 为什么现在做

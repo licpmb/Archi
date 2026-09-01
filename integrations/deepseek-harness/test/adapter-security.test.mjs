@@ -18,11 +18,11 @@ test('host-loaded adapter code does not open a second execution, network, creden
   assert.doesNotMatch(source, /telemetry|opentelemetry|otlp/i);
   assert.doesNotMatch(source, /credentials|DEEPSEEK_API_KEY|process\.env\.\w*TOKEN/);
   assert.doesNotMatch(source, /setInterval|setTimeout|Worker|cluster/);
-  assert.doesNotMatch(source, /archify_render|archify_deliver|tools\.register/);
+  assert.doesNotMatch(source, /archipam_render|archipam_deliver|tools\.register/);
 });
 
 test('package resolution failures fail loud instead of returning a guessed Skill root', async () => {
-  const { resolveArchifySkillRoot } = await import('../lib/index.js');
-  assert.throws(() => resolveArchifySkillRoot('file:///tmp/archify-dsh-missing-profile/'));
-  assert.throws(() => resolveArchifySkillRoot(''));
+  const { resolveArchiPamSkillRoot } = await import('../lib/index.js');
+  assert.throws(() => resolveArchiPamSkillRoot('file:///tmp/archipam-dsh-missing-profile/'));
+  assert.throws(() => resolveArchiPamSkillRoot(''));
 });

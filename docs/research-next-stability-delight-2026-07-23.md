@@ -1,7 +1,7 @@
 # Architecture Delta 之后的下一刀：Exact-ID Delta Review Navigator
 
 研究日期：2026-07-23
-Archify 基线：[`4aeb07b`](https://github.com/tt-a1i/archify/tree/4aeb07b379f09a8fc026df33e2402ad50ef9821e)
+ArchiPam 基线：[`4aeb07b`](https://github.com/licpmb/Archi/tree/4aeb07b379f09a8fc026df33e2402ad50ef9821e)
 
 ## 唯一推荐
 
@@ -11,12 +11,12 @@ Archify 基线：[`4aeb07b`](https://github.com/tt-a1i/archify/tree/4aeb07b379f0
 
 ## 为什么这是一个真实缺口
 
-当前 Archify 已经明确发布下列能力，因此它们全部排除，不再包装成“下一特性”：
+当前 ArchiPam 已经明确发布下列能力，因此它们全部排除，不再包装成“下一特性”：
 
-- Last-Good Live Preview 已经有独立、loopback-only、last-known-good 合同。([current Skill](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/SKILL.md#L84))
-- revision-pinned Repository Evidence、HTML-only source beacons 已经存在。([current Skill](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/SKILL.md#L285-L311))
-- Structured Repair Receipt 已覆盖 input、schema、repository evidence、composition、artifact 和 delivery failures。([current Skill](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/SKILL.md#L88))
-- Cursor onboarding、`deployment-ownership` profile 和 Architecture Delta 都已发布并带回归证据。([current changelog](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/CHANGELOG.md#L8-L11))
+- Last-Good Live Preview 已经有独立、loopback-only、last-known-good 合同。([current Skill](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/SKILL.md#L84))
+- revision-pinned Repository Evidence、HTML-only source beacons 已经存在。([current Skill](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/SKILL.md#L285-L311))
+- Structured Repair Receipt 已覆盖 input、schema、repository evidence、composition、artifact 和 delivery failures。([current Skill](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/SKILL.md#L88))
+- Cursor onboarding、`deployment-ownership` profile 和 Architecture Delta 都已发布并带回归证据。([current changelog](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/CHANGELOG.md#L8-L11))
 
 Architecture Delta 当前已经：
 
@@ -25,7 +25,7 @@ Architecture Delta 当前已经：
 3. 显示 counts、proof level、classifications 和 changed fields；
 4. 严禁 risk、mergeability 或 verified-PR 结论。
 
-但 current artifact 里的 change rows 只是静态 `<li>`；顶部只有视图、preset 和 theme 控制，没有 change-level selection、previous/next 或 review playback。([Delta renderer](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/delta/architecture-delta.mjs#L545-L580))
+但 current artifact 里的 change rows 只是静态 `<li>`；顶部只有视图、preset 和 theme 控制，没有 change-level selection、previous/next 或 review playback。([Delta renderer](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/delta/architecture-delta.mjs#L545-L580))
 
 因此缺口不是“再生成一种图”，而是：**当变化多于三四项时，审阅者怎样不离开完整上下文，逐项确认每条已经证明的变化。**
 
@@ -50,11 +50,11 @@ GitDiagram 的生成流程先得到 size-bounded graph AST，再验证 identifie
 drawio-skill 的 `prdiff.py` 会从 git refs 找出变化的 `.drawio`，输出 base/head/diff PNG 和 Markdown report；没有 draw.io CLI 时会明确降级为文件清单。([PR diff contract](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/scripts/prdiff.py#L1-L18), [Markdown renderer](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/scripts/prdiff.py#L114-L155)) 它的 underlying diagram diff 默认按 cell ID 对齐，但仍提供 `--by-label` 给随机 ID 的手绘图。([matching contract](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/skills/drawio-skill/scripts/drawiodiff.py#L18-L31))
 
 **吸收：** PR-friendly summary 确实有价值，应保留为后续独立切片。
-**不吸收：** label matching；Archify Delta 必须继续 exact-ID、fail-closed。也不在本轮引入 git-ref parsing、Markdown asset hosting 或 CI comment publishing。
+**不吸收：** label matching；ArchiPam Delta 必须继续 exact-ID、fail-closed。也不在本轮引入 git-ref parsing、Markdown asset hosting 或 CI comment publishing。
 
 ### GitNexus：不要把 authored Delta 偷换成 code impact
 
-GitNexus 的 `impact`、`detect_changes` 和 process resources 建立在本地解析、knowledge graph、process trace 和 staleness checks 上。([tool contract](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/README.md#L136-L175)) Archify 的两份 authored architecture snapshots 没有这些事实来源。
+GitNexus 的 `impact`、`detect_changes` 和 process resources 建立在本地解析、knowledge graph、process trace 和 staleness checks 上。([tool contract](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/README.md#L136-L175)) ArchiPam 的两份 authored architecture snapshots 没有这些事实来源。
 
 **吸收：** 对证据来源和 freshness 的显式区分。
 **不吸收：** blast radius、affected process、confidence、risk level 或 safe-to-merge 文案。
@@ -72,7 +72,7 @@ B 不是坏想法，但现在做它会让核心能力先长出 CI/GitHub 边界�
 
 ### 1. 唯一事实源
 
-Navigator 只读当前 document 内唯一的 `#archify-compare-receipt`，并要求：
+Navigator 只读当前 document 内唯一的 `#archipam-compare-receipt`，并要求：
 
 - JSON 可解析；
 - `schemaVersion === 1`、`command === "compare"`；
@@ -97,7 +97,7 @@ Navigator 只读当前 document 内唯一的 `#archify-compare-receipt`，并要
 
 直接复用当前 `changeRows(receipt)` 的 codepoint-stable 顺序；不要创建“更聪明”的 risk、severity 或 topology-first 排序。总数必须等于三类 changes 的合计，并与 details summary 一致。
 
-格式化、object-key、entity-order、`wraps` / `sources` set-like reordering 已经不改变 Delta artifact；Navigator 不得破坏这一保证。([current deterministic tests](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/test/architecture-delta.test.mjs#L67-L75), [artifact stability tests](https://github.com/tt-a1i/archify/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archify/test/architecture-delta.test.mjs#L130-L177))
+格式化、object-key、entity-order、`wraps` / `sources` set-like reordering 已经不改变 Delta artifact；Navigator 不得破坏这一保证。([current deterministic tests](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/test/architecture-delta.test.mjs#L67-L75), [artifact stability tests](https://github.com/licpmb/Archi/blob/4aeb07b379f09a8fc026df33e2402ad50ef9821e/archipam/test/architecture-delta.test.mjs#L130-L177))
 
 ### 4. UX
 

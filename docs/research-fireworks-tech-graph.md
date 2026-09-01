@@ -16,8 +16,8 @@ authoring as a complete, highly visible workflow: named visual styles, scenario
 recipes, domain-specific semantics, deterministic geometry checks, polished
 showcase assets, installation paths, and a validation loop.
 
-The project is a useful Archify competitor reference, but its highest-value
-lessons are presentation and domain recipes. Archify should not copy its broad
+The project is a useful ArchiPam competitor reference, but its highest-value
+lessons are presentation and domain recipes. ArchiPam should not copy its broad
 style/UML/GIF surface or its duplicated distribution tree.
 
 ## Current snapshot
@@ -64,7 +64,7 @@ The repository therefore has two layers:
 
 SVG is the canonical artifact. The offline HTML viewer wraps one sanitized SVG
 and adds pan/zoom, themes, copy, and SVG/PNG/JPEG/WebP export. This differs from
-Archify, where the interactive self-contained HTML is the primary deliverable.
+ArchiPam, where the interactive self-contained HTML is the primary deliverable.
 
 Primary sources:
 
@@ -177,9 +177,9 @@ Primary sources:
 - <https://github.com/yizhiyanhua-ai/fireworks-tech-graph/issues/13>
 - <https://github.com/yizhiyanhua-ai/fireworks-tech-graph/issues/28>
 
-## Archify comparison
+## ArchiPam comparison
 
-| Axis | fireworks-tech-graph | Archify |
+| Axis | fireworks-tech-graph | ArchiPam |
 |---|---|---|
 | Canonical artifact | Semantic SVG | Self-contained interactive HTML |
 | Strongest appeal | Many polished styles and AI/Agent recipes | One portable artifact with themes, clipboard, and multi-format export |
@@ -190,7 +190,7 @@ Primary sources:
 | Editing | Regenerate or edit SVG externally | JSON IR refinement; local-edit stability remains an active direction |
 | Distribution | GitHub/npx/npm plus committed nested mirror | Zero-install package/ZIP with doctor and demo paths |
 
-## Borrow / skip judgment for Archify
+## Borrow / skip judgment for ArchiPam
 
 Worth borrowing:
 
@@ -208,11 +208,11 @@ Do not borrow:
 1. Twelve-style and fourteen-UML breadth as a roadmap goal.
 2. A large hard-coded GIF scene-contract system.
 3. The physical root/nested distribution duplication.
-4. SVG as the primary artifact at the expense of Archify's stronger HTML
+4. SVG as the primary artifact at the expense of ArchiPam's stronger HTML
    interaction and export experience.
 5. Claims broader than the actual renderer boundary.
 
 The sharp strategic conclusion is: `fireworks-tech-graph` wins attention with
-style breadth and a spectacular proof surface; Archify should answer with a
+style breadth and a spectacular proof surface; ArchiPam should answer with a
 better proof surface and stronger scenario recipes, while keeping its narrower,
 more coherent technical-diagram-compiler boundary.

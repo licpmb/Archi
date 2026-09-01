@@ -7,7 +7,7 @@ Status: implementation-ready research recommendation
 
 Build a **Story Follow Camera** as the next bounded visual-comprehension slice.
 
-Archify already has the major viewer primitives that modern graph tools use to
+ArchiPam already has the major viewer primitives that modern graph tools use to
 make a large diagram approachable:
 
 - Semantic Radar gives a simplified whole-diagram map and a live viewport;
@@ -28,8 +28,8 @@ chapter does not make its individual steps materially larger. Story Beat
 playback changes emphasis and may pulse one exact relationship, but
 `centerStoryStop()` only centers the **HTML beat button in the rail**. It does
 not ask Semantic Camera to frame the current SVG node or relationship
-([Guided Story implementation](../archify/assets/template.html),
-[Semantic Camera implementation](../archify/assets/template.html)).
+([Guided Story implementation](../archipam/assets/template.html),
+[Semantic Camera implementation](../archipam/assets/template.html)).
 
 The next slice should connect those two existing owners:
 
@@ -48,18 +48,18 @@ layout, dependency, graph store, or editor surface.
 
 How do current graph and diagram viewers use overview, subset framing,
 progressive disclosure, bounded animation, and narrative steps to improve
-first-glance hierarchy and reading comprehension—and what should Archify add
+first-glance hierarchy and reading comprehension—and what should ArchiPam add
 after its existing Radar, Camera, Reading Depth, Guided Story, Route Journey,
 Motion Governor, and presentation features?
 
 This note uses:
 
-1. the current Archify worktree and generated Proof Lab artifacts;
+1. the current ArchiPam worktree and generated Proof Lab artifacts;
 2. direct browser evidence from the current Presentation Stage at 1280×720;
 3. official product documentation, official repositories, and W3C guidance as
    available on 2026-07-20; and
 4. explicit product inferences where a source supplies a primitive rather than
-   an Archify-specific recommendation.
+   an ArchiPam-specific recommendation.
 
 No external source claims that a particular interaction is “beautiful.” In this
 report, first-impression beauty means a calm, intentional visual hierarchy:
@@ -67,21 +67,21 @@ important content is large enough to read, unrelated content remains stable
 context, and motion explains one semantic change rather than decorating the
 whole page.
 
-## Current Archify baseline: do not rebuild solved layers
+## Current ArchiPam baseline: do not rebuild solved layers
 
 ### Overview and orientation already exist
 
 Semantic Radar derives a simplified map from stable semantic nodes, represents
 the viewport, supports node activation and panning, and remains outside the
 canonical SVG. It already covers the core overview/minimap pattern
-([Semantic Radar implementation](../archify/assets/template.html),
-[Semantic Radar tests](../archify/test/semantic-radar.test.mjs)).
+([Semantic Radar implementation](../archipam/assets/template.html),
+[Semantic Radar tests](../archipam/test/semantic-radar.test.mjs)).
 
 The default SVG `viewBox` plus `width: 100%` already provides a complete cold-open
 overview. The camera's reset state is explicitly `{ scale: 1, x: 0, y: 0,
 mode: 'overview' }`. Another fit-all subsystem would duplicate that contract
 rather than solve the observed tall-diagram problem
-([shared viewer CSS and camera](../archify/assets/template.html)).
+([shared viewer CSS and camera](../archipam/assets/template.html)).
 
 ### Progressive disclosure already exists
 
@@ -89,7 +89,7 @@ Reading Depth keeps structure and primary labels at MAP, restores relationship
 labels and node context at READ, and restores tags and fine annotations at FULL.
 Exact semantic intent can reveal matching detail without changing geometry.
 This is deterministic author-aware disclosure, not a density heuristic
-([Reading Depth implementation](../archify/assets/template.html),
+([Reading Depth implementation](../archipam/assets/template.html),
 [Reading Depth research](research-visual-evolution-round-23.md)).
 
 ### Narrative structure already exists
@@ -98,7 +98,7 @@ All 11 current Proof Lab sources have three authored views: 33 chapters total.
 Across those artifacts, the first authored chapter contains 52 of 112 semantic
 nodes, with a mean artifact-level share of 47%. This demonstrates that authors
 already provide useful bounded subsets, but it does **not** prove that array
-position means “default opening.” Archify should not infer cold-open intent from
+position means “default opening.” ArchiPam should not infer cold-open intent from
 the first array item.
 
 Within a selected chapter, Story Trail already derives ordered stable IDs,
@@ -106,7 +106,7 @@ distinguishes exact forward, exact reverse, and grouped/no-direct-edge steps,
 and exposes each beat as a native control. Shareable Story Moment restores one
 exact `view + beat` semantic state. The missing operation is framing that exact
 state in the SVG viewport
-([Story Beat tests](../archify/test/story-beat-navigator.test.mjs),
+([Story Beat tests](../archipam/test/story-beat-navigator.test.mjs),
 [shareable moment research](research-visual-evolution-round-33.md)).
 
 ### The camera and cancellation substrate already exists
@@ -116,8 +116,8 @@ space for viewer chrome, cap scale, resolve instantly for reduced motion, and
 return a transaction receipt. Manual zoom, pan, mobile scroll, replacement, and
 other semantic owners can interrupt it. Route Journey already requests a
 bounded camera frame for an ordered path position
-([camera implementation](../archify/assets/template.html),
-[Route Journey tests](../archify/test/route-journey.test.mjs)).
+([camera implementation](../archipam/assets/template.html),
+[Route Journey tests](../archipam/test/route-journey.test.mjs)).
 
 The new slice therefore needs a new **request policy**, not a new camera.
 
@@ -139,7 +139,7 @@ Panning and zooming through the map are optional rather than inherent
 and subset-fit as different operations.
 
 **Adapt:** Story Follow should send a two- or three-node semantic window to
-Archify's existing camera. It should not store a React Flow viewport or make the
+ArchiPam's existing camera. It should not store a React Flow viewport or make the
 minimap the camera owner.
 
 **Skip:** another minimap, React state, draggable nodes, controlled viewport
@@ -157,7 +157,7 @@ pause while retaining progress or stop while removing themselves from queues
 replaces old work; manual navigation stops the current transaction and clears
 pending progression.
 
-**Adapt:** Archify should not queue camera moves ahead of the reader. The Story
+**Adapt:** ArchiPam should not queue camera moves ahead of the reader. The Story
 Beat scheduler should request only the current frame, then schedule the next
 beat from the settled state.
 
@@ -177,7 +177,7 @@ letting a tour lose the visual world
 **Borrow:** last intent wins; cancellation must settle cleanup; camera bounds
 must keep the reader in the same stable diagram.
 
-**Adapt:** Archify already has camera transaction IDs and settlement receipts.
+**Adapt:** ArchiPam already has camera transaction IDs and settlement receipts.
 Use them to prevent a stale Story Beat callback from moving the camera after a
 new beat, route, focus, resize, or manual pan.
 
@@ -200,7 +200,7 @@ one from graph centrality
 **Borrow:** authored order, explicit Play/Pause and Previous/Next, and a
 separate whole-diagram return path.
 
-**Adapt:** Archify's authored order is already `meta.views[].focus`; its Story
+**Adapt:** ArchiPam's authored order is already `meta.views[].focus`; its Story
 Beat rail and Show all control already expose the required navigation. Add only
 the missing per-beat viewport frame.
 
@@ -226,7 +226,7 @@ those compositions as dynamic media
 authored rather than inferred; previous state remains intelligible while the
 next step arrives.
 
-**Adapt:** Archify should preserve one SVG and express past/current/pending by
+**Adapt:** ArchiPam should preserve one SVG and express past/current/pending by
 viewer emphasis. Its frame window may include the previous and next authored
 stop so the reader retains local continuity.
 
@@ -280,7 +280,7 @@ focus/page visibility changes, and forced auto-follow under reduced motion.
 
 ### Product sentence
 
-> Play or select a Story Beat, and Archify follows that exact authored moment
+> Play or select a Story Beat, and ArchiPam follows that exact authored moment
 > with a calm, bounded camera while the complete diagram remains one reset away.
 
 ### 1. Preserve the whole-system opening
@@ -310,7 +310,7 @@ This window is a presentation policy over existing semantics. It does not alter
 
 ### 3. Reuse the existing bounded camera
 
-Call the already-public `Archify.view.reveal(ids, options)` from a small
+Call the already-public `ArchiPam.view.reveal(ids, options)` from a small
 story-owned request helper rather than copying `frameDesktop()` or adding a
 second camera.
 
@@ -414,8 +414,8 @@ viewer transforms and transient overlays.
 Expected scope:
 
 - one shared Story-to-Camera request path in
-  [`archify/assets/template.html`](../archify/assets/template.html);
-- one story-owned caller of the existing public `Archify.view.reveal` method,
+  [`archipam/assets/template.html`](../archipam/assets/template.html);
+- one story-owned caller of the existing public `ArchiPam.view.reveal` method,
   with no duplicated fitting math;
 - a per-beat dwell constant and generation-safe scheduling;
 - Motion Governor integration for story camera ownership;
@@ -473,7 +473,7 @@ the follow immediately without losing the semantic receipt.
 **Borrow** subset fitting, explicit padding/zoom caps, finite step controls,
 transaction cancellation, and return-to-overview behavior.
 
-**Adapt** them into a Story Follow Camera over Archify's existing stable IDs,
+**Adapt** them into a Story Follow Camera over ArchiPam's existing stable IDs,
 Story Beat truth, Semantic Camera, Route Journey timing discipline, Motion
 Governor, and exact-moment URLs.
 
@@ -482,7 +482,7 @@ topology collapse, multi-board scenes, foreground cloning, serialized pixel
 viewports, and any new graph or animation dependency.
 
 Story Follow Camera is the highest-leverage next slice because it fixes the
-observed legibility failure at the exact point Archify's narrative becomes most
+observed legibility failure at the exact point ArchiPam's narrative becomes most
 valuable: one reader-started semantic moment inside a tall or dense technical
 diagram.
 

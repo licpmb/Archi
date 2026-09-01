@@ -5,13 +5,13 @@ root = Path(sys.argv[1] if len(sys.argv) > 1 else '.').resolve()
 temp_workflows = {'archipam-one-time-refactor.yml','archipam-refactor-v2.yml','archipam-refactor-v3.yml'}
 binary_ext = {'.png','.jpg','.jpeg','.gif','.webm','.ico','.zip','.woff','.woff2','.ttf','.otf','.pdf'}
 special = [
-    ('@tt-a1i/archify-dsh','@licpmb/archipam-dsh'),
-    ('https://github.com/tt-a1i/archify.git','https://github.com/licpmb/Archi.git'),
-    ('https://github.com/tt-a1i/archify','https://github.com/licpmb/Archi'),
-    ('https://tt-a1i.github.io/archify','https://licpmb.github.io/Archi'),
-    ('tt-a1i/archify','licpmb/Archi'),
+    ('@licpmb/archipam-dsh','@licpmb/archipam-dsh'),
+    ('https://github.com/licpmb/Archi.git','https://github.com/licpmb/Archi.git'),
+    ('https://github.com/licpmb/Archi','https://github.com/licpmb/Archi'),
+    ('https://licpmb.github.io/Archi','https://licpmb.github.io/Archi'),
+    ('licpmb/Archi','licpmb/Archi'),
 ]
-replacements = [('ARCHIFY','ARCHIPAM'),('Archify','Archipam'),('archify','archipam')]
+replacements = [('ARCHIPAM','ARCHIPAM'),('ArchiPam','ArchiPam'),('archipam','archipam')]
 
 def is_text_candidate(p: Path):
     return p.is_file() and '.git' not in p.parts and p.suffix.lower() not in binary_ext and p.name not in temp_workflows
@@ -31,11 +31,11 @@ for p in list(root.rglob('*')):
     if s != old:
         p.write_text(s,'utf-8')
 
-items = [p for p in root.rglob('*') if '.git' not in p.parts and 'archify' in p.name.lower()]
+items = [p for p in root.rglob('*') if '.git' not in p.parts and 'archipam' in p.name.lower()]
 for p in sorted(items, key=lambda x: len(x.parts), reverse=True):
     if not p.exists():
         continue
-    newname = p.name.replace('ARCHIFY','ARCHIPAM').replace('Archify','Archipam').replace('archify','archipam')
+    newname = p.name.replace('ARCHIPAM','ARCHIPAM').replace('ArchiPam','ArchiPam').replace('archipam','archipam')
     if newname != p.name:
         p.rename(p.with_name(newname))
 
@@ -108,7 +108,7 @@ for p in root.rglob('*'):
     s=re.sub(r'\s*<link rel="preconnect" href="https://fonts\.gstatic\.com" crossorigin>\s*','\n',s)
     s=re.sub(r'\s*<link rel="preconnect" href="https://fonts\.googleapis\.com">\s*','\n',s)
     s=re.sub(r'\s*<link href="https://fonts\.googleapis\.com[^>]*>\s*','\n',s,flags=re.S)
-    s=s.replace('https://fonts.googleapis.com','about:blank#remote-font-removed').replace('https://fonts.gstatic.com','about:blank#remote-font-removed')
+    s=s.replace('about:blank#remote-font-removed','about:blank#remote-font-removed').replace('about:blank#remote-font-removed','about:blank#remote-font-removed')
     s=s.replace('  <!-- Async font load: a blackholed network must not block first paint.\n       The body font stack falls back to system monospace until it lands. -->\n','  <!-- Offline-safe font policy: use the local/system monospace stack only. -->\n')
     if s!=old:
         p.write_text(s,'utf-8')
@@ -145,7 +145,7 @@ for a,b in {
     s=s.replace(a,b)
 p.write_text(s)
 
-legacy_paths=[str(p.relative_to(root)) for p in root.rglob('*') if '.git' not in p.parts and p.name not in temp_workflows and 'archify' in p.name.lower()]
+legacy_paths=[str(p.relative_to(root)) for p in root.rglob('*') if '.git' not in p.parts and p.name not in temp_workflows and 'archipam' in p.name.lower()]
 legacy_text=[]
 for p in root.rglob('*'):
     if not is_text_candidate(p):
@@ -154,7 +154,7 @@ for p in root.rglob('*'):
         text=p.read_text('utf-8')
     except UnicodeDecodeError:
         continue
-    if 'archify' in text.lower():
+    if 'archipam' in text.lower():
         legacy_text.append(str(p.relative_to(root)))
 if legacy_paths or legacy_text:
     raise RuntimeError(f'legacy paths={legacy_paths[:20]} text={legacy_text[:20]}')

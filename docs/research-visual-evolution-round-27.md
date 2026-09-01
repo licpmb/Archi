@@ -4,7 +4,7 @@ Research date: 2026-07-20 (Asia/Shanghai)
 
 ## Product question
 
-Archify already has two category surfaces:
+ArchiPam already has two category surfaces:
 
 1. each renderer draws a compact in-diagram legend; and
 2. the shared viewer derives a counted, interactive **Semantic Lens** from the
@@ -16,7 +16,7 @@ separate `LENS` control or <kbd>L</kbd> shortcut before the swatch becomes usefu
 The question for this round is therefore deliberately narrow:
 
 > Should a compatible static legend item become a direct, counted entry into
-> the existing Semantic Lens, and can that feel alive without turning Archify
+> the existing Semantic Lens, and can that feel alive without turning ArchiPam
 > into a filtering dashboard?
 
 **Recommendation: yes, selectively.** Build a viewer-owned **Semantic Legend
@@ -28,11 +28,11 @@ items explanatory and non-interactive.
 This is a discoverability and feedback improvement, not a second filtering
 system.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 ### The Lens already owns the authoritative category model
 
-[`Archify.semanticLens`](../archify/assets/template.html) currently:
+[`ArchiPam.semanticLens`](../archipam/assets/template.html) currently:
 
 - deduplicates semantic nodes by stable `data-node-id`;
 - derives kinds and exact node counts from `data-node-kind`;
@@ -48,22 +48,22 @@ relationship matching, URL state, or dimming rules into a renderer.
 
 ### Renderer legends do not all mean the same thing
 
-- [`render-architecture.mjs`](../archify/renderers/architecture/render-architecture.mjs)
+- [`render-architecture.mjs`](../archipam/renderers/architecture/render-architecture.mjs)
   dynamically emits exactly one swatch per component type that is actually
   present. This is a lossless map to `data-node-kind` and is the best first
   bridge.
-- [`render-workflow.mjs`](../archify/renderers/workflow/render-workflow.mjs)
+- [`render-workflow.mjs`](../archipam/renderers/workflow/render-workflow.mjs)
   uses five node-kind colors (`frontend`, `backend`, `security`, `messagebus`,
   `database`) under domain labels such as “User UI” and “Agent logic.” These
   rows can be bridged only when the renderer marks their exact kind.
-- [`render-lifecycle.mjs`](../archify/renderers/lifecycle/render-lifecycle.mjs)
+- [`render-lifecycle.mjs`](../archipam/renderers/lifecycle/render-lifecycle.mjs)
   has exact rows for `active`, `waiting`, `success`, and `failure`, but not for
   every lifecycle kind (`start` and `decision` can also occur). Marked rows can
   be bridged; the bridge must not imply complete kind coverage.
-- [`render-sequence.mjs`](../archify/renderers/sequence/render-sequence.mjs)
+- [`render-sequence.mjs`](../archipam/renderers/sequence/render-sequence.mjs)
   explains message/edge variants such as request and return. It is not a node
   category legend and must remain static.
-- [`render-dataflow.mjs`](../archify/renderers/dataflow/render-dataflow.mjs)
+- [`render-dataflow.mjs`](../archipam/renderers/dataflow/render-dataflow.mjs)
   mixes edge variants with one data-store node swatch. Making only the last row
   interactive would give identical-looking entries different hidden behavior.
   Keep the whole mixed legend static in this slice.
@@ -96,10 +96,10 @@ It also disables transitions under reduced motion
 **Borrow:** preserve the authored legend's domain and keep interaction in a
 viewer-owned layer with explicit focus and cleanup. **Do not borrow:** the lack
 of legend interactivity as a product ceiling, or Fireworks' direct serialization
-of the live SVG for Archify's export path. Archify already has a stronger
+of the live SVG for ArchiPam's export path. ArchiPam already has a stronger
 canonical-clone boundary and should keep runtime decorations out of export.
 
-This source is also a useful negative test: a legend can look like Archify's
+This source is also a useful negative test: a legend can look like ArchiPam's
 legend and still classify edges rather than node kinds. Shape and color alone
 are not sufficient evidence that a row may drive Semantic Lens.
 
@@ -124,7 +124,7 @@ the plugin:
 - fades unselected legend markers and labels instead of removing them
   ([legend feedback](https://github.com/antvis/G6/blob/7b7ff8e2b52609486840963dc1608d9f565e7f66/packages/g6/src/plugins/legend.ts#L208-L225)).
 
-The exact count badge is an Archify inference from the same category-to-ID
+The exact count badge is an ArchiPam inference from the same category-to-ID
 principle: for a marked kind, the honest count is the number of distinct
 semantic node IDs already returned by `semanticLens.kinds()`, never the number
 of swatches, DOM descendants, path fragments, or touching edges.
@@ -133,7 +133,7 @@ of swatches, DOM descendants, path fragments, or touching edges.
 **Improve:** G6's legend event table is mouse-oriented (`mouseenter`,
 `mouseleave`, `click`)
 ([event source](https://github.com/antvis/G6/blob/7b7ff8e2b52609486840963dc1608d9f565e7f66/packages/g6/src/plugins/legend.ts#L243-L248));
-Archify must add keyboard, focus, touch, semantic state, and target-size behavior
+ArchiPam must add keyboard, focus, touch, semantic state, and target-size behavior
 rather than copying the plugin literally.
 
 ### 3. Sigma and yFiles favor visual state over data mutation for highlighting
@@ -149,7 +149,7 @@ and restores the graph on leave
 yFiles makes the same boundary more explicit: selection, focus, and arbitrary
 highlighting are independent decorations managed separately from graph elements
 ([selection/focus/highlight guide](https://docs.yworks.com/yfiles-html/dguide/view/view_selection.html)).
-This distinction maps cleanly to Archify:
+This distinction maps cleanly to ArchiPam:
 
 - keyboard focus belongs to the legend control;
 - transient hover/focus preview is a viewer decoration;
@@ -190,7 +190,7 @@ group of three or more controls may use the Toolbar Pattern's single tab stop,
 roving `tabindex`, Left/Right navigation, and optional Home/End
 ([toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)).
 
-For Archify's SVG-hosted legend rows, this means:
+For ArchiPam's SVG-hosted legend rows, this means:
 
 - group compatible rows as a labelled `toolbar` only when there are at least
   three actionable rows;
@@ -225,7 +225,7 @@ means of communicating action or state
 ### 6. Hover preview is valuable only as a finite, parity-safe preview
 
 G6 and Sigma both demonstrate the comprehension benefit of a transient hover
-state. Archify should borrow it, with stricter limits:
+state. ArchiPam should borrow it, with stricter limits:
 
 - only on `(hover: hover) and (pointer: fine)`;
 - only when no stronger owner (Focus, Intent Trace, Route Probe, Story Trail,
@@ -268,7 +268,7 @@ Space/Enter. No two-tap “first hover, second activate” trap.
 4. The shared viewer upgrades marked rows at runtime. It derives counts from the
    same deduplicated `collectKinds()` result as the Lens panel, appends one quiet
    count badge, creates the enlarged hit/focus region, and delegates activation
-   to `Archify.semanticLens`.
+   to `ArchiPam.semanticLens`.
 5. A count is a node count only. Keep relationship totals and authored direction
    in the existing Lens receipt. Do not overload a tiny badge with two metrics.
 6. If a renderer carries a marked explanatory kind that has zero nodes, show a
@@ -318,7 +318,7 @@ Space/Enter. No two-tap “first hover, second activate” trap.
 ### Borrow now
 
 - G6's clear transient `active` versus durable `selected` grammar.
-- G6's exact category-to-element mapping, implemented through Archify's existing
+- G6's exact category-to-element mapping, implemented through ArchiPam's existing
   compiled semantic IDs rather than a plugin.
 - Sigma's reversible display-state update without graph-data mutation or spatial
   re-indexing.
@@ -330,7 +330,7 @@ Space/Enter. No two-tap “first hover, second activate” trap.
 
 ### Later, after evidence
 
-- Edge-semantic legend lenses for Sequence and Data Flow, but only after Archify
+- Edge-semantic legend lenses for Sequence and Data Flow, but only after ArchiPam
   has a normalized compiled `data-edge-kind` contract and a reader problem that
   justifies it. Do not retrofit them through text parsing.
 - A compact “all kinds” inline legend for modes whose current authored legend is
@@ -369,7 +369,7 @@ the following.
 2. Workflow/Lifecycle upgrade only explicitly marked exact node-kind rows.
    Sequence and Data Flow contain no interactive semantic legend controls.
 3. Every visible count equals the corresponding value returned by
-   `Archify.semanticLens.kinds()` after deduplication by `data-node-id`.
+   `ArchiPam.semanticLens.kinds()` after deduplication by `data-node-id`.
    Architecture's badge sum equals its semantic node count.
 4. A zero-count marked explanatory row, if any, is visibly honest but is not
    focusable or activatable. Unknown markers fail closed.

@@ -2,7 +2,7 @@
 
 ## Reader problem
 
-Archify could select nodes, name relationships, and play guided views, but desktop `reveal()` returned without changing the viewport. In Presentation Stage, tall or dense diagrams could remain centered at overview scale even when only four nodes mattered. The system knew the reader's semantic intent but did not give that intent the frame.
+ArchiPam could select nodes, name relationships, and play guided views, but desktop `reveal()` returned without changing the viewport. In Presentation Stage, tall or dense diagrams could remain centered at overview scale even when only four nodes mattered. The system knew the reader's semantic intent but did not give that intent the frame.
 
 ## Patterns worth borrowing
 
@@ -11,7 +11,7 @@ Archify could select nodes, name relationships, and play guided views, but deskt
 - [React Flow `FitViewOptions`](https://reactflow.dev/api-reference/types/fit-view-options) combines selected nodes, padding, minimum/maximum zoom, duration, easing, and interpolation into one explicit camera contract.
 - [Cytoscape.js viewport manipulation](https://js.cytoscape.org/index.html#cy.fit) separates `fit`, `center`, pan/zoom, and animated viewport operations instead of mutating model positions.
 
-## Archify boundary
+## ArchiPam boundary
 
 Add a semantic, viewer-only camera—not auto-layout, node movement, or a graph runtime.
 
@@ -37,4 +37,4 @@ The first in-app-browser pass exposed three defects that static contracts could 
 
 ## What we deliberately did not borrow
 
-Archify does not add wheel zoom, inertial physics, a minimap, editable node positions, or a persistent camera model in JSON. The camera interprets semantic selections inside a compiled artifact; it never becomes part of the diagram source of truth.
+ArchiPam does not add wheel zoom, inertial physics, a minimap, editable node positions, or a persistent camera model in JSON. The camera interprets semantic selections inside a compiled artifact; it never becomes part of the diagram source of truth.

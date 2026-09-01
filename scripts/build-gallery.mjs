@@ -10,7 +10,7 @@ import { DIAGRAM_TYPE_LABELS, diagramTypeCopyReplacements } from './site-copy.mj
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
-const skillRoot = path.join(repoRoot, 'archify');
+const skillRoot = path.join(repoRoot, 'archipam');
 const outputRoot = path.resolve(process.argv[2] || path.join(repoRoot, 'docs'));
 const artifactsRoot = path.join(outputRoot, 'gallery', 'artifacts');
 const sourcesRoot = path.join(outputRoot, 'gallery', 'sources');
@@ -219,7 +219,7 @@ function renderCard(entry, index) {
             </header>
             <div class="preview-shell">
               <div class="live-flag">Live artifact</div>
-              <iframe src="${esc(artifact)}?embed=1&amp;theme=dark" data-src-base="${esc(artifact)}" title="${esc(entry.titleEn)} live Archify preview" loading="${entry.featured ? 'eager' : 'lazy'}"></iframe>
+              <iframe src="${esc(artifact)}?embed=1&amp;theme=dark" data-src-base="${esc(artifact)}" title="${esc(entry.titleEn)} live ArchiPam preview" loading="${entry.featured ? 'eager' : 'lazy'}"></iframe>
             </div>
             <div class="card-body">
               <p class="card-description" data-en="${esc(entry.descriptionEn)}" data-zh="${esc(entry.descriptionZh)}">${esc(entry.descriptionEn)}</p>${engineeringProof}
@@ -294,7 +294,7 @@ for (const item of CASES) {
 const manifest = {
   schemaVersion: 1,
   generator: 'scripts/build-gallery.mjs',
-  archifyVersion: packageJson.version,
+  archipamVersion: packageJson.version,
   entryCount: entries.length,
   checkCount: entries.reduce((sum, entry) => sum + entry.checkCount, 0),
   entries: entries.map((entry) => ({
@@ -329,7 +329,7 @@ fs.writeFileSync(path.join(outputRoot, 'gallery', 'manifest.json'), `${manifestJ
 
 const replacements = {
   ...diagramTypeCopyReplacements(),
-  '[[ARCHIFY_VERSION]]': packageJson.version,
+  '[[ARCHIPAM_VERSION]]': packageJson.version,
   '[[ENTRY_COUNT]]': String(manifest.entryCount),
   '[[CHECK_COUNT]]': String(manifest.checkCount),
   '[[GALLERY_CARDS]]': entries.map(renderCard).join('\n'),

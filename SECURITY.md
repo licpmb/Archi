@@ -1,12 +1,12 @@
 # Security Policy
 
-Archify welcomes responsible security reports. Please report suspected
+ArchiPam welcomes responsible security reports. Please report suspected
 vulnerabilities privately so maintainers can investigate and coordinate
 remediation before public disclosure.
 
 ## Supported versions
 
-Archify is under active development. Please report vulnerabilities affecting
+ArchiPam is under active development. Please report vulnerabilities affecting
 the latest stable release or current `main`.
 
 Reports affecting older releases are also welcome. Include the exact version
@@ -20,7 +20,7 @@ option is available.
 
 Include, when available:
 
-- the affected Archify version or commit;
+- the affected ArchiPam version or commit;
 - the installation method, operating system, Node.js version, and relevant
   host or agent;
 - the affected command, component, or entry point;

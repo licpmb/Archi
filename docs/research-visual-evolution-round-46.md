@@ -129,7 +129,7 @@ necessary corridors, cross-container routes, and feedback routes explicit
 budgets instead of silently grandfathering them. Distinguish terminal from
 internal segments.
 **Skip:** one global threshold, Fireworks' very loose standard numbers as
-Archify's desired quality bar, or an aggregate score that cannot name a route.
+ArchiPam's desired quality bar, or an aggregate score that cannot name a route.
 
 ### Graphviz: relationship participation and compound boundaries are semantic
 
@@ -147,7 +147,7 @@ shared path segments.
 
 **Borrow:** treat primary-flow participation and container ancestry as inputs
 to routing quality.
-**Adapt:** compute Archify's `cross-container` class from typed structural
+**Adapt:** compute ArchiPam's `cross-container` class from typed structural
 ancestry; keep it separate from visual route style.
 **Skip:** assuming every edge should constrain layout equally, or penalizing
 intentional shared channels under a per-route bend contract.
@@ -173,7 +173,7 @@ and whether they may appear
 
 **Borrow:** per-edge importance, feedback classification, segment penalty, and
 a dedicated self-loop geometry contract.
-**Adapt:** use discrete explainable Archify classes instead of exposing router
+**Adapt:** use discrete explainable ArchiPam classes instead of exposing router
 cost weights in authored JSON.
 **Skip:** applying direct-distance stretch to feedback routes or self-loops,
 and treating a router cost as proof that model data is invalid.
@@ -190,7 +190,7 @@ models nesting directly.
 
 **Borrow:** sequence messages and self-messages are not generic polylines;
 container ancestry is explicit composition data.
-**Adapt:** make ordinary Archify sequence messages an exact renderer invariant
+**Adapt:** make ordinary ArchiPam sequence messages an exact renderer invariant
 and defer self-message quality to a loop-specific contract.
 **Skip:** forcing all five renderers through one geometrical route grammar.
 
@@ -221,7 +221,7 @@ keeps layout direction and spacing at the view level. Its official
 uses compound graphs, splines, node separation, and rank separation.
 
 **Borrow:** a relationship kind is model metadata and may inform composition.
-**Adapt:** reuse Archify's existing small `role` vocabulary instead of adding a
+**Adapt:** reuse ArchiPam's existing small `role` vocabulary instead of adding a
 second type system; derive route class from topology and resolved layout.
 **Skip:** deriving business role from color/dash style or making authors choose
 raw router parameters.
@@ -230,7 +230,7 @@ raw router parameters.
 
 ### Product sentence
 
-**Archify keeps primary routes direct, gives necessary detours an explicit
+**ArchiPam keeps primary routes direct, gives necessary detours an explicit
 budget, and explains every exception by relationship and segment.**
 
 ### Four independent dimensions
@@ -315,7 +315,7 @@ branch uses the forward budget. Only a real semantic reversal receives the
 feedback budget; a necessary non-reversing detour is a corridor. Similarly,
 `async` does not receive more bends merely because its stroke may be dashed.
 
-The 8px terminal threshold is an Archify adaptation below the current 13px
+The 8px terminal threshold is an ArchiPam adaptation below the current 13px
 corpus minimum. It preserves intentional compact port stubs but still prevents
 a future near-zero endpoint hook. The 16px Fireworks value remains strict for
 internal doglegs, where a tiny segment has no endpoint-port justification.
@@ -658,7 +658,7 @@ After repair:
 - Standard warning and showcase error have visibly different severity without
   implying that `n/a` stretch is a pass.
 - Desktop/mobile have no horizontal overflow or clipped receipt text; focus
-  targets remain at least 44px; console contains no Archify runtime errors.
+  targets remain at least 44px; console contains no ArchiPam runtime errors.
 - Reduced-motion mode keeps all repaired routes and issue focus visible without
   relying on animation.
 

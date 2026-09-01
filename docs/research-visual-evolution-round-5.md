@@ -1,11 +1,11 @@
 # Visual Evolution Round 5 — Every recipe earns a proof
 
 Date: 2026-07-19
-Status: implemented on `codex/archify-visual-evolution`
+Status: implemented on `codex/archipam-visual-evolution`
 
 ## Problem
 
-The question-first guide defined 11 useful scenario recipes, but only five had a matching live artifact. That weakened the promise: users could receive good advice without seeing whether Archify could actually render the recommended result.
+The question-first guide defined 11 useful scenario recipes, but only five had a matching live artifact. That weakened the promise: users could receive good advice without seeing whether ArchiPam could actually render the recommended result.
 
 ## What we learned
 
@@ -13,13 +13,13 @@ The question-first guide defined 11 useful scenario recipes, but only five had a
 
 LikeC4's official [Views documentation](https://likec4.dev/dsl/views/) treats views as named projections whose names become export filenames and shareable URLs. Its [dynamic-view navigation](https://likec4.dev/dsl/views/dynamic/) lets a step navigate into a more detailed view, and its project configuration can expose a curated landing-page grid.
 
-Archify keeps its smaller boundary—one self-contained diagram rather than a persistent architecture model—but adopts the product lesson: a scenario recommendation should lead to a named, shareable proof instead of a generic gallery homepage.
+ArchiPam keeps its smaller boundary—one self-contained diagram rather than a persistent architecture model—but adopts the product lesson: a scenario recommendation should lead to a named, shareable proof instead of a generic gallery homepage.
 
 ### D2: presentation value comes from inherited steps
 
 D2's official [Steps documentation](https://d2lang.com/tour/steps/) defines each step as inheriting the prior one, while [Composition](https://d2lang.com/tour/composition/) distinguishes independent layers, base-derived scenarios, and sequential steps. This makes presentation changes comprehensible because the audience retains context.
 
-Archify's equivalent is intentionally geometry-stable: each proof keeps one typed JSON graph and one SVG layout, then uses three bounded `meta.views` to focus successive parts. Playback changes emphasis, never the underlying coordinates.
+ArchiPam's equivalent is intentionally geometry-stable: each proof keeps one typed JSON graph and one SVG layout, then uses three bounded `meta.views` to focus successive parts. Playback changes emphasis, never the underlying coordinates.
 
 ## Product decision
 

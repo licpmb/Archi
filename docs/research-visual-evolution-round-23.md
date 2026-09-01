@@ -3,7 +3,7 @@ Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Reader gap
 
-Round 22 made Archify's rich viewer actions discoverable. The next problem is
+Round 22 made ArchiPam's rich viewer actions discoverable. The next problem is
 not another missing action: it is **simultaneous information density**. At the
 whole-system view, every node sublabel, relationship label, tag, classification,
 and annotation competes at once even when some of that text is too small to be
@@ -22,19 +22,19 @@ without adding another toolbar button, panel, query language, or graph model.
   makes the product lesson more explicit. Labels that are too small to read do
   not need to be displayed at low zoom, edge labels create substantial visual
   noise, and higher zoom levels can restore progressively richer styles. The
-  transferable value for Archify is readability, not yFiles' renderer or
+  transferable value for ArchiPam is readability, not yFiles' renderer or
   performance stack.
 - [Cytoscape.js' official documentation](https://js.cytoscape.org/)
   recommends `min-zoomed-font-size` so labels remain absent while physically
   unreadable and appear after the user zooms in. It also notes that edge labels
   are expensive and often unnecessary in the overview.
 - [Sigma.js' settings](https://v4.sigmajs.org/reference/settings/)
-  exposes a rendered-size threshold plus density-based label culling. Archify's
+  exposes a rendered-size threshold plus density-based label culling. ArchiPam's
   graphs are much smaller and deterministic, so it can use explicit authored
   detail tiers rather than a probabilistic density algorithm.
 - [G6's FixElementSize behavior](https://g6.antv.antgroup.com/en/manual/behavior/fix-element-size)
   listens to viewport changes to preserve readable labels and line widths while
-  zooming. Archify should likewise make the zoom control describe a reading
+  zooming. ArchiPam should likewise make the zoom control describe a reading
   state, not merely report a number.
 
 ## Competing candidate: Semantic Lens
@@ -81,7 +81,7 @@ remains a good future candidate when comparison evidence outweighs that UI cost.
 - No incomplete print or export. Those surfaces must always contain the full
   diagram independent of the current viewer zoom.
 
-## Archify implementation
+## ArchiPam implementation
 
 Every typed renderer emits two explicit viewer roles:
 

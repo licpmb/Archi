@@ -23,7 +23,7 @@ Round 45 should also begin recording bend, Manhattan stretch, and shortest
 normalized-segment metrics. Those three signals should be **metrics, not
 warnings or errors yet**. The current corpus contains legitimate recovery,
 feedback, boundary, and endpoint-stub routes that cross the borrowed Fireworks
-numbers, while Archify does not yet serialize a route role rich enough to tell
+numbers, while ArchiPam does not yet serialize a route role rich enough to tell
 an accidental detour from an intentional corridor.
 
 This split is important:
@@ -132,9 +132,9 @@ separates proper crossings, touches, and positive collinear overlaps.
 **Borrow:** open container corridors, typed geometry, and measurable route
 budgets.
 **Adapt:** make border collinearity universal because it is unambiguous in
-Archify's current schemas; retain the three route budgets as metrics until
+ArchiPam's current schemas; retain the three route budgets as metrics until
 route-role calibration exists.
-**Skip:** copying Fireworks' showcase numbers as immediate Archify failures or
+**Skip:** copying Fireworks' showcase numbers as immediate ArchiPam failures or
 turning its topology-specific total-bend score into a universal score.
 
 ### Graphviz: containers and relationships have distinct routing semantics
@@ -201,7 +201,7 @@ balanced, straighter edges with fewer crossings.
 
 **Borrow:** give every issue a concrete route or placement repair and preserve
 space around compounds.
-**Adapt:** point to Archify's existing `via`, channel, side, and placement
+**Adapt:** point to ArchiPam's existing `via`, channel, side, and placement
 controls instead of silently editing authored JSON.
 **Skip:** adding an opaque AI auto-layout step or hiding the defect with paint
 order.
@@ -219,7 +219,7 @@ order.
 
 ### Adapt
 
-- Border runs fail both Archify profiles; the Fireworks route-budget numbers
+- Border runs fail both ArchiPam profiles; the Fireworks route-budget numbers
   remain metric thresholds in this slice.
 - Inspect exact final `M/L/H/V/Q/Z` primitives. A quadratic curve is a border
   run only when the full relevant curve primitive is collinear, not merely
@@ -244,7 +244,7 @@ order.
 
 ### Product sentence
 
-**A relationship may enter or leave a container, but Archify never lets the
+**A relationship may enter or leave a container, but ArchiPam never lets the
 relationship masquerade as the container's own border.**
 
 ### Frame taxonomy
@@ -341,7 +341,7 @@ The detector must accept all of the following:
     Clean Flow Gate.
 
 There is no generic source/target exemption for a structural frame in v1,
-because current Archify relationships target semantic nodes, not containers.
+because current ArchiPam relationships target semantic nodes, not containers.
 If container endpoints are added later, the exemption must require an explicit
 semantic frame ID rather than coordinate coincidence.
 
@@ -485,7 +485,7 @@ repair still looks deliberate.
 - Gallery shows 66/66 artifact checks and 11 passing composition receipts.
 - Desktop and mobile have zero horizontal overflow.
 - Receipt text is not clipped and interactive targets remain at least 44px.
-- Browser console logs contain no Archify runtime error.
+- Browser console logs contain no ArchiPam runtime error.
 - Reduced-motion mode keeps the routes visible without requiring animation.
 
 ## Exit gate

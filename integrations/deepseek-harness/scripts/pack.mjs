@@ -9,7 +9,7 @@ import { spawnCliSync } from './resolve-cli.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
-const DSH_RELEASE_REF = 'archify-dsh-v0.1.0';
+const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
 
 function argValue(flag) {
   const index = process.argv.indexOf(flag);
@@ -65,7 +65,7 @@ function regularFiles(root, directory = root) {
   return files;
 }
 
-function stageCleanArchify(sourceRoot, dest) {
+function stageCleanArchiPam(sourceRoot, dest) {
   const validators = path.join(sourceRoot, 'renderers/shared/generated-validators.mjs');
   if (!fs.existsSync(validators)) {
     throw new Error(`generated validators are missing from ${DSH_RELEASE_REF}`);
@@ -86,13 +86,13 @@ function stageCleanArchify(sourceRoot, dest) {
 
 const json = process.argv.includes('--json');
 const out = argValue('--out');
-const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-pack-'));
-const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-source-'));
+const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-pack-'));
+const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-source-'));
 
 try {
   releaseSnapshot(snapshot);
   const releaseIntegration = path.join(snapshot, 'integrations', 'deepseek-harness');
-  stageCleanArchify(path.join(snapshot, 'archify'), path.join(stage, 'skills', 'archify'));
+  stageCleanArchiPam(path.join(snapshot, 'archipam'), path.join(stage, 'skills', 'archipam'));
   fs.copyFileSync(path.join(releaseIntegration, 'package.json'), path.join(stage, 'package.json'));
   fs.copyFileSync(path.join(releaseIntegration, 'cordis.patch.yml'), path.join(stage, 'cordis.patch.yml'));
   fs.cpSync(path.join(releaseIntegration, 'lib'), path.join(stage, 'lib'), { recursive: true });
@@ -124,7 +124,7 @@ try {
     } else if (parsed?.name) {
       packMeta = parsed;
     } else {
-      packMeta = Object.values(parsed || {}).find((entry) => entry?.name === '@tt-a1i/archify-dsh') || {};
+      packMeta = Object.values(parsed || {}).find((entry) => entry?.name === '@licpmb/archipam-dsh') || {};
     }
   } catch {
     packMeta = {};
@@ -137,7 +137,7 @@ try {
   fs.mkdirSync(path.dirname(destination), { recursive: true });
   fs.copyFileSync(path.join(stage, produced), destination);
   const result = {
-    name: packMeta.name || '@tt-a1i/archify-dsh',
+    name: packMeta.name || '@licpmb/archipam-dsh',
     version: packMeta.version || '0.1.0',
     filename: path.basename(destination),
     destination,

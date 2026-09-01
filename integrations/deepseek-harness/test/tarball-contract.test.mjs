@@ -10,7 +10,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
 const packScript = path.join(integrationRoot, 'scripts', 'pack.mjs');
-const DSH_RELEASE_REF = 'archify-dsh-v0.1.0';
+const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
 
 const FORBIDDEN = [
   '/test/',
@@ -25,8 +25,8 @@ const FORBIDDEN = [
 ];
 
 function packTarball() {
-  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-tarball-'));
-  const out = path.join(scratch, 'tt-a1i-archify-dsh-0.1.0.tgz');
+  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-tarball-'));
+  const out = path.join(scratch, 'tt-a1i-archipam-dsh-0.1.0.tgz');
   const result = spawnSync(process.execPath, [packScript, '--out', out, '--json'], {
     cwd: repoRoot,
     encoding: 'utf8',
@@ -39,7 +39,7 @@ test('pack command emits a real npm tarball with the expected identity and file 
   try {
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const receipt = JSON.parse(result.stdout);
-    assert.equal(receipt.name, '@tt-a1i/archify-dsh');
+    assert.equal(receipt.name, '@licpmb/archipam-dsh');
     assert.equal(receipt.version, '0.1.0');
     assert.equal(fs.existsSync(out), true);
     const files = receipt.files.map((file) => file.path.replace(/^package\//, ''));
@@ -49,17 +49,17 @@ test('pack command emits a real npm tarball with the expected identity and file 
       'lib/index.js',
       'README.md',
       'LICENSE',
-      'skills/archify/SKILL.md',
-      'skills/archify/bin/archify.mjs',
+      'skills/archipam/SKILL.md',
+      'skills/archipam/bin/archipam.mjs',
     ]) {
       assert.ok(files.includes(required), `tarball missing ${required}`);
     }
-    const skillEntries = files.filter((file) => file === 'skills/archify/SKILL.md' || file.endsWith('/SKILL.md'));
-    assert.deepEqual(skillEntries, ['skills/archify/SKILL.md']);
+    const skillEntries = files.filter((file) => file === 'skills/archipam/SKILL.md' || file.endsWith('/SKILL.md'));
+    assert.deepEqual(skillEntries, ['skills/archipam/SKILL.md']);
     for (const notifierFile of [
-      'skills/archify/skill-release.json',
-      'skills/archify/scripts/check-update.mjs',
-      'skills/archify/scripts/update-contract.mjs',
+      'skills/archipam/skill-release.json',
+      'skills/archipam/scripts/check-update.mjs',
+      'skills/archipam/scripts/update-contract.mjs',
     ]) {
       assert.equal(files.includes(notifierFile), false, `DSH 0.1.0 must not contain ${notifierFile}`);
     }
@@ -86,16 +86,16 @@ test('packed Skill payload remains byte-identical to the DSH 0.1.0 release tag',
       encoding: 'utf8',
     });
     assert.equal(tar.status, 0, tar.stderr);
-    const skillRoot = path.join(packedRoot, 'package', 'skills', 'archify');
+    const skillRoot = path.join(packedRoot, 'package', 'skills', 'archipam');
     const skillFiles = receipt.files
       .map((file) => file.path.replace(/^package\//, ''))
-      .filter((file) => file.startsWith('skills/archify/'))
-      .filter((file) => file !== 'skills/archify/package.json');
+      .filter((file) => file.startsWith('skills/archipam/'))
+      .filter((file) => file !== 'skills/archipam/package.json');
     for (const packagedPath of skillFiles) {
-      const relative = packagedPath.slice('skills/archify/'.length);
+      const relative = packagedPath.slice('skills/archipam/'.length);
       const tagged = spawnSync('git', [
         'show',
-        `${DSH_RELEASE_REF}:archify/${relative}`,
+        `${DSH_RELEASE_REF}:archipam/${relative}`,
       ], {
         cwd: repoRoot,
         encoding: null,

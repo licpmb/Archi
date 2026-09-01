@@ -10,9 +10,9 @@ body:
         Stability comes first. A small typed JSON reproduction and the machine-readable validation receipt are the fastest path to a safe fix.
 
   - type: input
-    id: archify_version
+    id: archipam_version
     attributes:
-      label: Archify version or commit
+      label: ArchiPam version or commit
       placeholder: "2.12.0 or 0123456789abcdef..."
     validations:
       required: true
@@ -24,7 +24,7 @@ body:
       options:
         - npm package
         - Git clone
-        - Downloaded archify.zip
+        - Downloaded archipam.zip
         - Uploaded skill archive
         - Other
     validations:

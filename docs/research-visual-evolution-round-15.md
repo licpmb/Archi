@@ -15,7 +15,7 @@ The missing surface was a compact narrative layer, not more graph decoration.
 
 The useful fusion is **an HTML chapter cue over an unchanged semantic SVG**.
 
-## Archify decision
+## ArchiPam decision
 
 `?embed=1&play=1#view=<id>` now exposes a viewer-only Share Chapter Cue:
 
@@ -38,4 +38,4 @@ The generated Signal Flow workflow was exercised in the built-in browser rather 
 
 ## What we deliberately did not borrow
 
-Archify does not add a timeline authoring schema, put HTML into the SVG export, duplicate the Guided Views toolbar inside embeds, loop a decorative status pulse forever, or guess labels from layout. The cue is a compact explanation of authored semantic state, not a second diagram system.
+ArchiPam does not add a timeline authoring schema, put HTML into the SVG export, duplicate the Guided Views toolbar inside embeds, loop a decorative status pulse forever, or guess labels from layout. The cue is a compact explanation of authored semantic state, not a second diagram system.

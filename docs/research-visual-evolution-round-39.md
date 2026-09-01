@@ -8,7 +8,7 @@ Status: implementation-ready research recommendation
 Build **Story Horizon**: a restrained, static preview of the one immediate
 next Story Beat.
 
-Archify's story system can now explain the present unusually well. Story Follow
+ArchiPam's story system can now explain the present unusually well. Story Follow
 Camera frames the previous, current, and next authored stops; Story Director
 Strip names the current route, relationship, responsibility, and context; the
 Story Trail preserves the past; exact moment links restore one stable beat; and
@@ -43,7 +43,7 @@ The shared viewer already records every story node as `data-story-step` and
 every exact story connector as `data-story-beat-step`. However,
 `setStoryBeat()` currently classifies both with the same three-way ternary:
 `past`, `active`, or `pending`
-([viewer implementation](../archify/assets/template.html)).
+([viewer implementation](../archipam/assets/template.html)).
 
 The current CSS then makes:
 
@@ -56,7 +56,7 @@ looks equally remote. That is especially visible because Story Follow already
 frames `previous + current + next`: the camera deliberately reserves room for
 the next stop, while its presentation state still looks like any other pending
 node
-([Story Follow contract](../archify/test/story-follow-camera.test.mjs)).
+([Story Follow contract](../archipam/test/story-follow-camera.test.mjs)).
 
 The current 11 Proof Lab artifacts contain 33 authored chapters, 150 resolved
 story stops, and 117 non-final transitions. Re-reading their current compiled
@@ -75,7 +75,7 @@ strengthens paused, manually selected, shared, mobile, Still, and reduced-motion
 states because the future cue remains useful without animation.
 
 Another toolbar, minimap, inspector, style preset, playback mode, or ambient
-motion layer would compete with surfaces Archify already has. Story Horizon
+motion layer would compete with surfaces ArchiPam already has. Story Horizon
 instead increases the value of Story Follow and Story Director by completing
 their temporal hierarchy.
 
@@ -95,7 +95,7 @@ many decorative effects from reviewed scenes
 **Borrow:** one semantic route owns attention at a time; immutable diagram
 geometry remains the visual world; every moving sequence has a settled state.
 
-**Adapt:** Archify should create expectation with one static immediate-next
+**Adapt:** ArchiPam should create expectation with one static immediate-next
 state inside its live viewer rather than render another GIF timeline. The
 existing Story Follow transaction remains the only camera owner.
 
@@ -112,7 +112,7 @@ chrome so the diagram remains primary
 
 **Borrow:** authored order, discrete steps, and a readable current scene.
 
-**Adapt:** unlike a strict reveal, Archify should retain its stable topology and
+**Adapt:** unlike a strict reveal, ArchiPam should retain its stable topology and
 show one future stop as orientation. `next` is a viewer perspective over the
 same authored SVG, not a new view or model fact.
 
@@ -131,7 +131,7 @@ capability
 **Borrow:** preserve authored direction and multiplicity; keep walkthrough
 state separate from architecture truth.
 
-**Adapt:** reuse Archify's existing `forward`, `reverse`, `multiple`, and
+**Adapt:** reuse ArchiPam's existing `forward`, `reverse`, `multiple`, and
 `grouped` Story Step classification. A grouped transition may preview the real
 next node but must show no connector; a multiple transition may preview only
 the exact authored edge set already resolved by that step.
@@ -156,7 +156,7 @@ increment.
 one stable canvas.
 
 **Skip:** board replacement, multi-file scenes, autoplaying animated SVG/GIF,
-and composition semantics in Archify's source schema.
+and composition semantics in ArchiPam's source schema.
 
 ### React Flow: frame the current semantic target, not the whole graph
 
@@ -338,5 +338,5 @@ Implement Story Horizon now. It is the smallest truthful change that makes the
 existing story system feel more cinematic: not by adding more animation, but by
 turning the canvas into a readable past-present-future composition. It directly
 amplifies Story Follow Camera and Story Director Strip, remains useful without
-motion, and preserves Archify's strongest product boundary—one stable,
+motion, and preserves ArchiPam's strongest product boundary—one stable,
 inspectable, deterministic artifact.

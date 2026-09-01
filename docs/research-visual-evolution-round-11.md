@@ -11,7 +11,7 @@ Relationship Lens made edge names and directions readable, but it still left a h
 - [React Flow `getConnectedEdges`](https://reactflow.dev/api-reference/utils/get-connected-edges) resolves the exact relationship set from semantic endpoints rather than estimating from rendered pixels.
 - [Cytoscape.js events](https://js.cytoscape.org/index.html#events) expose pointer-over and pointer-out alongside keyboard-independent graph state, a useful reminder that preview and activation are separate actions.
 
-## Archify boundary
+## ArchiPam boundary
 
 Add a read-only, exact-path preview layered over the existing one-hop focus—not direct edge picking or graph editing.
 
@@ -28,4 +28,4 @@ Add a read-only, exact-path preview layered over the existing one-hop focus—no
 
 ## What we deliberately did not borrow
 
-Archify does not add enlarged edge hit zones, an editable canvas, a graph runtime, or a third-party rendering library. Direct edge interaction would compete with pan/zoom on dense and mobile diagrams. The accessible Relationship Lens remains the interaction surface, while SVG geometry stays a deterministic compiled artifact.
+ArchiPam does not add enlarged edge hit zones, an editable canvas, a graph runtime, or a third-party rendering library. Direct edge interaction would compete with pan/zoom on dense and mobile diagrams. The accessible Relationship Lens remains the interaction surface, while SVG geometry stays a deterministic compiled artifact.

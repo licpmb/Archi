@@ -1,12 +1,12 @@
-# Archify 下一轮稳定与惊喜切片：Deployment Ownership Contract
+# ArchiPam 下一轮稳定与惊喜切片：Deployment Ownership Contract
 
 研究日期：2026-07-23（Asia/Shanghai）
 
-Archify 已提交基线：[`codex/cursor-onboarding@a73047b`](https://github.com/tt-a1i/archify/tree/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782)
+ArchiPam 已提交基线：[`codex/cursor-onboarding@a73047b`](https://github.com/licpmb/Archi/tree/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782)
 
 上游固定快照：Fireworks [`50c819d`](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/tree/50c819d68fd4fee330b3010988cd13e98b678d44)、GitDiagram [`041d2fe`](https://github.com/ahmedkhaleel2004/gitdiagram/tree/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9)、GitNexus [`cdbdf21`](https://github.com/abhigyanpatwari/GitNexus/tree/cdbdf219dce797e51cdeb8cfa386e77ab2d35628)、Agents365 drawio-skill [`6f33563`](https://github.com/Agents365-ai/drawio-skill/tree/6f33563adce24450003d1cb61111ebbcc5579f28)。
 
-> 本文只把上述已提交版本作为 Archify 事实基线。研究期间工作区有其他任务并发修改，因此未提交内容不作为“已经具备”的证据。
+> 本文只把上述已提交版本作为 ArchiPam 事实基线。研究期间工作区有其他任务并发修改，因此未提交内容不作为“已经具备”的证据。
 
 ## 结论
 
@@ -20,7 +20,7 @@ Archify 已提交基线：[`codex/cursor-onboarding@a73047b`](https://github.com
 }
 ```
 
-它不增加第六种图、不增加第四套风格、不增加 Viewer 面板，也不引入云厂商图标。它把 Archify 已经能画、但目前只能靠作者自觉填写的四类事实变成可执行合同：
+它不增加第六种图、不增加第四套风格、不增加 Viewer 面板，也不引入云厂商图标。它把 ArchiPam 已经能画、但目前只能靠作者自觉填写的四类事实变成可执行合同：
 
 1. 运行组件的负责人；
 2. Region 与私有网络归属；
@@ -33,11 +33,11 @@ Archify 已提交基线：[`codex/cursor-onboarding@a73047b`](https://github.com
 
 1. **现在：Deployment Ownership Contract**，同时把无依赖安装 smoke 扩到 Ubuntu / macOS / Windows 作为发行门。
 2. **下一阶段：Architecture Delta / PR Proof**；它很有增长潜力，但 before/after 几何、删除节点、缺失稳定 ID 与导出合同尚需独立设计。
-3. **以后再评估：Story-specific motion / GIF**；当前 Archify 已有有限 motion、Guided Story、WebM 与 README GIF，不应先扩第二套媒体系统。
+3. **以后再评估：Story-specific motion / GIF**；当前 ArchiPam 已有有限 motion、Guided Story、WebM 与 README GIF，不应先扩第二套媒体系统。
 
-## 1. Archify 真实基线：视觉证明已经有，语义合同还没有
+## 1. ArchiPam 真实基线：视觉证明已经有，语义合同还没有
 
-Archify 当前已经有五种 typed renderer、三套同拓扑 preset、Guided Story、Finder、Focus、Route、Reach、Lens、Share / Route / Reach Card、WebM、revision-pinned source evidence、Atomic Delivery、Last-Good Preview、Structured Repair Receipt，以及 Cursor / Codex / Claude Code / OpenCode 共用的一个 Skill。当前 [README](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/README.md#L11-L24) 和 [PRODUCT](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/PRODUCT.md#L13-L37) 已把产品边界写得很清楚：交互必须来自 authored / verified evidence，默认交付仍是自包含文件。
+ArchiPam 当前已经有五种 typed renderer、三套同拓扑 preset、Guided Story、Finder、Focus、Route、Reach、Lens、Share / Route / Reach Card、WebM、revision-pinned source evidence、Atomic Delivery、Last-Good Preview、Structured Repair Receipt，以及 Cursor / Codex / Claude Code / OpenCode 共用的一个 Skill。当前 [README](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/README.md#L11-L24) 和 [PRODUCT](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/PRODUCT.md#L13-L37) 已把产品边界写得很清楚：交互必须来自 authored / verified evidence，默认交付仍是自包含文件。
 
 更关键的是，Proof Lab 已经有一张很强的 `Production Deployment Ownership` 成品：
 
@@ -46,7 +46,7 @@ Archify 当前已经有五种 typed renderer、三套同拓扑 preset、Guided S
 - cards 已经总结 runtime ownership、named crossings 与 operational evidence；
 - Guided Views 已能讲 request boundary、state ownership 与 async operations。
 
-这些事实可在当前 [production-deployment fixture](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archify/examples/production-deployment.architecture.json#L1-L69) 中直接看到。
+这些事实可在当前 [production-deployment fixture](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archipam/examples/production-deployment.architecture.json#L1-L69) 中直接看到。
 
 但 committed schema 仍把它们当普通可选内容：
 
@@ -55,7 +55,7 @@ Archify 当前已经有五种 typed renderer、三套同拓扑 preset、Guided S
 - `boundaries` 只定义 `region` / `security-group` 与 `wraps`，没有成员归属合同；
 - `connections[].label` 可选，因此跨边界关系可以不命名。
 
-见当前 [Architecture schema](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archify/schemas/architecture.schema.json#L8-L151)。所以当前状态是：**Archify 有一张部署归属样例，但没有能力保证下一张部署归属图仍然回答了同样的问题。** 这是本切片要关闭的真实缺口。
+见当前 [Architecture schema](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archipam/schemas/architecture.schema.json#L8-L151)。所以当前状态是：**ArchiPam 有一张部署归属样例，但没有能力保证下一张部署归属图仍然回答了同样的问题。** 这是本切片要关闭的真实缺口。
 
 ## 2. 四个一手同类项目：值得吸收、已经具备、不要复制
 
@@ -79,7 +79,7 @@ Cloud Fabric 的一手合同尤其直接：
 - profile 默认不启用；一旦显式启用，缺失事实 hard fail。
 - 先做一个经过真实场景证明的 profile，不同时铺开 C4 / Event / Ops 三个合同。
 
-**Archify 已经具备**
+**ArchiPam 已经具备**
 
 - versioned typed IR、确定性 geometry/composition gates、两轮有界 visual review、offline HTML、静态输出、有限 motion 与 motion readback。
 - 三套 preset 共用 geometry；没有必要靠 style 数量追赶。
@@ -88,7 +88,7 @@ Cloud Fabric 的一手合同尤其直接：
 
 - 12 styles、14 UML mappings、vendor icon manifest 与 per-style motion schedule。
 - GIF 的 FFmpeg / Chromium / Puppeteer 依赖进入 zero-install core。Fireworks 自己也把 GIF 标为可选依赖；静态路径可独立工作。[v1.2.0 release](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/releases/tag/v1.2.0)
-- GitHub stable `1.2.0` 与 npm legacy `1.0.4` 的发行漂移；Archify 的 ZIP、文档与实现必须由同一 gate 锁定。
+- GitHub stable `1.2.0` 与 npm legacy `1.0.4` 的发行漂移；ArchiPam 的 ZIP、文档与实现必须由同一 gate 锁定。
 
 ### 2.2 GitDiagram：把一眼入口和真实路径校验学过来，不把 SaaS 搬过来
 
@@ -98,24 +98,24 @@ GitDiagram 的一句话入口仍然极强：把 GitHub URL 中的 `hub` 换成 `
 
 **值得吸收**
 
-- 入口必须容易记；Archify 当前 artifact footer → Start 页已经承担这件事，不需要新服务。
+- 入口必须容易记；ArchiPam 当前 artifact footer → Start 页已经承担这件事，不需要新服务。
 - profile 失败必须指出准确组件 / boundary / connection 与受支持修复，而不是泛化为“部署图不完整”。
-- 1200×630 social card 是有效增长面；Archify 已经具备并应让新 proof 直接受益。GitDiagram 自身也用固定 1200×630 Open Graph card contract。[social image source](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/server/og/cards.tsx#L5-L15)
+- 1200×630 social card 是有效增长面；ArchiPam 已经具备并应让新 proof 直接受益。GitDiagram 自身也用固定 1200×630 Open Graph card contract。[social image source](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/server/og/cards.tsx#L5-L15)
 
-**Archify 已经具备**
+**ArchiPam 已经具备**
 
 - revision-pinned source evidence、真实 repository case、bounded correction、结构化 repair receipt、Share Card 与 artifact-to-install 转化入口。
 
 **不要复制**
 
 - Vercel、R2、Upstash Redis、quota、PostHog、private token 与 hosted persistence。GitDiagram 的 README 明确这些是它的生产架构。[production architecture](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/README.md#L23-L47)
-- Mermaid 作为 Archify 的 canonical IR 或通用 auto-layout；两者产品边界不同。
+- Mermaid 作为 ArchiPam 的 canonical IR 或通用 auto-layout；两者产品边界不同。
 
 ### 2.3 GitNexus：只有做过真实 code indexing，才能说 impact / blast radius
 
 GitNexus 的核心并不是“图更炫”，而是先索引代码，再预计算 dependency、call chain、cluster 与 execution flow。它公开提供 `impact`、`trace`、`detect_changes`、route map、shape check 等工具，并把 blast radius 与 confidence 建立在 knowledge graph 上。[GitNexus README](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/README.md#L97-L158)
 
-这反而强化 Archify 的边界：Authored Reach 可以叫 authored reachability，不能借一个 deployment profile 偷换成 runtime impact、availability、failover correctness 或 blast radius。profile 只能验证 JSON 是否完整、自洽，不能证明云上真的这样部署。
+这反而强化 ArchiPam 的边界：Authored Reach 可以叫 authored reachability，不能借一个 deployment profile 偷换成 runtime impact、availability、failover correctness 或 blast radius。profile 只能验证 JSON 是否完整、自洽，不能证明云上真的这样部署。
 
 GitNexus 另一个值得直接学习的地方是测试分层：完整套件留在 Ubuntu，Windows / macOS 只跑 platform-sensitive subset，覆盖 path separator、CRLF、filesystem、real CLI spawn、native loading；CI 再单列 packaged-install smoke。[GitNexus cross-platform testing](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/TESTING.md#L83-L120)
 
@@ -124,7 +124,7 @@ GitNexus 另一个值得直接学习的地方是测试分层：完整套件留�
 - 只在证据边界允许时使用强词；profile receipt 不得声称 verified deployment。
 - Ubuntu 跑全量，macOS / Windows 跑小而真实的无依赖 package smoke。
 
-**Archify 已经具备**
+**ArchiPam 已经具备**
 
 - 作者关系上的 Route / Reach，以及明确“不叫 impact”的产品约束。
 - 本地单文件交付，不需要数据库才能读图。
@@ -132,19 +132,19 @@ GitNexus 另一个值得直接学习的地方是测试分层：完整套件留�
 **不要复制**
 
 - knowledge graph、native database、MCP server、embedding、cross-repo contract registry 与 Web UI bridge。
-- GitNexus 采用 PolyForm Noncommercial；这里只学习产品与测试模式，不搬代码进入 MIT Archify。
+- GitNexus 采用 PolyForm Noncommercial；这里只学习产品与测试模式，不搬代码进入 MIT ArchiPam。
 
 ### 2.4 Agents365 drawio-skill：Architecture Delta 很强，但不应挤进本轮
 
 drawio-skill 目前的强项已经不只是画图：它有 code / IaC / SQL import、Graphviz auto-layout、`.drawio` validator、self-check、visual review、diagram diff、PR diff、architecture time-lapse、interactive HTML 与 animated flow SVG。[official README feature map](https://github.com/Agents365-ai/drawio-skill/blob/6f33563adce24450003d1cb61111ebbcc5579f28/README.md#L153-L266)
 
-其中最值得 Archify 后续研究的是：
+其中最值得 ArchiPam 后续研究的是：
 
 - `drawiodiff.py` 把 added / removed / changed 做成一眼可见的 architecture drift；
 - `prdiff.py` 为 PR 生成 base / head / diff PNG 与 Markdown report；
 - `relabel.py` / `restyle.py` 保持 layout、styles、IDs 不动。
 
-这些能力和 Archify 的 typed stable IDs、Share Card、revision evidence 很匹配，**Architecture Delta 是清晰的 P1**。
+这些能力和 ArchiPam 的 typed stable IDs、Share Card、revision evidence 很匹配，**Architecture Delta 是清晰的 P1**。
 
 但它不适合作为当前最小切片：两份 IR 的 viewBox 与位置可能不同；removed node 在 after geometry 中没有位置；connection 可能没有 authored ID；changed 要区分语义、文案、位置与视觉 preset；canonical export、Share Card、guided state 与 deep link 都要定义新语义。若只做一个颜色 overlay，会把一个真正的 change-review 产品缩水成“diff 配色”。
 
@@ -152,14 +152,14 @@ drawio-skill 目前的强项已经不只是画图：它有 code / IaC / SQL impo
 
 - 把 Architecture Delta 作为独立 RFC：先定义可比性、stable ID、geometry ownership 与 machine receipt，再接 PR Card。
 
-**Archify 已经具备**
+**ArchiPam 已经具备**
 
 - layout-preserving presets、typed identity、Chapter Delta（同一 artifact 内的 authored view 对比）、Share Cards、self-contained viewer 与两轮视觉复核。
 
 **不要复制**
 
 - `.drawio` XML、draw.io desktop、Graphviz、10,000+ icon catalogue、37 个松散脚本与 general-purpose editor surface。
-- 仅为“动起来”复制 looping marching ants。Archify 的 motion 必须有限、由读者控制、静态含义完整。
+- 仅为“动起来”复制 looping marching ants。ArchiPam 的 motion 必须有限、由读者控制、静态含义完整。
 
 ## 3. 决策矩阵
 
@@ -238,7 +238,7 @@ drawio-skill 目前的强项已经不只是画图：它有 code / IaC / SQL impo
 3. 当前 production-deployment source 升级为正向 fixture，并补精确反例；
 4. `validate` / `deliver` receipt 公开 profile passed 状态；
 5. SKILL、schema reference、README/CHANGELOG/ROADMAP 的窄说明；
-6. 重建 `archify.zip`，并让同一 package smoke 在 Ubuntu / macOS / Windows 跑最小静态子集；
+6. 重建 `archipam.zip`，并让同一 package smoke 在 Ubuntu / macOS / Windows 跑最小静态子集；
 7. 内置浏览器对真实 deployment proof 做桌面验收。
 
 明确不做：
@@ -262,7 +262,7 @@ drawio-skill 目前的强项已经不只是画图：它有 code / IaC / SQL impo
 
 Architecture Delta 是本轮研究中唯一比“再做一个 viewer 小功能”更强的后续候选。drawio-skill 已经证明 diff / PR report / time-lapse 很有传播力；GitNexus 的 `detect_changes` 也证明开发者愿意围绕变化而不是静态全景工作。
 
-但 Archify 必须先回答这些问题，才能不缩水：
+但 ArchiPam 必须先回答这些问题，才能不缩水：
 
 1. 两份 IR 的 diagram type、schema version、repository revision 与 quality profile 怎样判定可比？
 2. 没有 authored relationship ID 时，是 fail closed，还是允许 collection index？
@@ -282,7 +282,7 @@ Architecture Delta 是本轮研究中唯一比“再做一个 viewer 小功能�
 
 ## 一手来源
 
-- Archify committed baseline：[repository](https://github.com/tt-a1i/archify/tree/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782)、[README](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/README.md)、[Architecture schema](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archify/schemas/architecture.schema.json)、[deployment proof source](https://github.com/tt-a1i/archify/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archify/examples/production-deployment.architecture.json)
+- ArchiPam committed baseline：[repository](https://github.com/licpmb/Archi/tree/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782)、[README](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/README.md)、[Architecture schema](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archipam/schemas/architecture.schema.json)、[deployment proof source](https://github.com/licpmb/Archi/blob/a73047b27e3b423fc8ab6ebd1ac84fd4ecb2e782/archipam/examples/production-deployment.architecture.json)
 - Fireworks Tech Graph：[README](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/README.md)、[Cloud Fabric contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/style-10-cloud-fabric.md)、[semantic tests](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/tests/test_semantic_contracts.py)、[v1.1.0](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/releases/tag/v1.1.0)、[v1.2.0](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/releases/tag/v1.2.0)
 - GitDiagram：[README](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/README.md)、[social card source](https://github.com/ahmedkhaleel2004/gitdiagram/blob/041d2feb4a9b1593dcf3bde2ca5b9ae7659becb9/src/server/og/cards.tsx)
 - GitNexus：[README](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/README.md)、[TESTING](https://github.com/abhigyanpatwari/GitNexus/blob/cdbdf219dce797e51cdeb8cfa386e77ab2d35628/TESTING.md)

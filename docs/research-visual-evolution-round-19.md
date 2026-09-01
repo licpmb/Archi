@@ -4,14 +4,14 @@ Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Product question
 
-Archify has strong committed exploration after a reader clicks a node: Semantic
+ArchiPam has strong committed exploration after a reader clicks a node: Semantic
 Camera frames its neighborhood, Semantic Passport explains it, Relationship Lens
 lists exact connections, and Semantic Radar preserves spatial context. The first
 exploration moment is weaker. Before clicking, a node only gains a glow, so a new
 reader cannot tell whether the click will reveal metadata, navigate away, or edit
 the diagram.
 
-Can Archify make the diagram feel immediately explorable without adding another
+Can ArchiPam make the diagram feel immediately explorable without adding another
 toolbar, tooltip, editor mode, or persistent animation?
 
 ## Primary-source findings
@@ -30,7 +30,7 @@ owns the canvas.
 ### Sigma.js: preview and commitment are distinct events
 
 Sigma's node event model exposes `enterNode` and `leaveNode` separately from
-`clickNode`. The event payload includes the stable node ID. Archify should keep
+`clickNode`. The event payload includes the stable node ID. ArchiPam should keep
 the same semantic split: entering previews one-hop traffic; clicking continues to
 own durable focus, URL state, and details.
 
@@ -39,7 +39,7 @@ own durable focus, URL state, and details.
 ### Cytoscape.js: pointer and touch have different contracts
 
 Cytoscape documents mouseover/mouseout as separate from normalized tap events,
-and notes that labels or details can be delayed until tap/mouseover. Archify
+and notes that labels or details can be delayed until tap/mouseover. ArchiPam
 should not invent a hover dependency for touch users. Touch stays click-to-focus;
 hover is an enhancement for fine pointers, with keyboard focus as its accessible
 equivalent.
@@ -49,7 +49,7 @@ equivalent.
 ### React Flow: node mouse handlers receive semantic node data
 
 React Flow's `NodeMouseHandler` receives both the pointer event and the node that
-triggered it. Archify already has the equivalent stable identity in
+triggered it. ArchiPam already has the equivalent stable identity in
 `data-node-id`; it does not need a graph runtime to implement a small preview
 behavior.
 

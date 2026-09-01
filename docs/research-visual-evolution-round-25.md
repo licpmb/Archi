@@ -4,7 +4,7 @@ Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Product question
 
-Archify already has optional trace animation, one-hop Intent Trace, directed
+ArchiPam already has optional trace animation, one-hop Intent Trace, directed
 Route Probe, Story Trail, and exact Relationship Preview. The next motion change
 should therefore not ask “how can more things move?” It should ask:
 
@@ -16,12 +16,12 @@ on the exact edge already selected by Relationship Preview. This makes the
 diagram feel alive at the moment motion carries meaning, while retaining one
 canonical topology and one stable geometry.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 - Every typed renderer already exposes relationship identity and direction as
   `data-edge-key`, `data-edge-from`, and `data-edge-to`. No motion-specific schema
   or IR field is needed.
-- [`template.html`](../archify/assets/template.html) already clones authored edge
+- [`template.html`](../archipam/assets/template.html) already clones authored edge
   geometry for Intent Trace, Route Probe, and Story Trail. These overlays are
   viewer-only, pointer-transparent, removed on state exit, and stripped from
   canonical SVG export.
@@ -76,7 +76,7 @@ of markers and filters; a runtime sentinel asserts that the static DOM did not
 change at every sampled frame
 ([clone preparation](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/svg2gif.js#L896-L919),
 [static-DOM guard](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/svg2gif.js#L2338-L2402)).
-Archify can borrow this invariant directly with far less machinery.
+ArchiPam can borrow this invariant directly with far less machinery.
 
 The repository also demonstrates where not to copy the delivery model. Its motion
 export requires Chromium and FFmpeg, and the renderer enforces explicit limits of
@@ -87,7 +87,7 @@ Its own website handles reduced motion by replacing animated GIF sources with
 static PNGs, because a standalone GIF cannot respond to a live CSS preference
 ([showcase markup](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/index.html#L223-L246),
 [preference switch](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/index.html#L313-L316)).
-Archify's self-contained HTML viewer can apply the preference directly and should
+ArchiPam's self-contained HTML viewer can apply the preference directly and should
 keep its zero-runtime-dependency advantage.
 
 ### G6: useful motion is attached to a graph event or lifecycle stage
@@ -103,7 +103,7 @@ including the selected element and a bounded neighbor degree
 [event binding and state update](https://github.com/antvis/G6/blob/7b7ff8e2b52609486840963dc1608d9f565e7f66/packages/g6/src/behaviors/click-select.ts#L129-L168)).
 
 The transferable idea is stage ownership: creation, selection, preview, and
-removal decide when motion exists. Archify does not need G6's renderer, extension
+removal decide when motion exists. ArchiPam does not need G6's renderer, extension
 registry, state engine, or dependency graph to follow the same rule.
 
 ### Sigma.js: schedule only necessary work and cancel owned frames
@@ -113,7 +113,7 @@ Sigma's renderer coalesces repeated render requests into one
 discarding state
 ([scheduler source](https://github.com/jacomyal/sigma.js/blob/d32c4e5bfd4c5f49724ebc21bd786b01be555dac/packages/sigma/src/sigma.ts#L2128-L2155),
 [cleanup source](https://github.com/jacomyal/sigma.js/blob/d32c4e5bfd4c5f49724ebc21bd786b01be555dac/packages/sigma/src/sigma.ts#L2368-L2389)).
-For Archify's smaller fixed SVGs, the simpler equivalent is stronger: create at
+For ArchiPam's smaller fixed SVGs, the simpler equivalent is stronger: create at
 most one exact-edge overlay on preview entry, let a finite CSS animation run, and
 remove the overlay on preview exit. There is no reason to add a perpetual JavaScript
 frame loop or reprocess the graph.
@@ -133,7 +133,7 @@ sufficient route
 [C39 technique](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)).
 
 This rules out an infinite Relationship Preview or Intent Trace loop on hover.
-The safer Archify grammar is a short one-shot directional pulse, with the static
+The safer ArchiPam grammar is a short one-shot directional pulse, with the static
 edge, arrow, endpoint emphasis, and text retaining all meaning when motion is
 reduced or already finished.
 
@@ -240,7 +240,7 @@ reduced or already finished.
     viewer-only motion state.
 12. Focused contract tests cover exact-edge ownership, direction, finite timing,
     reduced motion, cleanup, canonical export, and all five renderers; the complete
-    Archify suite and Proof Lab remain green.
+    ArchiPam suite and Proof Lab remain green.
 
 ## Recommendation
 
@@ -252,7 +252,7 @@ Sigma reinforces bounded scheduling and cleanup, and W3C sets the line against
 passive infinite loops.
 
 The result should be one precise packet, one real relationship, one short pass,
-and zero new runtime architecture. That is enough movement to make Archify feel
+and zero new runtime architecture. That is enough movement to make ArchiPam feel
 alive without sacrificing its strongest differentiators: stable geometry,
 self-contained artifacts, accessibility, canonical export, and zero dependencies.
 

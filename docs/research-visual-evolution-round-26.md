@@ -4,7 +4,7 @@ Research date: 2026-07-20 (Asia/Shanghai)
 
 ## Executive decision
 
-Archify should add one **finite, source-to-target Directional Flow Pulse** to the
+ArchiPam should add one **finite, source-to-target Directional Flow Pulse** to the
 relationship row that Relationship Preview already owns.
 
 - A fine pointer entering a row, or keyboard focus entering it, previews the
@@ -25,14 +25,14 @@ relationship row that Relationship Preview already owns.
 This is a motion *explanation*, not motion *content*. Direction remains fully
 legible after the pulse and when all animation is disabled.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 The recommendation fits the viewer that exists today rather than inventing a new
 surface:
 
 - Every renderer already emits stable relationship hooks:
   `data-edge-key`, `data-edge-from`, and `data-edge-to`.
-- [`template.html`](../archify/assets/template.html) already resolves each
+- [`template.html`](../archipam/assets/template.html) already resolves each
   Relationship Lens row to one exact edge key and its real source and target.
   Pointer hover and keyboard focus own temporary Relationship Preview; row
   activation follows the neighboring node.
@@ -87,7 +87,7 @@ infinitely
 ([bounded frame API](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/svg2gif.js#L2341-L2351),
 [render budgets](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/svg2gif.js#L2735-L2782)).
 
-**Archify inference:** borrow the one bright head, exact path direction, immutable
+**ArchiPam inference:** borrow the one bright head, exact path direction, immutable
 base DOM, bounded lifetime, and explicit cleanup. Do not borrow the body stream,
 reset loop, scene metadata, Puppeteer/Chromium/FFmpeg pipeline, or whole-diagram
 autoplay.
@@ -106,7 +106,7 @@ an ambient loop
 ([official example source](https://github.com/antvis/G6/blob/7b7ff8e2b52609486840963dc1608d9f565e7f66/packages/site/examples/animation/basic/demo/enter-edge-path-in.js#L3-L11),
 [action that owns the animation](https://github.com/antvis/G6/blob/7b7ff8e2b52609486840963dc1608d9f565e7f66/packages/site/examples/animation/basic/demo/enter-edge-path-in.js#L36-L57)).
 
-**Archify inference:** Relationship Preview entry is the owning lifecycle stage.
+**ArchiPam inference:** Relationship Preview entry is the owning lifecycle stage.
 No durable “animation selected” state is needed once the pulse completes.
 
 ### 3. yFiles: decorate the graph; do not mutate it
@@ -126,7 +126,7 @@ from the library's hit testing and that exported SVG needs explicit stylesheet
 handling
 ([CSS item-style caveats](https://docs.yworks.com/yfiles-html/dguide/styles-css_item_class/)).
 
-**Archify inference:** keep the original edge as the hit target and semantic
+**ArchiPam inference:** keep the original edge as the hit target and semantic
 artifact. A pointer-transparent overlay may be brighter, but it must not change
 edge hit geometry, labels, markers, or export bytes.
 
@@ -138,7 +138,7 @@ disabled by default unless the application explicitly enables them
 ([official event reference](https://www.sigmajs.org/docs/advanced/events/)).
 
 This is an important restraint: edge feedback is a reader-requested mode, not a
-background assumption. Archify already has a better hit target—the named
+background assumption. ArchiPam already has a better hit target—the named
 relationship row—so it should not enable direct thin-edge picking merely to start
 the pulse.
 
@@ -156,7 +156,7 @@ collection `stop(clearQueue, jumpToEnd)` and `clearQueue()` are explicit
 ([animation stop contract](https://js.cytoscape.org/#ani.stop),
 [element animation cleanup](https://js.cytoscape.org/#eles.stop)).
 
-**Archify inference:** a CSS-only one-shot is smaller than a queued animation
+**ArchiPam inference:** a CSS-only one-shot is smaller than a queued animation
 runtime, but it still needs equal ownership hygiene: remove the previous overlay
 before starting a new one, and remove completed/cancelled overlays rather than
 leaving inert clones in the SVG.
@@ -194,7 +194,7 @@ change the viewport, or alter meaning; Enter/Space remains the explicit
 navigation action
 ([WCAG On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus)).
 
-An Archify relationship row is already a button. The HTML Standard forbids
+An ArchiPam relationship row is already a button. The HTML Standard forbids
 interactive descendants or descendants with `tabindex` inside a button
 ([button content model](https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element)).
 A sibling Replay button would be conforming HTML, but it would double row targets

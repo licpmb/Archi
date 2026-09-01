@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publicGuideData } from '../archify/recipes/scenarios.mjs';
+import { publicGuideData } from '../archipam/recipes/scenarios.mjs';
 import { copySiteAssets } from './copy-site-assets.mjs';
 import { diagramTypeCopyReplacements } from './site-copy.mjs';
 
@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const templatePath = path.join(__dirname, 'guide-template.html');
 const outputPath = path.resolve(process.argv[2] || path.join(repoRoot, 'docs/guide.html'));
-const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'archify/package.json'), 'utf8'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'archipam/package.json'), 'utf8'));
 
 const guideJson = JSON.stringify(publicGuideData())
   .replaceAll('&', '\\u0026')
@@ -20,7 +20,7 @@ const guideJson = JSON.stringify(publicGuideData())
 
 const replacements = {
   ...diagramTypeCopyReplacements(),
-  '[[ARCHIFY_VERSION]]': packageJson.version,
+  '[[ARCHIPAM_VERSION]]': packageJson.version,
   '[[RECIPE_COUNT]]': String(publicGuideData().length),
   '[[GUIDE_JSON]]': guideJson,
 };

@@ -10,11 +10,11 @@ import { runWithTransientNetworkRetry } from './transient-retry.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
-const PACKAGE_NAME = '@tt-a1i/archify-dsh';
+const PACKAGE_NAME = '@licpmb/archipam-dsh';
 const PACKAGE_VERSION = '0.1.0';
-const DSH_RELEASE_REF = 'archify-dsh-v0.1.0';
+const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
 const DSH_SPEC = '@deepseek-ai/dsh@0.1.0-rc.6';
-const PROFILE = 'archify-dsh-acceptance';
+const PROFILE = 'archipam-dsh-acceptance';
 const DSH_RUNTIME_INSTALL_TIMEOUT = process.platform === 'win32' ? 600_000 : 300_000;
 const PLUGIN_MUTATION_TIMEOUT = 180_000;
 
@@ -131,8 +131,8 @@ function waitForProbe(child, file, timeoutMs) {
   });
 }
 
-const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-acceptance-'));
-const tarball = path.join(scratch, 'tt-a1i-archify-dsh-0.1.0.tgz');
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-acceptance-'));
+const tarball = path.join(scratch, 'tt-a1i-archipam-dsh-0.1.0.tgz');
 const dshHome = path.join(scratch, 'dsh-home');
 const agentsHome = path.join(scratch, 'agents-home');
 const dshRuntime = path.join(scratch, 'dsh-runtime');
@@ -187,8 +187,8 @@ const forbidden = packedFiles.filter((file) => (
 if (packedPkg.name !== PACKAGE_NAME || packedPkg.version !== PACKAGE_VERSION || forbidden.length > 0) {
   fail('tarball-inspect', 'packed identity or exclusions failed', { forbidden, packedPkg });
 }
-if (!packedFiles.includes('skills/archify/SKILL.md')) {
-  fail('tarball-inspect', 'packed tarball is missing the clean Archify Skill');
+if (!packedFiles.includes('skills/archipam/SKILL.md')) {
+  fail('tarball-inspect', 'packed tarball is missing the clean ArchiPam Skill');
 }
 pass('tarball-inspect', { fileCount: packedFiles.length });
 
@@ -197,7 +197,7 @@ const dshEnv = {
   DSH_HOME: dshHome,
   DSH_AGENTS_HOME: agentsHome,
   DSH_TELEMETRY_DISABLED: '1',
-  ARCHIFY_DSH_PROBE_OUT: probeOut,
+  ARCHIPAM_DSH_PROBE_OUT: probeOut,
   npm_config_update_notifier: 'false',
 };
 
@@ -278,34 +278,34 @@ pass('profile-identity', { bundles, dependency: deps[PACKAGE_NAME] });
 const dump = dsh(['--profile', PROFILE, '--dump-config']);
 requireStatus('compose', dump, { command: 'dsh --dump-config' });
 const composed = parseDump(dump.stdout);
-const archifyLayer = composed.layers.find((layer) => layer.name === PACKAGE_NAME);
+const archipamLayer = composed.layers.find((layer) => layer.name === PACKAGE_NAME);
 const originalFilesystem = composed.rows.find((row) => row.id === 'skill-filesystem');
-const archifyProvider = composed.rows.find((row) => row.id === 'archify-skill-filesystem');
-const extraProviders = composed.rows.filter((row) => row.config.providerName === 'archify-plugin');
-if (!dump.stdout.includes(`# == ${PACKAGE_NAME}`) || !archifyLayer) {
-  fail('compose', 'composed dump does not include the Archify bundle layer', { layers: composed.layers.map((layer) => layer.name) });
+const archipamProvider = composed.rows.find((row) => row.id === 'archipam-skill-filesystem');
+const extraProviders = composed.rows.filter((row) => row.config.providerName === 'archipam-plugin');
+if (!dump.stdout.includes(`# == ${PACKAGE_NAME}`) || !archipamLayer) {
+  fail('compose', 'composed dump does not include the ArchiPam bundle layer', { layers: composed.layers.map((layer) => layer.name) });
 }
-if (!originalFilesystem || originalFilesystem.config.providerName === 'archify-plugin') {
+if (!originalFilesystem || originalFilesystem.config.providerName === 'archipam-plugin') {
   fail('compose', 'original DSH skill-filesystem row was replaced', { originalFilesystem });
 }
-if (!archifyProvider || extraProviders.length !== 1 || archifyLayer.rows.length !== 1) {
-  fail('compose', 'composed config did not insert exactly one Archify Skill provider', {
+if (!archipamProvider || extraProviders.length !== 1 || archipamLayer.rows.length !== 1) {
+  fail('compose', 'composed config did not insert exactly one ArchiPam Skill provider', {
     extra: extraProviders.map((row) => row.id),
-    layerRows: archifyLayer.rows.map((row) => row.id),
+    layerRows: archipamLayer.rows.map((row) => row.id),
   });
 }
-if (archifyProvider.config.includeDefaultRoots !== false || archifyProvider.config.providerName !== 'archify-plugin') {
-  fail('compose', 'Archify provider config is not isolated', { archifyProvider });
+if (archipamProvider.config.includeDefaultRoots !== false || archipamProvider.config.providerName !== 'archipam-plugin') {
+  fail('compose', 'ArchiPam provider config is not isolated', { archipamProvider });
 }
 pass('compose', {
-  extraIds: archifyLayer.rows.map((row) => row.id),
-  providerName: 'archify-plugin',
+  extraIds: archipamLayer.rows.map((row) => row.id),
+  providerName: 'archipam-plugin',
 });
 
 const probePatch = path.join(scratch, 'probe.patch.yml');
 const probeModule = path.join(integrationRoot, 'test', 'probe-skills.mjs');
 fs.writeFileSync(probePatch, `- insert:
-    - id: archify-dsh-skill-probe
+    - id: archipam-dsh-skill-probe
       name: ${JSON.stringify(pathToFileURL(probeModule).href)}
       inject: [skills]
 `);
@@ -326,23 +326,23 @@ try {
 }
 probeChild.kill('SIGTERM');
 const probeReceipt = JSON.parse(fs.readFileSync(probeOut, 'utf8'));
-const archifyHits = (probeReceipt.skills || []).filter((skill) => skill.name === 'archify');
-if (archifyHits.length !== 1 || archifyHits[0].provider !== 'archify-plugin') {
-  fail('skill-discovery', 'public Skill registry did not discover archify only from archify-plugin', {
+const archipamHits = (probeReceipt.skills || []).filter((skill) => skill.name === 'archipam');
+if (archipamHits.length !== 1 || archipamHits[0].provider !== 'archipam-plugin') {
+  fail('skill-discovery', 'public Skill registry did not discover archipam only from archipam-plugin', {
     probeReceipt,
     stdout: probeStdout,
     stderr: probeStderr,
   });
 }
-pass('skill-discovery', { provider: 'archify-plugin' });
+pass('skill-discovery', { provider: 'archipam-plugin' });
 
-if (!probeReceipt.definition?.contentLength || probeReceipt.definition.provider !== 'archify-plugin') {
+if (!probeReceipt.definition?.contentLength || probeReceipt.definition.provider !== 'archipam-plugin') {
   fail('skill-load', 'full Skill definition was not loaded', { definition: probeReceipt.definition });
 }
 pass('skill-load', { contentLength: probeReceipt.definition.contentLength });
 
 const resourcePath = probeReceipt.definition.resourceBase?.path || probeReceipt.definition.path;
-const installedPackage = path.join(profileDir, 'node_modules', '@tt-a1i', 'archify-dsh');
+const installedPackage = path.join(profileDir, 'node_modules', '@tt-a1i', 'archipam-dsh');
 let resourceReal;
 let packageReal;
 try {
@@ -356,7 +356,7 @@ const resourceInsidePackage = resourceRelative
   && !resourceRelative.startsWith(`..${path.sep}`)
   && resourceRelative !== '..'
   && !path.isAbsolute(resourceRelative);
-if (!resourceInsidePackage || !resourceReal.includes(`${path.sep}skills${path.sep}archify`)) {
+if (!resourceInsidePackage || !resourceReal.includes(`${path.sep}skills${path.sep}archipam`)) {
   fail('resource-base', 'Skill resource base is not inside the installed tarball package', {
     resourcePath: resourceReal,
     installedPackage: packageReal,
@@ -366,7 +366,7 @@ pass('resource-base', { resourcePath: resourceReal });
 
 const skillRoot = fs.existsSync(path.join(resourceReal, 'SKILL.md'))
   ? resourceReal
-  : path.join(resourceReal, 'archify');
+  : path.join(resourceReal, 'archipam');
 const taggedSmoke = run('git', ['show', `${DSH_RELEASE_REF}:scripts/package-smoke.mjs`], {
   cwd: repoRoot,
 });
@@ -392,17 +392,17 @@ pass('uninstall', { bundles: removedManifest.dsh?.profile?.bundles || [] });
 const baseBootDump = dsh(['--profile', PROFILE, '--dump-config']);
 requireStatus('base-profile', baseBootDump, { command: 'dsh --dump-config after uninstall' });
 const leftover = parseDump(baseBootDump.stdout).rows.filter((row) => (
-  row.id === 'archify-skill-filesystem' || row.config.providerName === 'archify-plugin'
+  row.id === 'archipam-skill-filesystem' || row.config.providerName === 'archipam-plugin'
 ));
 if (leftover.length > 0) {
-  fail('base-profile', 'uninstalled profile still contains the Archify provider', { leftover });
+  fail('base-profile', 'uninstalled profile still contains the ArchiPam provider', { leftover });
 }
 pass('base-profile', { bundles: removedManifest.dsh?.profile?.bundles || [] });
 
-const zipBlob = run('git', ['hash-object', 'archify.zip'], { cwd: repoRoot });
-const pkgBlob = run('git', ['hash-object', 'archify/package.json'], { cwd: repoRoot });
+const zipBlob = run('git', ['hash-object', 'archipam.zip'], { cwd: repoRoot });
+const pkgBlob = run('git', ['hash-object', 'archipam/package.json'], { cwd: repoRoot });
 const skipFreshZipRebuild = process.platform === 'win32';
-const committedZip = path.join(repoRoot, 'archify.zip');
+const committedZip = path.join(repoRoot, 'archipam.zip');
 let unzipContentsIdentical = 'not-asserted';
 let canonicalZipBytes = 'not-asserted';
 if (skipFreshZipRebuild) {
@@ -413,7 +413,7 @@ if (skipFreshZipRebuild) {
   requireStatus('zero-regression', run('tar', ['-xf', 'committed.zip'], { cwd: checkedDir }));
   const currentSmoke = run(process.execPath, [
     path.join(repoRoot, 'scripts', 'package-smoke.mjs'),
-    path.join(checkedDir, 'archify'),
+    path.join(checkedDir, 'archipam'),
   ], { cwd: repoRoot, timeout: 120_000 });
   requireStatus('zero-regression', currentSmoke, { command: 'current package-smoke.mjs <committed-zip-skill-root>' });
   unzipContentsIdentical = 'not-asserted-on-windows';
@@ -426,7 +426,7 @@ if (skipFreshZipRebuild) {
   fs.mkdirSync(checkedDir);
   requireStatus('zero-regression', run('unzip', ['-q', freshZip, '-d', freshDir]));
   requireStatus('zero-regression', run('unzip', ['-q', committedZip, '-d', checkedDir]));
-  const unzipDiff = run('diff', ['-r', path.join(freshDir, 'archify'), path.join(checkedDir, 'archify')]);
+  const unzipDiff = run('diff', ['-r', path.join(freshDir, 'archipam'), path.join(checkedDir, 'archipam')]);
   if (unzipDiff.status !== 0) {
     fail('zero-regression', 'fresh ZIP contents drifted from the committed ZIP', { diff: unzipDiff.stdout });
   }
@@ -441,8 +441,8 @@ if (skipFreshZipRebuild) {
 const skillsList = run('npx', ['-y', 'skills', 'add', repoRoot, '--list', '--full-depth'], { cwd: repoRoot, timeout: 120_000 });
 requireStatus('zero-regression', skillsList, { command: 'npx skills add --list --full-depth' });
 pass('zero-regression', {
-  archifyZipBlob: zipBlob.stdout.trim(),
-  archifyPackageBlob: pkgBlob.stdout.trim(),
+  archipamZipBlob: zipBlob.stdout.trim(),
+  archipamPackageBlob: pkgBlob.stdout.trim(),
   unzipContentsIdentical,
   canonicalZipBytes,
   crossPlatformZipCheck: 'extracted-content',

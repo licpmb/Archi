@@ -5,7 +5,7 @@ Status: implementation-ready research decision
 
 ## Executive decision
 
-Build **Settled Flow**: an ordinary trace-enabled Archify artifact should run
+Build **Settled Flow**: an ordinary trace-enabled ArchiPam artifact should run
 one short ambient flow pass, then return permanently to the exact authored
 relationship styles and a quiet, fully readable topology.
 
@@ -46,7 +46,7 @@ WebM pipeline. It can remain entirely viewer/CSS-owned.
 
 ### Candidate B — another Story or visual-preset feature (**skip**)
 
-Archify already has Story Trail, Story Beats, Story Follow Camera, Story
+ArchiPam already has Story Trail, Story Beats, Story Follow Camera, Story
 Director, Story Horizon, three visual presets, Route Journey, Semantic Flow,
 Relationship Pulse, and reader-controlled Live/Still. Another panel or preset
 would increase surface area without addressing the current infinite loop or
@@ -67,11 +67,11 @@ the incorrect settled relationship style.
 
 ### Infinite ambient ownership
 
-`archify/assets/template.html` currently gives trace edges and nodes:
+`archipam/assets/template.html` currently gives trace edges and nodes:
 
 ```css
-animation: archify-edge-flow 2.4s linear infinite;
-animation: archify-node-pulse 3.6s ease-in-out infinite;
+animation: archipam-edge-flow 2.4s linear infinite;
+animation: archipam-node-pulse 3.6s ease-in-out infinite;
 ```
 
 Signal Flow and Blueprint adjust duration and treatment, but not the infinite
@@ -130,7 +130,7 @@ Sources:
 
 **Borrow:** finite semantic order, a readable settled result, and immutable
 source topology.
-**Adapt:** Archify can reuse its existing CSS markers and six-second WebM
+**Adapt:** ArchiPam can reuse its existing CSS markers and six-second WebM
 surface; it does not need Fireworks' GIF renderer or scene metadata.
 **Skip:** twelve scene contracts, Puppeteer/FFmpeg, motion-role schema, GIF-only
 distribution, copied signature effects, and continuously moving settled rails.
@@ -149,7 +149,7 @@ Sources:
 
 **Borrow:** motion has a bounded explanatory job; static export remains an
 explicit stable artifact.
-**Adapt:** Archify's Story features already own deliberate step navigation, so
+**Adapt:** ArchiPam's Story features already own deliberate step navigation, so
 ambient trace should simply introduce and settle.
 **Skip:** a new step UI or export mode.
 
@@ -164,7 +164,7 @@ Source:
 
 **Borrow:** transient explanation must not mutate the durable relationship
 model.
-**Adapt:** treat Archify animation state as viewer-only; authored classes and
+**Adapt:** treat ArchiPam animation state as viewer-only; authored classes and
 canonical SVG remain authoritative.
 **Skip:** a new dynamic-view DSL, notes schema, or parallel-story authoring.
 
@@ -316,7 +316,7 @@ Implement Settled Flow now.
 
 The transferable lesson from Fireworks is not the number of styles or the GIF
 pipeline. It is the discipline of a finite semantic construction followed by a
-legible settled topology, with source geometry and meaning preserved. Archify
+legible settled topology, with source geometry and meaning preserved. ArchiPam
 can absorb that lesson more cleanly: one dependency-free viewer contract across
 five renderers, existing reader-controlled interactions, existing WebM export,
 and exact restoration of the author's relationship language.

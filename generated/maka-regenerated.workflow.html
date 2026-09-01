@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="generator" content="archify 2.16.0-dev.0">
+  <meta name="generator" content="archipam 2.16.0-dev.0">
   <title>Maka 托管执行、受控工具与可恢复事实</title>
   <script>
     // Resolve the theme before first paint so light-preference users don't
@@ -22,7 +22,7 @@
           }
         } catch (_) {}
         if (!theme) {
-          try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
+          try { theme = localStorage.getItem('archipam-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
           theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -31,15 +31,8 @@
       } catch (_) {}
     })();
   </script>
-  <!-- Async font load: a blackholed network must not block first paint.
-       The body font stack falls back to system monospace until it lands. -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </noscript>
-  <style>
+  <!-- Offline-safe font policy: use the local/system monospace stack only. -->
+<style>
     /* ==========================================================
        THEME VARIABLES — switch by toggling [data-theme] on <html>
        ========================================================== */
@@ -441,7 +434,7 @@
       box-shadow: 0 14px 42px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.045);
       backdrop-filter: blur(16px);
       pointer-events: none;
-      animation: archify-share-cue-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: archipam-share-cue-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     html[data-preset="blueprint"] .share-chapter-cue {
       border-radius: 0.2rem;
@@ -491,7 +484,7 @@
       content: '';
     }
     .share-chapter-cue[data-state="playing"] .share-chapter-state::before {
-      animation: archify-share-cue-pulse 1.15s ease-in-out infinite;
+      animation: archipam-share-cue-pulse 1.15s ease-in-out infinite;
     }
     .share-chapter-count {
       color: var(--text-faint);
@@ -586,7 +579,7 @@
       justify-content: center;
       min-height: 0;
       padding: 0.75rem;
-      padding-bottom: calc(0.75rem + var(--archify-nav-reserve));
+      padding-bottom: calc(0.75rem + var(--archipam-nav-reserve));
     }
     html[data-present="true"]:not([data-embed="true"]) .diagram-container > svg {
       width: 100%;
@@ -605,7 +598,7 @@
        jumps between a laptop and a tall monitor. */
     .container {
       width: 100%;
-      max-width: var(--archify-reader-width, 1440px);
+      max-width: var(--archipam-reader-width, 1440px);
       margin: 0 auto;
     }
     @media (min-width: 768px) and (max-height: 920px) {
@@ -723,12 +716,12 @@
     }
 
     .diagram-container {
-      --archify-nav-reserve: 0px;
+      --archipam-nav-reserve: 0px;
       background: var(--panel);
       border-radius: 1rem;
       border: 1px solid var(--panel-border);
       padding: 1.5rem;
-      padding-bottom: calc(1.5rem + var(--archify-nav-reserve));
+      padding-bottom: calc(1.5rem + var(--archipam-nav-reserve));
       overflow: hidden;
       position: relative;
     }
@@ -804,7 +797,7 @@
       pointer-events: none;
       background: linear-gradient(115deg, transparent 28%, rgba(103, 232, 249, 0.035) 48%, transparent 68%);
       transform: translateX(-70%);
-      animation: archify-signal-scan 4.8s ease-in-out 1 both;
+      animation: archipam-signal-scan 4.8s ease-in-out 1 both;
     }
 
     /* Motion Governor gives the reader a real static state and gives the
@@ -1055,7 +1048,7 @@
     .overview-map {
       position: absolute;
       right: 1rem;
-      bottom: calc(4.15rem + var(--archify-nav-reserve));
+      bottom: calc(4.15rem + var(--archipam-nav-reserve));
       z-index: 12;
       width: 11.25rem;
       overflow: hidden;
@@ -1070,13 +1063,13 @@
     .overview-map[hidden] { display: none; }
     .overview-map[data-docked="true"] {
       position: fixed;
-      right: var(--archify-radar-right, 1rem);
-      top: var(--archify-radar-top, 1rem);
+      right: var(--archipam-radar-right, 1rem);
+      top: var(--archipam-radar-top, 1rem);
       bottom: auto;
     }
     .overview-map[data-docked="true"][data-dock-side="left"] {
       right: auto;
-      left: var(--archify-radar-left, 1rem);
+      left: var(--archipam-radar-left, 1rem);
     }
     html[data-preset="blueprint"] .overview-map { border-radius: 0.28rem; }
     .overview-map-head {
@@ -1125,7 +1118,7 @@
       border-radius: 50%;
       background: var(--backend-stroke);
       box-shadow: 0 0 0 0 color-mix(in srgb, var(--backend-stroke) 52%, transparent);
-      animation: archify-radar-live 2.4s ease-out infinite;
+      animation: archipam-radar-live 2.4s ease-out infinite;
     }
     .overview-map-copy { min-width: 0; line-height: 1.1; }
     .overview-map-copy strong {
@@ -1300,7 +1293,7 @@
     .semantic-lens {
       position: absolute;
       right: 1rem;
-      bottom: calc(4.15rem + var(--archify-nav-reserve));
+      bottom: calc(4.15rem + var(--archipam-nav-reserve));
       z-index: 24;
       width: min(20rem, calc(100% - 2rem));
       overflow: hidden;
@@ -1312,7 +1305,7 @@
       color: var(--toolbar-text);
       box-shadow: 0 18px 52px rgba(0, 0, 0, 0.36);
       backdrop-filter: blur(18px);
-      animation: archify-lens-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
+      animation: archipam-lens-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .semantic-lens[hidden] { display: none; }
     .semantic-lens[data-dock-side="left"] { left: 1rem; right: auto; }
@@ -1464,7 +1457,7 @@
     }
     .semantic-lens-actions button:hover { background: var(--toolbar-hover); }
     .semantic-lens-actions #semantic-lens-copy { color: var(--database-stroke); }
-    @keyframes archify-lens-in {
+    @keyframes archipam-lens-in {
       from { opacity: 0; transform: translateY(5px) scale(0.985); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
@@ -1475,7 +1468,7 @@
     .route-probe {
       position: absolute;
       left: 1rem;
-      bottom: calc(1rem + var(--archify-nav-reserve));
+      bottom: calc(1rem + var(--archipam-nav-reserve));
       z-index: 12;
       width: min(46rem, calc(100% - 25rem));
       min-width: 18rem;
@@ -2014,7 +2007,7 @@
       color: var(--toolbar-text);
       box-shadow: 0 22px 64px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(18px);
-      animation: archify-guide-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
+      animation: archipam-guide-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .diagram-guide[hidden] { display: none; }
     html[data-preset="blueprint"] .diagram-guide { border-radius: 0.28rem; }
@@ -2184,7 +2177,7 @@
       font-size: 0.5rem;
     }
     .diagram-guide-feedback:empty { display: none; }
-    @keyframes archify-guide-in {
+    @keyframes archipam-guide-in {
       from { opacity: 0; transform: translateY(-5px) scale(0.985); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
@@ -2456,12 +2449,12 @@
       stroke-dasharray: 4 4;
       vector-effect: non-scaling-stroke;
       opacity: 0.96;
-      animation: archify-chapter-anchor 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: archipam-chapter-anchor 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     svg[data-chapter-handoff] [data-node-id][data-chapter-role="stay"] { opacity: 1; }
     svg[data-chapter-handoff] [data-node-id][data-chapter-role="enter"] { opacity: 0.78; }
     svg[data-chapter-handoff] [data-node-id][data-chapter-role="leave"] { opacity: 0.26; }
-    @keyframes archify-chapter-anchor {
+    @keyframes archipam-chapter-anchor {
       0% { opacity: 0.35; stroke-dashoffset: 8; }
       45% { opacity: 1; }
       100% { opacity: 0.72; stroke-dashoffset: 0; }
@@ -2498,7 +2491,7 @@
       border: 1px solid color-mix(in srgb, var(--frontend-stroke) 32%, var(--toolbar-border));
       border-radius: 0.58rem;
       background: color-mix(in srgb, var(--frontend-fill) 26%, transparent);
-      animation: archify-story-caption-in 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: archipam-story-caption-in 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     .guided-story-caption[hidden] { display: none; }
     .guided-story-caption-index {
@@ -2547,7 +2540,7 @@
     html[data-preset="blueprint"] .guided-story-caption { border-radius: 0.2rem; }
     .guided-views[data-story-beat] .guided-view-copy > #guided-view-label,
     .guided-views[data-story-beat] .guided-view-copy > #guided-view-note { display: none; }
-    @keyframes archify-story-caption-in {
+    @keyframes archipam-story-caption-in {
       from { opacity: 0; transform: translateY(3px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -2876,7 +2869,7 @@
       .header { margin-bottom: 1rem; }
       .diagram-container {
         padding: 0.875rem;
-        padding-bottom: calc(0.875rem + var(--archify-nav-reserve));
+        padding-bottom: calc(0.875rem + var(--archipam-nav-reserve));
       }
       .cards { margin-top: 1rem; }
       .card { padding: 1rem; }
@@ -2993,13 +2986,13 @@
       }
       body { background: #ffffff !important; padding: 0; }
       .container { max-width: none; }
-      .toolbar, .diagram-nav, .focus-chip, .guided-views, .archify-toast, .no-print { display: none !important; }
+      .toolbar, .diagram-nav, .focus-chip, .guided-views, .archipam-toast, .no-print { display: none !important; }
       .chapter-handoff-overlay { display: none !important; }
       svg [data-node-id][data-chapter-role] { opacity: 1 !important; }
       svg[data-chapter-preview] [data-node-id],
       svg[data-chapter-preview] [data-edge-from] { opacity: 1 !important; filter: none !important; }
       .diagram-container, .card { box-shadow: none; border-color: #e2e8f0; }
-      .diagram-container { --archify-nav-reserve: 0px !important; }
+      .diagram-container { --archipam-nav-reserve: 0px !important; }
       html[data-preset="signal-flow"] .diagram-container,
       html[data-preset="signal-flow"] .card { background: #ffffff; }
       .cards { grid-template-columns: 1fr 1fr; }
@@ -3538,7 +3531,7 @@
     }
 
     /* Toast — brief feedback for actions like "copied" */
-    .archify-toast {
+    .archipam-toast {
       position: fixed;
       top: 1rem;
       left: 50%;
@@ -3556,7 +3549,7 @@
       pointer-events: none;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-    .archify-toast.show {
+    .archipam-toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
@@ -3636,7 +3629,7 @@
       html:not([data-embed="true"]) .diagram-container[data-wide-diagram="true"] .semantic-lens,
       html:not([data-embed="true"]) .diagram-container[data-wide-diagram="true"] .diagram-guide,
       html:not([data-embed="true"]) .diagram-container[data-wide-diagram="true"] .node-finder {
-        transform: translateX(var(--archify-scroll-x, 0px));
+        transform: translateX(var(--archipam-scroll-x, 0px));
       }
       .diagram-nav { right: 0.5rem; bottom: 0.5rem; }
       .diagram-nav button {
@@ -3651,14 +3644,14 @@
         width: min(10.25rem, calc(100% - 1rem));
       }
       .overview-map[data-docked="true"] {
-        right: var(--archify-radar-right, 0.5rem);
-        top: var(--archify-radar-top, 0.5rem);
+        right: var(--archipam-radar-right, 0.5rem);
+        top: var(--archipam-radar-top, 0.5rem);
         bottom: auto;
         transform: none !important;
       }
       .overview-map[data-docked="true"][data-dock-side="left"] {
         right: auto;
-        left: var(--archify-radar-left, 0.5rem);
+        left: var(--archipam-radar-left, 0.5rem);
       }
       .overview-map-surface { height: 4rem; }
       .overview-map-feedback { right: 0.5rem; bottom: 3.7rem; }
@@ -3974,7 +3967,7 @@
     svg .s-external   { color: var(--external-stroke); }
 
     /* Brand Marks are authored identity badges. Their color is contained
-       inside one neutral plate so vendor color never replaces Archify's
+       inside one neutral plate so vendor color never replaces ArchiPam's
        semantic node and relationship vocabulary. */
     svg .brand-mark { pointer-events: none; }
     svg .brand-mark-badge { fill: #fff; stroke: none; }
@@ -4174,7 +4167,7 @@
       stroke-dashoffset: 0;
       vector-effect: non-scaling-stroke;
       opacity: 0.9;
-      animation: archify-semantic-lens-flow 1.35s linear 1 both;
+      animation: archipam-semantic-lens-flow 1.35s linear 1 both;
       animation-delay: var(--lens-flow-delay, 0s);
     }
     .semantic-lens-flow[data-direction="out"],
@@ -4327,7 +4320,7 @@
       vector-effect: non-scaling-stroke;
       opacity: 0;
       filter: drop-shadow(0 0 4px var(--arrow-emphasis));
-      animation: archify-relationship-pulse 1.2s linear 1 both;
+      animation: archipam-relationship-pulse 1.2s linear 1 both;
     }
     svg[data-preset="signal-flow"] .relationship-flow-pulse {
       stroke: var(--frontend-stroke);
@@ -4350,10 +4343,10 @@
       pointer-events: none;
     }
     .relationship-flow-token {
-      animation: archify-relationship-token-life 1.2s linear 1 both;
+      animation: archipam-relationship-token-life 1.2s linear 1 both;
     }
     .story-flow-token {
-      animation: archify-relationship-token-life 0.78s linear 1 both;
+      animation: archipam-relationship-token-life 0.78s linear 1 both;
     }
     .semantic-flow-token-halo {
       fill: var(--mask);
@@ -4407,7 +4400,7 @@
       stroke-dashoffset: 0;
       vector-effect: non-scaling-stroke;
       opacity: 0.94;
-      animation: archify-intent-trace-flow 1.15s linear 1 both;
+      animation: archipam-intent-trace-flow 1.15s linear 1 both;
     }
     /* Direction names describe each edge relative to the focused node only.
        The cloned geometry already runs from the authored source to target, so
@@ -4489,7 +4482,7 @@
       vector-effect: non-scaling-stroke;
       opacity: 0.96;
       filter: drop-shadow(0 0 5px var(--backend-stroke));
-      animation: archify-route-probe-flow 1.1s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+      animation: archipam-route-probe-flow 1.1s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
       animation-delay: calc(var(--route-step, 0) * 0.16s);
     }
     .route-journey-flow {
@@ -4502,7 +4495,7 @@
       vector-effect: non-scaling-stroke;
       opacity: 0;
       filter: drop-shadow(0 0 6px var(--backend-stroke));
-      animation: archify-route-journey-flow 780ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+      animation: archipam-route-journey-flow 780ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
     }
     svg[data-preset="blueprint"] [data-route-start],
     svg[data-preset="blueprint"] [data-route-end],
@@ -4591,7 +4584,7 @@
     svg[data-story-beat] [data-story-step][data-story-beat-state="active"] {
       opacity: 1;
       filter: drop-shadow(0 0 7px var(--frontend-stroke));
-      animation: archify-story-beat-node 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: archipam-story-beat-node 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     svg[data-story-beat] [data-edge-from][data-story-beat-step] {
       opacity: 0.16;
@@ -4608,7 +4601,7 @@
       stroke-dasharray: 2 13;
       stroke-dashoffset: 30;
       opacity: 0.92;
-      animation: archify-story-flow 0.78s linear 1 both;
+      animation: archipam-story-flow 0.78s linear 1 both;
     }
     svg[data-preset="blueprint"] .story-trail-flow {
       stroke-linecap: square;
@@ -4658,13 +4651,13 @@
        authored solid/security/async line language. WebM samples the same
        authored geometry into an explicit canvas timeline. */
     html[data-ambient-motion="running"] svg[data-animation="trace"] [data-animate="edge"] {
-      animation: archify-edge-flow 2.4s linear 1;
+      animation: archipam-edge-flow 2.4s linear 1;
       animation-delay: calc(var(--step, 0) * 160ms);
     }
     html[data-ambient-motion="running"] svg[data-animation="trace"] [data-animate="node"] {
       transform-box: fill-box;
       transform-origin: center;
-      animation: archify-node-pulse 3.6s ease-in-out 1;
+      animation: archipam-node-pulse 3.6s ease-in-out 1;
       animation-delay: calc(var(--step, 0) * 160ms);
     }
     svg[data-preset="signal-flow"][data-animation="trace"] [data-animate="edge"] {
@@ -4681,7 +4674,7 @@
       animation-duration: 2.15s;
     }
     svg[data-preset="blueprint"][data-animation="trace"] [data-animate="node"] {
-      animation-name: archify-blueprint-node-pulse;
+      animation-name: archipam-blueprint-node-pulse;
       animation-duration: 3.8s;
     }
     svg[data-preset="editorial"][data-animation="trace"] [data-animate="edge"] {
@@ -4689,7 +4682,7 @@
       animation-duration: 2.2s;
     }
     svg[data-preset="editorial"][data-animation="trace"] [data-animate="node"] {
-      animation-name: archify-editorial-node-pulse;
+      animation-name: archipam-editorial-node-pulse;
       animation-duration: 3.5s;
     }
     /* Embedded proofs are static until a named Story Trail chapter is played.
@@ -4700,83 +4693,83 @@
       animation: none !important;
       stroke-dashoffset: 0;
     }
-    @keyframes archify-edge-flow {
+    @keyframes archipam-edge-flow {
       0% { stroke-dasharray: 10 8; stroke-dashoffset: 54; opacity: 0.42; }
       88% { stroke-dasharray: 10 8; stroke-dashoffset: 0; opacity: 1; }
       99.9% { stroke-dasharray: 10 8; stroke-dashoffset: 0; opacity: 1; }
       100% { stroke-dashoffset: 0; opacity: 1; }
     }
-    @keyframes archify-node-pulse {
+    @keyframes archipam-node-pulse {
       0%, 72%, 100% { filter: none; stroke-width: 1.5; }
       18%, 36% {
         filter: drop-shadow(0 0 8px var(--arrow-emphasis));
         stroke-width: 2.4;
       }
     }
-    @keyframes archify-blueprint-node-pulse {
+    @keyframes archipam-blueprint-node-pulse {
       0%, 72%, 100% { opacity: 1; filter: none; }
       18%, 36% { opacity: 0.72; filter: drop-shadow(0 0 2px var(--frontend-stroke)); }
     }
-    @keyframes archify-editorial-node-pulse {
+    @keyframes archipam-editorial-node-pulse {
       0%, 72%, 100% { opacity: 1; filter: none; }
       18%, 36% { opacity: 0.78; filter: drop-shadow(0 2px 2px color-mix(in srgb, var(--text) 18%, transparent)); }
     }
-    @keyframes archify-signal-scan {
+    @keyframes archipam-signal-scan {
       0%, 18% { opacity: 1; transform: translateX(-70%); }
       70% { opacity: 1; transform: translateX(70%); }
       100% { opacity: 0; transform: translateX(70%); }
     }
-    @keyframes archify-radar-live {
+    @keyframes archipam-radar-live {
       0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--backend-stroke) 52%, transparent); }
       55%, 100% { box-shadow: 0 0 0 0.32rem transparent; }
     }
-    @keyframes archify-guided-progress {
+    @keyframes archipam-guided-progress {
       from { transform: scaleX(var(--guided-progress-start, 0)); }
       to { transform: scaleX(1); }
     }
-    @keyframes archify-story-flow {
+    @keyframes archipam-story-flow {
       to { stroke-dashoffset: 0; }
     }
-    @keyframes archify-intent-trace-flow {
+    @keyframes archipam-intent-trace-flow {
       0% { opacity: 0.28; stroke-dashoffset: 0; }
       12%, 78% { opacity: 0.94; }
       100% { opacity: 0; stroke-dashoffset: -1; }
     }
-    @keyframes archify-route-probe-flow {
+    @keyframes archipam-route-probe-flow {
       0% { stroke-dashoffset: 0; opacity: 0.96; }
       78% { stroke-dashoffset: -1; opacity: 0.96; }
       100% { stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.58; }
     }
-    @keyframes archify-route-journey-flow {
+    @keyframes archipam-route-journey-flow {
       0% { opacity: 0.16; stroke-dashoffset: 0; }
       14%, 76% { opacity: 1; }
       100% { opacity: 0; stroke-dashoffset: -1; }
     }
-    @keyframes archify-semantic-lens-flow {
+    @keyframes archipam-semantic-lens-flow {
       0% { opacity: 0.2; stroke-dashoffset: 0; }
       12%, 78% { opacity: 0.9; }
       100% { opacity: 0; stroke-dashoffset: -1; }
     }
-    @keyframes archify-relationship-pulse {
+    @keyframes archipam-relationship-pulse {
       0% { opacity: 0.18; stroke-dashoffset: 0; }
       10%, 76% { opacity: 0.98; }
       100% { opacity: 0; stroke-dashoffset: -1; }
     }
-    @keyframes archify-relationship-token-life {
+    @keyframes archipam-relationship-token-life {
       0%, 7% { opacity: 0; }
       13%, 82% { opacity: 1; }
       100% { opacity: 0; }
     }
-    @keyframes archify-story-beat-node {
+    @keyframes archipam-story-beat-node {
       from { opacity: 0.48; filter: saturate(0.6); }
       58% { opacity: 1; filter: drop-shadow(0 0 10px var(--frontend-stroke)); }
       to { opacity: 1; filter: drop-shadow(0 0 7px var(--frontend-stroke)); }
     }
-    @keyframes archify-share-cue-enter {
+    @keyframes archipam-share-cue-enter {
       from { opacity: 0; transform: translate(-50%, -0.45rem); }
       to { opacity: 1; transform: translate(-50%, 0); }
     }
-    @keyframes archify-share-cue-pulse {
+    @keyframes archipam-share-cue-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.48; transform: scale(0.78); }
     }
@@ -4952,9 +4945,9 @@
       </div>
     </div>
 
-    <script id="archify-guided-views-data" type="application/json">[{"id":"turn_spine","label":"托管回合主链","focus":["request_portal","host_kernel","session_owner","turn_driver","flow_adapter","response_surface"],"note":"请求进入 Runtime Host，由 SessionManager 编排回合并经 Flow 流式返回结果。"},{"id":"guarded_effect","label":"受控工具副作用","focus":["turn_driver","boundary_gate","tool_runtime","artifact_store","runtime_ledger"],"note":"工具调用先通过 ExecutionBoundary，再发布文件结果并写入 RuntimeEvent 账本。"},{"id":"durable_resume","label":"规范事实恢复","focus":["runtime_ledger","resume_planner","host_kernel","session_owner"],"note":"恢复规划器读取事件与 Artifact 引用，验证后重新进入 Host 托管链。"}]</script>
+    <script id="archipam-guided-views-data" type="application/json">[{"id":"turn_spine","label":"托管回合主链","focus":["request_portal","host_kernel","session_owner","turn_driver","flow_adapter","response_surface"],"note":"请求进入 Runtime Host，由 SessionManager 编排回合并经 Flow 流式返回结果。"},{"id":"guarded_effect","label":"受控工具副作用","focus":["turn_driver","boundary_gate","tool_runtime","artifact_store","runtime_ledger"],"note":"工具调用先通过 ExecutionBoundary，再发布文件结果并写入 RuntimeEvent 账本。"},{"id":"durable_resume","label":"规范事实恢复","focus":["runtime_ledger","resume_planner","host_kernel","session_owner"],"note":"恢复规划器读取事件与 Artifact 引用，验证后重新进入 Host 托管链。"}]</script>
 
-    <script id="archify-i18n-data" type="application/json">{"locale":"zh-CN","messages":{"viewer.kind.frontend":"前端","viewer.kind.backend":"后端","viewer.kind.database":"数据库","viewer.kind.cloud":"云服务","viewer.kind.security":"安全","viewer.kind.messagebus":"消息总线","viewer.kind.external":"外部系统","viewer.kind.neutral":"中性","viewer.kind.node":"节点","viewer.kind.start":"开始","viewer.kind.active":"活动","viewer.kind.waiting":"等待","viewer.kind.decision":"决策","viewer.kind.success":"成功","viewer.kind.failure":"失败","viewer.toolbar.actions":"图表操作","viewer.theme.toggle.title":"切换主题（T）","viewer.theme.toggle":"切换颜色主题","viewer.theme.dark":"深色","viewer.theme.light":"浅色","viewer.preset.choose.title":"选择视觉风格（S 循环切换）","viewer.preset.choose":"选择视觉风格","viewer.preset.style":"风格","viewer.preset.menu":"视觉风格","viewer.preset.identity":"视觉表达","viewer.preset.cycles":"S 循环切换","viewer.preset.classic":"经典","viewer.preset.classic.short":"经典","viewer.preset.classic.hint":"稳定的技术默认风格","viewer.preset.flow":"信号流","viewer.preset.flow.short":"流动","viewer.preset.flow.hint":"突出动态流向","viewer.preset.blueprint":"蓝图","viewer.preset.blueprint.hint":"工程评审","viewer.preset.editorial":"编辑风格","viewer.preset.editorial.hint":"适合发布与上线说明","viewer.preset.badge.signalFlow":"信号流","viewer.preset.badge.blueprint":"蓝图 / 修订 01","viewer.preset.badge.editorial":"编辑风格 / 现场笔记","viewer.preset.badge.editorialPlate":"ARCHIFY / 图版 04","viewer.preset.current":"当前视觉风格：{style}。选择视觉风格","viewer.motion.live":"动态","viewer.motion.still":"静态","viewer.motion.pause":"暂停动效","viewer.motion.resume":"恢复动效","viewer.motion.reduced":"已根据减少动态效果偏好暂停动效","viewer.motion.hidden":"页面不可见时已暂停动效","viewer.motion.yielding":"暂停动效；当前让位于{owner}","viewer.motion.yielding.title":"动态预览已启用 · 正在让位于{owner}","viewer.owner.story":"引导故事","viewer.owner.chapter":"当前章节","viewer.owner.chapterPreview":"章节差异预览","viewer.owner.handoff":"章节交接","viewer.owner.route":"路径探测","viewer.owner.lens":"语义透镜","viewer.owner.relationship":"关系预览","viewer.owner.intent":"意图追踪","viewer.owner.focus":"语义聚焦","viewer.owner.legend":"图例预览","viewer.owner.reader":"读者交互","viewer.present.enter":"进入演示模式","viewer.present.enter.title":"演示模式（F）","viewer.present.exit":"退出演示模式","viewer.present.exit.title":"退出演示模式（F 或 Escape）","viewer.present.present":"演示","viewer.present.exit.label":"退出","viewer.export.button":"导出","viewer.export.button.title":"导出图表（E）","viewer.export.diagram":"导出图表","viewer.export.menu":"导出","viewer.export.subtitle":"便携、整洁的输出","viewer.export.share":"分享","viewer.export.shareCard":"分享卡片","viewer.export.routeShareCard":"路径分享卡片","viewer.export.reachShareCard":"可达范围分享卡片","viewer.export.copyShareCard":"复制分享卡片","viewer.export.copyDiagram":"复制图表","viewer.export.clipboardPng":"复制 PNG 到剪贴板","viewer.export.raster":"位图","viewer.export.image":"图像","viewer.export.lossless":"无损图像","viewer.export.compact":"紧凑图像","viewer.export.modern":"现代图像格式","viewer.export.vectorMotion":"矢量与动效","viewer.export.vectorMotion.heading":"矢量与动效","viewer.export.editable":"可编辑矢量图","viewer.export.motion6s":"6 秒动效","viewer.export.unsupported":"当前浏览器不支持","viewer.export.clipboardUnsupported":"当前浏览器不支持写入图片剪贴板","viewer.export.clipboardUnsupported.period":"当前浏览器不支持写入图片剪贴板。","viewer.export.clipboardUnsupported.short":"此浏览器不支持写入图片剪贴板。","viewer.export.motionUnavailable":"当前浏览器无法录制动效","viewer.export.webmUnavailable":"当前浏览器不支持 WebM","viewer.export.failed":"导出失败：{message}","viewer.export.unknownVariant":"未知的分享卡片类型：{variant}","viewer.export.routeRequired":"请先追踪路径，再导出路径分享卡片","viewer.export.reachRequired":"请先追踪编写可达范围，再导出可达范围分享卡片","viewer.export.unknown":"未知错误","viewer.export.routeFailed":"路径分享卡片导出失败：{message}","viewer.export.reachFailed":"可达范围分享卡片导出失败：{message}","viewer.export.copyFailed":"复制失败：{message}","viewer.export.copiedPng":"已将 PNG 复制到剪贴板","viewer.export.copiedShare":"已复制分享卡片","viewer.export.downloadedShare":"已下载分享卡片","viewer.export.downloadedRoute":"已下载路径分享卡片","viewer.export.downloadedReach":"已下载可达范围分享卡片","viewer.export.downloadedWebm":"已下载 WebM","viewer.export.recording":"正在录制 6 秒动效…","viewer.export.card.routeSummary.one":"路径：{source} → {target} · {count} 个有向跳转","viewer.export.card.routeSummary.other":"路径：{source} → {target} · {count} 个有向跳转","viewer.export.card.reachSummary":"从{origin}开始的编写{direction} · {nodes} · {links} · 最深 {hops}","viewer.export.card.node.one":"{count} 个节点","viewer.export.card.node.other":"{count} 个节点","viewer.export.card.link.one":"{count} 条连接","viewer.export.card.link.other":"{count} 条连接","viewer.export.card.hop.one":"{count} 跳","viewer.export.card.hop.other":"{count} 跳","viewer.export.card.routeBadge":"ARCHIFY · 路径 · {hops}","viewer.export.card.reachBadge":"ARCHIFY · {direction}可达范围","viewer.export.card.defaultBadge":"ARCHIFY · {preset} · {theme}","viewer.export.direction.upstream":"上游","viewer.export.direction.downstream":"下游","viewer.export.error.canvasUnavailable":"无法为{label}使用画布","viewer.export.error.contextUnavailable":"无法为{label}创建二维画布上下文","viewer.export.error.toBlobUnavailable":"{label}无法使用 canvas.toBlob","viewer.export.error.toBlobNull":"{label}的 canvas.toBlob 未返回数据","viewer.export.error.variantsCombined":"无法同时组合多种分享卡片类型","viewer.export.error.viewerState":"分享卡片导出无法移除临时 Viewer 状态","viewer.export.error.routeState":"路径卡片导出无法安全保留已解析路径","viewer.export.error.reachState":"可达范围卡片导出无法安全保留编写的可达范围","viewer.export.error.webmRequirements":"WebM 动效导出需要追踪动画及浏览器 MediaRecorder 支持","viewer.export.error.mediaRecorder":"MediaRecorder 录制失败","viewer.export.error.emptyWebm":"MediaRecorder 生成了空的 WebM","viewer.export.error.webmBackground":"无法为 WebM 导出加载 SVG 背景","viewer.guided.region":"图表引导视图","viewer.guided.previous":"上一个引导视图","viewer.guided.previous.title":"上一个引导视图（[）","viewer.guided.next":"下一个引导视图","viewer.guided.next.title":"下一个引导视图（]）","viewer.guided.views":"引导视图","viewer.guided.explore":"探索此系统","viewer.guided.intro":"沿精选路径逐步查看，而不改变源图表。","viewer.guided.trail":"故事轨迹","viewer.guided.beat":"节点","viewer.guided.nextBeat":"下一步","viewer.guided.play":"播放引导故事","viewer.guided.play.title":"播放引导故事（P）","viewer.guided.pause":"暂停引导故事","viewer.guided.pause.title":"暂停引导故事（P）","viewer.guided.replay":"重播引导故事","viewer.guided.replay.title":"重播引导故事（P）","viewer.guided.playStory":"播放故事","viewer.guided.pauseStory":"暂停","viewer.guided.replayStory":"重播故事","viewer.guided.motionUnavailable":"静态模式下无法播放故事","viewer.guided.enableMotion":"切换为动态模式以播放引导故事","viewer.guided.selectBeatLink":"选择故事节点以复制其精确链接","viewer.guided.copyMoment":"复制此刻","viewer.guided.momentCopied":"已复制时刻链接","viewer.guided.momentCopyFailed":"无法复制故事时刻链接","viewer.guided.copied":"已复制","viewer.guided.copyFailed":"复制失败","viewer.guided.showAll":"显示全部","viewer.guided.showAll.aria":"显示完整图表","viewer.guided.chapters":"故事章节","viewer.guided.storyTrail":"{label}的故事轨迹：{count} 个节点","viewer.guided.chapter.open":"打开第 {index}/{total} 章：{label}，{count} 个停靠点","viewer.guided.chapter.current":"当前第 {index}/{total} 章：{label}，{count} 个停靠点","viewer.guided.chapter.selectedNodes":"已选择 {count} 个节点","viewer.guided.chapter.stops":"{count} 个停靠点","viewer.guided.chapter.stop.one":"{count} 个停靠点","viewer.guided.chapter.stop.other":"{count} 个停靠点","viewer.guided.chapter.current.title":"{label} — 当前章节，{count} 个停靠点","viewer.guided.chapter.delta.expanded":"{stay} 个保留，{enter} 个进入，{leave} 个离开","viewer.guided.chapter.delta.aria":"打开第 {index}/{total} 章：{label}。章节聚焦差异：{delta}","viewer.guided.chapter.delta.title":"{label} — 章节聚焦 {delta}","viewer.guided.handoff":"{from} → {to} · 经由{label}","viewer.guided.share.chapter":"章节 {index} / {total}","viewer.guided.share.initial":"章节 01 / 01","viewer.guided.share.default":"引导章节","viewer.guided.state.ready":"就绪","viewer.guided.state.playing":"播放中","viewer.guided.state.settled":"已完成","viewer.guided.state.paused":"已暂停","viewer.guided.state.pinned":"已固定","viewer.guided.state.still":"静态","viewer.guided.share.step":"步骤 {index} / {total} · {label}","viewer.guided.share.staticMoment":"{step} · 静态时刻","viewer.guided.share.complete":"{count} 个步骤已完成 · {note}","viewer.guided.share.settled":"路径已稳定，可供阅读。","viewer.guided.share.staticPath":"{count} 个步骤 · 静态路径","viewer.guided.share.ready":"{count} 个步骤 · 就绪","viewer.guided.share.aria":"{state}，第 {index}/{total} 章：{label}。{beat}。{route}","viewer.guided.beat.start":"节点 {index} / {total} · {label} · 起点","viewer.guided.beat.forward":"节点 {index} / {total} · {from} → {to}","viewer.guided.beat.reverse":"节点 {index} / {total} · {from} → {to} · 反向编写连接","viewer.guided.beat.multiple":"节点 {index} / {total} · {from} ⇄ {to} · {count} 条编写连接","viewer.guided.beat.group":"节点 {index} / {total} · {from} · {to} · 分组 · 无直接连接","viewer.guided.beat.aria.prefix":"故事节点 {index}/{total}：{label}。","viewer.guided.beat.aria.start":"起点。","viewer.guided.beat.aria.forward":"从{from}经一条正向编写关系到达。","viewer.guided.beat.aria.reverse":"从{from}出发；编写关系实际由{to}指向{from}。","viewer.guided.beat.aria.multiple":"从{from}经 {count} 条编写关系到达；不使用任意动效。","viewer.guided.beat.aria.group":"与{from}分组展示，没有直接编写关系。","viewer.guided.caption.start":"起点","viewer.guided.caption.grouped":"分组过渡 · 无直接编写连接","viewer.guided.caption.more":" +另外 {count} 条","viewer.guided.caption.reverse":"反向编写关系","viewer.guided.caption.relationships":"{count} 条编写关系","viewer.guided.caption.relationship":"编写关系","viewer.guided.caption.direction":"编写方向：{from} → {to}","viewer.guided.caption.starting":"编写起点","viewer.guided.beatLink":"复制当前故事时刻链接：第 {index}/{total} 个节点：{label}","viewer.guided.noStory":"此图表没有编写引导故事。","viewer.guide.eyebrow":"图表指南","viewer.guide.close":"关闭图表指南","viewer.guide.inspecting":"正在检查已编译语义","viewer.guide.actions":"图表探索操作","viewer.guide.find":"查找任意节点","viewer.guide.find.hint":"搜索标签、职责、类型和稳定 ID。","viewer.guide.route":"追踪路径","viewer.guide.route.aria":"追踪有向路径","viewer.guide.route.hint":"查看两个语义节点如何按编写方向连接。","viewer.guide.map":"查看完整系统","viewer.guide.map.hint":"打开带实时视口和稳定节点的语义雷达。","viewer.guide.lens":"比较语义类型","viewer.guide.lens.hint":"统计角色、显示流量并比较直接编写的连接。","viewer.guide.story":"播放引导故事","viewer.guide.story.hint":"浏览已编写的章节和真实关系。","viewer.guide.present":"进入演示模式","viewer.guide.present.hint":"让实时图表占满视口，同时不改变导出。","viewer.guide.shortcuts":"其他键盘快捷键","viewer.guide.shortcut.export":"导出","viewer.guide.shortcut.theme":"主题","viewer.guide.shortcut.style":"风格","viewer.guide.shortcut.reset":"重置","viewer.guide.shortcut.zoomIn":"放大","viewer.guide.shortcut.zoomOut":"缩小","viewer.guide.shortcut.close":"关闭","viewer.guide.facts":"{nodes} · {relationships} · {views}","viewer.guide.fact.node.one":"{count} 个语义节点","viewer.guide.fact.node.other":"{count} 个语义节点","viewer.guide.fact.relationship.one":"{count} 条关系","viewer.guide.fact.relationship.other":"{count} 条关系","viewer.guide.fact.view.one":"{count} 个引导视图","viewer.guide.fact.view.other":"{count} 个引导视图","viewer.guide.story.available.one":"浏览 {count} 个已编写章节及其真实关系。","viewer.guide.story.available.other":"浏览 {count} 个已编写章节及其真实关系。","viewer.guide.story.unavailable":"此图表没有编写引导故事。","viewer.guide.open":"打开图表指南","viewer.guide.noStory":"此图表没有编写引导故事。","viewer.finder.title":"查找节点","viewer.finder.close":"关闭节点查找器","viewer.finder.placeholder":"搜索标签或 ID","viewer.finder.search":"搜索图表节点","viewer.finder.results":"图表节点","viewer.finder.empty":"没有匹配的节点","viewer.finder.result.focus":"聚焦{label}","viewer.finder.result.routeStart":"选择{label}作为路径起点","viewer.finder.result.routeTarget":"选择{label}作为路径终点，{links}","viewer.finder.status.empty":"没有匹配的节点","viewer.finder.status.count.one":"{count} 个匹配节点","viewer.finder.status.count.other":"{count} 个匹配节点","viewer.finder.noun.nodes":"个节点","viewer.finder.link.one":"{count} 条连接","viewer.finder.link.other":"{count} 条连接","viewer.finder.result.focus.one":"聚焦{label}，{count} 条相关连接","viewer.finder.result.focus.other":"聚焦{label}，{count} 条相关连接","viewer.finder.status.filtered":"{visible}/{available} {noun}","viewer.finder.status.all":"{available} {noun}","viewer.passport.eyebrow":"语义护照","viewer.passport.metadata":"节点元数据","viewer.passport.evidence":"已验证的源代码证据","viewer.passport.verified":"已验证来源","viewer.passport.reach":"编写可达范围","viewer.passport.reach.trace":"追踪编写的可达性","viewer.passport.upstream":"上游","viewer.passport.downstream":"下游","viewer.passport.upstream.trace":"追踪上游编写可达性","viewer.passport.downstream.trace":"追踪下游编写可达性","viewer.passport.close":"关闭语义护照","viewer.passport.copy":"复制链接","viewer.passport.copy.focus":"复制聚焦节点的链接","viewer.passport.relations":"关系","viewer.passport.relations.show":"显示关联关系","viewer.passport.relations.hide":"隐藏关联关系","viewer.passport.relations.list":"关联关系","viewer.passport.copyRelation":"复制关系","viewer.passport.copyNode":"复制节点","viewer.passport.copyPinned":"复制固定关系的链接","viewer.passport.copySource":"复制来源节点的链接","viewer.passport.copy.focused.success":"已复制聚焦节点链接","viewer.passport.copy.pinned.success":"已复制固定关系链接","viewer.passport.copy.focused.failed":"无法复制聚焦节点链接","viewer.passport.copy.pinned.failed":"无法复制固定关系链接","viewer.passport.relationship.none":"没有关联关系","viewer.passport.relationship.count.one":"{count} 条关系","viewer.passport.relationship.count.other":"{count} 条关系","viewer.passport.relationship.show.one":"显示 {count} 条关联关系","viewer.passport.relationship.show.other":"显示 {count} 条关联关系","viewer.passport.relationship.summary":"{out} 条出向 · {in} 条入向{loops}","viewer.passport.relationship.loops":" · {count} 条自环","viewer.passport.relationship.explorer":"直接关系浏览器","viewer.passport.relationship.help":"使用方向键浏览关系。按 Enter 或空格键固定详情；按 Escape 清除。","viewer.passport.relationship.loopsBack":"回环","viewer.passport.relationship.connectsTo":"连接到","viewer.passport.relationship.connectsFrom":"连接自","viewer.passport.relationship.pinned":"已固定关系 · {from} → {to} · {label}","viewer.passport.relationship.inspect":"检查第 {index}/{total} 条关系：{from} 到 {to}，{label}。按 Enter 查看详情。","viewer.passport.relationship.group.out":"出向","viewer.passport.relationship.group.in":"入向","viewer.passport.relationship.group.loop":"自环","viewer.passport.relationship.row":"{group}：{relationship}，{neighbor}","viewer.passport.relationship.direction.out":"出 →","viewer.passport.relationship.direction.in":"← 入","viewer.passport.relationship.direction.loop":"自环","viewer.passport.sourceCount.one":"{count} 个已验证来源引用","viewer.passport.sourceCount.other":"{count} 个已验证来源引用","viewer.passport.sourceMarker":"来源","viewer.passport.beacon.one":"{count} 个已验证来源；聚焦此节点以检查","viewer.passport.beacon.other":"{count} 个已验证来源；聚焦此节点以检查","viewer.passport.repository.open":"打开已验证的仓库修订版本 {revision}","viewer.passport.source.open":"打开修订版本 {revision} 中已验证的来源 {path}","viewer.passport.source.openLink":"打开 ↗","viewer.passport.reach.upstream.one":"追踪 {count} 个上游编写节点","viewer.passport.reach.upstream.other":"追踪 {count} 个上游编写节点","viewer.passport.reach.downstream.one":"追踪 {count} 个下游编写节点","viewer.passport.reach.downstream.other":"追踪 {count} 个下游编写节点","viewer.passport.reach.noUpstream":"没有上游编写节点","viewer.passport.reach.noDownstream":"没有下游编写节点","viewer.passport.reach.status":"{direction} · {nodes} 个节点 · {links} 条连接 · 最深 {hops} 跳","viewer.route.eyebrow":"路径探测","viewer.route.start":"选择起点节点","viewer.route.start.find":"查找起点","viewer.route.start.find.aria":"查找路径起点","viewer.route.copy":"复制链接","viewer.route.copy.aria":"复制已追踪路径的链接","viewer.route.clear":"清除","viewer.route.clear.aria":"清除路径探测","viewer.route.traced":"已追踪路径","viewer.route.pickTwo":"在图表中选择两个语义节点","viewer.route.pickOne":"在图表中选择一个语义节点","viewer.route.controls":"路径旅程控制","viewer.route.previous":"上一个路径位置","viewer.route.play":"播放路径旅程","viewer.route.pause":"暂停路径旅程","viewer.route.replay":"重播路径旅程","viewer.route.next":"下一个路径位置","viewer.route.journey":"旅程","viewer.route.pause.label":"暂停","viewer.route.replay.label":"重播","viewer.route.overview":"总览","viewer.route.overview.aria":"显示完整路径总览","viewer.route.instructions":"先选择来源，再选择目标；方向很重要。","viewer.route.destination":"选择从{label}出发的目标","viewer.route.destination.find":"查找目标","viewer.route.destination.find.aria":"查找可达的路径目标","viewer.route.differentDestination":"选择其他目标","viewer.route.distinct":"一条路径需要两个不同的语义节点。","viewer.route.unreachable":"没有通往{label}的有向路径","viewer.route.unreachable.detail":"从{source}无法到达{target}。请选择高亮的目标。","viewer.route.start.instructions":"选择来源。下一步只会显示有向可达的目标。","viewer.route.copy.success":"已复制路径链接","viewer.route.copy.failed":"无法复制路径链接","viewer.route.position":"路径位置 {index}/{total}：{label}","viewer.route.step":"第 {index}/{total} 步 · {phase} · {label}","viewer.route.motionRequired":"自动旅程需要动态模式","viewer.route.trigger.clear":"清除已追踪路径","viewer.route.overview.status":"{nodes} · {hops} · 最短编写路径","viewer.route.overview.node.one":"{count} 个节点","viewer.route.overview.node.other":"{count} 个节点","viewer.route.overview.hop.one":"{count} 个有向跳转","viewer.route.overview.hop.other":"{count} 个有向跳转","viewer.route.phase.playing":"播放中","viewer.route.phase.complete":"已完成","viewer.route.phase.inspecting":"检查中","viewer.route.destination.count.one":"有 {count} 个有向目标可用。请选择高亮节点。","viewer.route.destination.count.other":"有 {count} 个有向目标可用。请选择高亮节点。","viewer.route.noOutgoing":"此处没有可用的出向路径。请清除后选择其他来源。","viewer.route.result.title":"{source} 到 {target}","viewer.route.finder.source.title":"选择路径起点","viewer.route.finder.source.placeholder":"搜索路径来源","viewer.route.finder.source.empty":"没有匹配的路径来源","viewer.route.finder.source.results":"可作为路径起点的节点","viewer.route.finder.source.noun":"个路径来源","viewer.route.finder.source.badge":"起点","viewer.route.finder.target.title":"从{label}出发的目标","viewer.route.finder.target.placeholder":"搜索可达目标","viewer.route.finder.target.empty":"没有匹配的可达目标","viewer.route.finder.target.results":"可达路径目标","viewer.route.finder.target.noun":"个可达目标","viewer.route.hop.one":"{count} 跳","viewer.route.hop.other":"{count} 跳","viewer.lens.eyebrow":"语义透镜","viewer.lens.title":"比较系统角色","viewer.lens.close":"关闭语义透镜","viewer.lens.instruction":"最多选择两种语义类型。选择一种可显示其真实流量；选择两种只比较直接编写的关系。","viewer.lens.kinds":"语义类型","viewer.lens.choose":"选择一种类型以检查其节点和相连关系。","viewer.lens.copy":"复制语义透镜链接","viewer.lens.clear":"清除语义透镜","viewer.lens.open":"打开语义透镜","viewer.lens.openActive":"打开当前语义透镜","viewer.lens.legend":"语义图例","viewer.lens.legend.inspect.one":"检查{label}，{count} 个节点","viewer.lens.legend.inspect.other":"检查{label}，{count} 个节点","viewer.lens.kind.count.one":"{label}，{count} 个节点","viewer.lens.kind.count.other":"{label}，{count} 个节点","viewer.lens.compare.one":"{first} → {second}：{forward} · {second} → {first}：{reverse} · 共 {count} 条直接关系","viewer.lens.compare.other":"{first} → {second}：{forward} · {second} → {first}：{reverse} · 共 {count} 条直接关系","viewer.lens.single":"{nodes} · {relationships} · 已连接节点保持可见","viewer.lens.node.one":"{count} 个{label}节点","viewer.lens.node.other":"{count} 个{label}节点","viewer.lens.relationship.one":"{count} 条相连关系","viewer.lens.relationship.other":"{count} 条相连关系","viewer.radar.title":"语义雷达","viewer.radar.building":"正在构建总览","viewer.radar.openFull":"打开完整语义雷达","viewer.radar.open":"打开雷达","viewer.radar.close":"关闭语义雷达","viewer.radar.surface":"图表总览。点击节点进行聚焦，或使用方向键平移。","viewer.radar.click":"点击节点","viewer.radar.drag":"拖动平移","viewer.radar.space":"语义雷达需要更多地图可见空间。","viewer.radar.nodes":"语义图表雷达节点","viewer.radar.focus":"从语义雷达聚焦{label}","viewer.radar.status":"{count} 个节点 · {viewport}","viewer.radar.fullMap":"{count} 个节点 · 完整地图","viewer.radar.compacted":"已收紧雷达，避免遮挡语义护照或地图控件。","viewer.radar.cancelWaiting":"取消等待更多地图空间的语义雷达","viewer.radar.needsSpace":"语义雷达需要更多可见地图空间","viewer.radar.viewport.full":"完整地图","viewer.radar.viewport.width":"宽度 {percent}%","viewer.radar.viewport.scale":"视口 {percent}%","viewer.nav.controls":"图表视图控制","viewer.nav.route":"追踪有向路径","viewer.nav.route.title":"追踪路径（R）","viewer.nav.route.short":"路径","viewer.nav.radar":"打开语义雷达","viewer.nav.radar.title":"语义雷达（M）","viewer.nav.radar.short":"地图","viewer.nav.lens":"打开语义透镜","viewer.nav.lens.title":"语义透镜（L）","viewer.nav.lens.short":"透镜","viewer.nav.find":"查找节点","viewer.nav.find.title":"查找节点（/）","viewer.nav.guide":"打开图表指南","viewer.nav.guide.title":"图表指南（?）","viewer.nav.zoomOut":"缩小","viewer.nav.zoomOut.title":"缩小（-）","viewer.nav.reset":"重置图表视图","viewer.nav.reset.title":"重置视图（0）","viewer.nav.read":"阅读","viewer.nav.zoomIn":"放大","viewer.nav.zoomIn.title":"放大（+）","viewer.nav.camera":"{hint}。重置图表视图","viewer.nav.camera.title":"{semantic}{hint} · 重置视图（0）","viewer.nav.camera.semantic":"语义相机已启用 · ","viewer.nav.level.map":"概览","viewer.nav.level.read":"阅读","viewer.nav.level.full":"完整","viewer.nav.level.auto":"自动","viewer.nav.detail.map":"放大以显示关系标签和节点上下文","viewer.nav.detail.read":"再次放大以显示标签和注释","viewer.nav.detail.full":"完整图表详情","viewer.intent.summary":"{label}。{out} 条出向，{in} 条入向{loops}。共 {total} 条连接。按 Enter 查看详情。","viewer.intent.loops":"，{count} 条自环","viewer.common.copied":"已复制","viewer.common.copyFailed":"复制失败","viewer.common.copyLink":"复制链接","viewer.common.clear":"清除","viewer.common.close":"关闭"}}</script>
+    <script id="archipam-i18n-data" type="application/json">{"locale":"zh-CN","messages":{"viewer.kind.frontend":"前端","viewer.kind.backend":"后端","viewer.kind.database":"数据库","viewer.kind.cloud":"云服务","viewer.kind.security":"安全","viewer.kind.messagebus":"消息总线","viewer.kind.external":"外部系统","viewer.kind.neutral":"中性","viewer.kind.node":"节点","viewer.kind.start":"开始","viewer.kind.active":"活动","viewer.kind.waiting":"等待","viewer.kind.decision":"决策","viewer.kind.success":"成功","viewer.kind.failure":"失败","viewer.toolbar.actions":"图表操作","viewer.theme.toggle.title":"切换主题（T）","viewer.theme.toggle":"切换颜色主题","viewer.theme.dark":"深色","viewer.theme.light":"浅色","viewer.preset.choose.title":"选择视觉风格（S 循环切换）","viewer.preset.choose":"选择视觉风格","viewer.preset.style":"风格","viewer.preset.menu":"视觉风格","viewer.preset.identity":"视觉表达","viewer.preset.cycles":"S 循环切换","viewer.preset.classic":"经典","viewer.preset.classic.short":"经典","viewer.preset.classic.hint":"稳定的技术默认风格","viewer.preset.flow":"信号流","viewer.preset.flow.short":"流动","viewer.preset.flow.hint":"突出动态流向","viewer.preset.blueprint":"蓝图","viewer.preset.blueprint.hint":"工程评审","viewer.preset.editorial":"编辑风格","viewer.preset.editorial.hint":"适合发布与上线说明","viewer.preset.badge.signalFlow":"信号流","viewer.preset.badge.blueprint":"蓝图 / 修订 01","viewer.preset.badge.editorial":"编辑风格 / 现场笔记","viewer.preset.badge.editorialPlate":"ARCHIPAM / 图版 04","viewer.preset.current":"当前视觉风格：{style}。选择视觉风格","viewer.motion.live":"动态","viewer.motion.still":"静态","viewer.motion.pause":"暂停动效","viewer.motion.resume":"恢复动效","viewer.motion.reduced":"已根据减少动态效果偏好暂停动效","viewer.motion.hidden":"页面不可见时已暂停动效","viewer.motion.yielding":"暂停动效；当前让位于{owner}","viewer.motion.yielding.title":"动态预览已启用 · 正在让位于{owner}","viewer.owner.story":"引导故事","viewer.owner.chapter":"当前章节","viewer.owner.chapterPreview":"章节差异预览","viewer.owner.handoff":"章节交接","viewer.owner.route":"路径探测","viewer.owner.lens":"语义透镜","viewer.owner.relationship":"关系预览","viewer.owner.intent":"意图追踪","viewer.owner.focus":"语义聚焦","viewer.owner.legend":"图例预览","viewer.owner.reader":"读者交互","viewer.present.enter":"进入演示模式","viewer.present.enter.title":"演示模式（F）","viewer.present.exit":"退出演示模式","viewer.present.exit.title":"退出演示模式（F 或 Escape）","viewer.present.present":"演示","viewer.present.exit.label":"退出","viewer.export.button":"导出","viewer.export.button.title":"导出图表（E）","viewer.export.diagram":"导出图表","viewer.export.menu":"导出","viewer.export.subtitle":"便携、整洁的输出","viewer.export.share":"分享","viewer.export.shareCard":"分享卡片","viewer.export.routeShareCard":"路径分享卡片","viewer.export.reachShareCard":"可达范围分享卡片","viewer.export.copyShareCard":"复制分享卡片","viewer.export.copyDiagram":"复制图表","viewer.export.clipboardPng":"复制 PNG 到剪贴板","viewer.export.raster":"位图","viewer.export.image":"图像","viewer.export.lossless":"无损图像","viewer.export.compact":"紧凑图像","viewer.export.modern":"现代图像格式","viewer.export.vectorMotion":"矢量与动效","viewer.export.vectorMotion.heading":"矢量与动效","viewer.export.editable":"可编辑矢量图","viewer.export.motion6s":"6 秒动效","viewer.export.unsupported":"当前浏览器不支持","viewer.export.clipboardUnsupported":"当前浏览器不支持写入图片剪贴板","viewer.export.clipboardUnsupported.period":"当前浏览器不支持写入图片剪贴板。","viewer.export.clipboardUnsupported.short":"此浏览器不支持写入图片剪贴板。","viewer.export.motionUnavailable":"当前浏览器无法录制动效","viewer.export.webmUnavailable":"当前浏览器不支持 WebM","viewer.export.failed":"导出失败：{message}","viewer.export.unknownVariant":"未知的分享卡片类型：{variant}","viewer.export.routeRequired":"请先追踪路径，再导出路径分享卡片","viewer.export.reachRequired":"请先追踪编写可达范围，再导出可达范围分享卡片","viewer.export.unknown":"未知错误","viewer.export.routeFailed":"路径分享卡片导出失败：{message}","viewer.export.reachFailed":"可达范围分享卡片导出失败：{message}","viewer.export.copyFailed":"复制失败：{message}","viewer.export.copiedPng":"已将 PNG 复制到剪贴板","viewer.export.copiedShare":"已复制分享卡片","viewer.export.downloadedShare":"已下载分享卡片","viewer.export.downloadedRoute":"已下载路径分享卡片","viewer.export.downloadedReach":"已下载可达范围分享卡片","viewer.export.downloadedWebm":"已下载 WebM","viewer.export.recording":"正在录制 6 秒动效…","viewer.export.card.routeSummary.one":"路径：{source} → {target} · {count} 个有向跳转","viewer.export.card.routeSummary.other":"路径：{source} → {target} · {count} 个有向跳转","viewer.export.card.reachSummary":"从{origin}开始的编写{direction} · {nodes} · {links} · 最深 {hops}","viewer.export.card.node.one":"{count} 个节点","viewer.export.card.node.other":"{count} 个节点","viewer.export.card.link.one":"{count} 条连接","viewer.export.card.link.other":"{count} 条连接","viewer.export.card.hop.one":"{count} 跳","viewer.export.card.hop.other":"{count} 跳","viewer.export.card.routeBadge":"ARCHIPAM · 路径 · {hops}","viewer.export.card.reachBadge":"ARCHIPAM · {direction}可达范围","viewer.export.card.defaultBadge":"ARCHIPAM · {preset} · {theme}","viewer.export.direction.upstream":"上游","viewer.export.direction.downstream":"下游","viewer.export.error.canvasUnavailable":"无法为{label}使用画布","viewer.export.error.contextUnavailable":"无法为{label}创建二维画布上下文","viewer.export.error.toBlobUnavailable":"{label}无法使用 canvas.toBlob","viewer.export.error.toBlobNull":"{label}的 canvas.toBlob 未返回数据","viewer.export.error.variantsCombined":"无法同时组合多种分享卡片类型","viewer.export.error.viewerState":"分享卡片导出无法移除临时 Viewer 状态","viewer.export.error.routeState":"路径卡片导出无法安全保留已解析路径","viewer.export.error.reachState":"可达范围卡片导出无法安全保留编写的可达范围","viewer.export.error.webmRequirements":"WebM 动效导出需要追踪动画及浏览器 MediaRecorder 支持","viewer.export.error.mediaRecorder":"MediaRecorder 录制失败","viewer.export.error.emptyWebm":"MediaRecorder 生成了空的 WebM","viewer.export.error.webmBackground":"无法为 WebM 导出加载 SVG 背景","viewer.guided.region":"图表引导视图","viewer.guided.previous":"上一个引导视图","viewer.guided.previous.title":"上一个引导视图（[）","viewer.guided.next":"下一个引导视图","viewer.guided.next.title":"下一个引导视图（]）","viewer.guided.views":"引导视图","viewer.guided.explore":"探索此系统","viewer.guided.intro":"沿精选路径逐步查看，而不改变源图表。","viewer.guided.trail":"故事轨迹","viewer.guided.beat":"节点","viewer.guided.nextBeat":"下一步","viewer.guided.play":"播放引导故事","viewer.guided.play.title":"播放引导故事（P）","viewer.guided.pause":"暂停引导故事","viewer.guided.pause.title":"暂停引导故事（P）","viewer.guided.replay":"重播引导故事","viewer.guided.replay.title":"重播引导故事（P）","viewer.guided.playStory":"播放故事","viewer.guided.pauseStory":"暂停","viewer.guided.replayStory":"重播故事","viewer.guided.motionUnavailable":"静态模式下无法播放故事","viewer.guided.enableMotion":"切换为动态模式以播放引导故事","viewer.guided.selectBeatLink":"选择故事节点以复制其精确链接","viewer.guided.copyMoment":"复制此刻","viewer.guided.momentCopied":"已复制时刻链接","viewer.guided.momentCopyFailed":"无法复制故事时刻链接","viewer.guided.copied":"已复制","viewer.guided.copyFailed":"复制失败","viewer.guided.showAll":"显示全部","viewer.guided.showAll.aria":"显示完整图表","viewer.guided.chapters":"故事章节","viewer.guided.storyTrail":"{label}的故事轨迹：{count} 个节点","viewer.guided.chapter.open":"打开第 {index}/{total} 章：{label}，{count} 个停靠点","viewer.guided.chapter.current":"当前第 {index}/{total} 章：{label}，{count} 个停靠点","viewer.guided.chapter.selectedNodes":"已选择 {count} 个节点","viewer.guided.chapter.stops":"{count} 个停靠点","viewer.guided.chapter.stop.one":"{count} 个停靠点","viewer.guided.chapter.stop.other":"{count} 个停靠点","viewer.guided.chapter.current.title":"{label} — 当前章节，{count} 个停靠点","viewer.guided.chapter.delta.expanded":"{stay} 个保留，{enter} 个进入，{leave} 个离开","viewer.guided.chapter.delta.aria":"打开第 {index}/{total} 章：{label}。章节聚焦差异：{delta}","viewer.guided.chapter.delta.title":"{label} — 章节聚焦 {delta}","viewer.guided.handoff":"{from} → {to} · 经由{label}","viewer.guided.share.chapter":"章节 {index} / {total}","viewer.guided.share.initial":"章节 01 / 01","viewer.guided.share.default":"引导章节","viewer.guided.state.ready":"就绪","viewer.guided.state.playing":"播放中","viewer.guided.state.settled":"已完成","viewer.guided.state.paused":"已暂停","viewer.guided.state.pinned":"已固定","viewer.guided.state.still":"静态","viewer.guided.share.step":"步骤 {index} / {total} · {label}","viewer.guided.share.staticMoment":"{step} · 静态时刻","viewer.guided.share.complete":"{count} 个步骤已完成 · {note}","viewer.guided.share.settled":"路径已稳定，可供阅读。","viewer.guided.share.staticPath":"{count} 个步骤 · 静态路径","viewer.guided.share.ready":"{count} 个步骤 · 就绪","viewer.guided.share.aria":"{state}，第 {index}/{total} 章：{label}。{beat}。{route}","viewer.guided.beat.start":"节点 {index} / {total} · {label} · 起点","viewer.guided.beat.forward":"节点 {index} / {total} · {from} → {to}","viewer.guided.beat.reverse":"节点 {index} / {total} · {from} → {to} · 反向编写连接","viewer.guided.beat.multiple":"节点 {index} / {total} · {from} ⇄ {to} · {count} 条编写连接","viewer.guided.beat.group":"节点 {index} / {total} · {from} · {to} · 分组 · 无直接连接","viewer.guided.beat.aria.prefix":"故事节点 {index}/{total}：{label}。","viewer.guided.beat.aria.start":"起点。","viewer.guided.beat.aria.forward":"从{from}经一条正向编写关系到达。","viewer.guided.beat.aria.reverse":"从{from}出发；编写关系实际由{to}指向{from}。","viewer.guided.beat.aria.multiple":"从{from}经 {count} 条编写关系到达；不使用任意动效。","viewer.guided.beat.aria.group":"与{from}分组展示，没有直接编写关系。","viewer.guided.caption.start":"起点","viewer.guided.caption.grouped":"分组过渡 · 无直接编写连接","viewer.guided.caption.more":" +另外 {count} 条","viewer.guided.caption.reverse":"反向编写关系","viewer.guided.caption.relationships":"{count} 条编写关系","viewer.guided.caption.relationship":"编写关系","viewer.guided.caption.direction":"编写方向：{from} → {to}","viewer.guided.caption.starting":"编写起点","viewer.guided.beatLink":"复制当前故事时刻链接：第 {index}/{total} 个节点：{label}","viewer.guided.noStory":"此图表没有编写引导故事。","viewer.guide.eyebrow":"图表指南","viewer.guide.close":"关闭图表指南","viewer.guide.inspecting":"正在检查已编译语义","viewer.guide.actions":"图表探索操作","viewer.guide.find":"查找任意节点","viewer.guide.find.hint":"搜索标签、职责、类型和稳定 ID。","viewer.guide.route":"追踪路径","viewer.guide.route.aria":"追踪有向路径","viewer.guide.route.hint":"查看两个语义节点如何按编写方向连接。","viewer.guide.map":"查看完整系统","viewer.guide.map.hint":"打开带实时视口和稳定节点的语义雷达。","viewer.guide.lens":"比较语义类型","viewer.guide.lens.hint":"统计角色、显示流量并比较直接编写的连接。","viewer.guide.story":"播放引导故事","viewer.guide.story.hint":"浏览已编写的章节和真实关系。","viewer.guide.present":"进入演示模式","viewer.guide.present.hint":"让实时图表占满视口，同时不改变导出。","viewer.guide.shortcuts":"其他键盘快捷键","viewer.guide.shortcut.export":"导出","viewer.guide.shortcut.theme":"主题","viewer.guide.shortcut.style":"风格","viewer.guide.shortcut.reset":"重置","viewer.guide.shortcut.zoomIn":"放大","viewer.guide.shortcut.zoomOut":"缩小","viewer.guide.shortcut.close":"关闭","viewer.guide.facts":"{nodes} · {relationships} · {views}","viewer.guide.fact.node.one":"{count} 个语义节点","viewer.guide.fact.node.other":"{count} 个语义节点","viewer.guide.fact.relationship.one":"{count} 条关系","viewer.guide.fact.relationship.other":"{count} 条关系","viewer.guide.fact.view.one":"{count} 个引导视图","viewer.guide.fact.view.other":"{count} 个引导视图","viewer.guide.story.available.one":"浏览 {count} 个已编写章节及其真实关系。","viewer.guide.story.available.other":"浏览 {count} 个已编写章节及其真实关系。","viewer.guide.story.unavailable":"此图表没有编写引导故事。","viewer.guide.open":"打开图表指南","viewer.guide.noStory":"此图表没有编写引导故事。","viewer.finder.title":"查找节点","viewer.finder.close":"关闭节点查找器","viewer.finder.placeholder":"搜索标签或 ID","viewer.finder.search":"搜索图表节点","viewer.finder.results":"图表节点","viewer.finder.empty":"没有匹配的节点","viewer.finder.result.focus":"聚焦{label}","viewer.finder.result.routeStart":"选择{label}作为路径起点","viewer.finder.result.routeTarget":"选择{label}作为路径终点，{links}","viewer.finder.status.empty":"没有匹配的节点","viewer.finder.status.count.one":"{count} 个匹配节点","viewer.finder.status.count.other":"{count} 个匹配节点","viewer.finder.noun.nodes":"个节点","viewer.finder.link.one":"{count} 条连接","viewer.finder.link.other":"{count} 条连接","viewer.finder.result.focus.one":"聚焦{label}，{count} 条相关连接","viewer.finder.result.focus.other":"聚焦{label}，{count} 条相关连接","viewer.finder.status.filtered":"{visible}/{available} {noun}","viewer.finder.status.all":"{available} {noun}","viewer.passport.eyebrow":"语义护照","viewer.passport.metadata":"节点元数据","viewer.passport.evidence":"已验证的源代码证据","viewer.passport.verified":"已验证来源","viewer.passport.reach":"编写可达范围","viewer.passport.reach.trace":"追踪编写的可达性","viewer.passport.upstream":"上游","viewer.passport.downstream":"下游","viewer.passport.upstream.trace":"追踪上游编写可达性","viewer.passport.downstream.trace":"追踪下游编写可达性","viewer.passport.close":"关闭语义护照","viewer.passport.copy":"复制链接","viewer.passport.copy.focus":"复制聚焦节点的链接","viewer.passport.relations":"关系","viewer.passport.relations.show":"显示关联关系","viewer.passport.relations.hide":"隐藏关联关系","viewer.passport.relations.list":"关联关系","viewer.passport.copyRelation":"复制关系","viewer.passport.copyNode":"复制节点","viewer.passport.copyPinned":"复制固定关系的链接","viewer.passport.copySource":"复制来源节点的链接","viewer.passport.copy.focused.success":"已复制聚焦节点链接","viewer.passport.copy.pinned.success":"已复制固定关系链接","viewer.passport.copy.focused.failed":"无法复制聚焦节点链接","viewer.passport.copy.pinned.failed":"无法复制固定关系链接","viewer.passport.relationship.none":"没有关联关系","viewer.passport.relationship.count.one":"{count} 条关系","viewer.passport.relationship.count.other":"{count} 条关系","viewer.passport.relationship.show.one":"显示 {count} 条关联关系","viewer.passport.relationship.show.other":"显示 {count} 条关联关系","viewer.passport.relationship.summary":"{out} 条出向 · {in} 条入向{loops}","viewer.passport.relationship.loops":" · {count} 条自环","viewer.passport.relationship.explorer":"直接关系浏览器","viewer.passport.relationship.help":"使用方向键浏览关系。按 Enter 或空格键固定详情；按 Escape 清除。","viewer.passport.relationship.loopsBack":"回环","viewer.passport.relationship.connectsTo":"连接到","viewer.passport.relationship.connectsFrom":"连接自","viewer.passport.relationship.pinned":"已固定关系 · {from} → {to} · {label}","viewer.passport.relationship.inspect":"检查第 {index}/{total} 条关系：{from} 到 {to}，{label}。按 Enter 查看详情。","viewer.passport.relationship.group.out":"出向","viewer.passport.relationship.group.in":"入向","viewer.passport.relationship.group.loop":"自环","viewer.passport.relationship.row":"{group}：{relationship}，{neighbor}","viewer.passport.relationship.direction.out":"出 →","viewer.passport.relationship.direction.in":"← 入","viewer.passport.relationship.direction.loop":"自环","viewer.passport.sourceCount.one":"{count} 个已验证来源引用","viewer.passport.sourceCount.other":"{count} 个已验证来源引用","viewer.passport.sourceMarker":"来源","viewer.passport.beacon.one":"{count} 个已验证来源；聚焦此节点以检查","viewer.passport.beacon.other":"{count} 个已验证来源；聚焦此节点以检查","viewer.passport.repository.open":"打开已验证的仓库修订版本 {revision}","viewer.passport.source.open":"打开修订版本 {revision} 中已验证的来源 {path}","viewer.passport.source.openLink":"打开 ↗","viewer.passport.reach.upstream.one":"追踪 {count} 个上游编写节点","viewer.passport.reach.upstream.other":"追踪 {count} 个上游编写节点","viewer.passport.reach.downstream.one":"追踪 {count} 个下游编写节点","viewer.passport.reach.downstream.other":"追踪 {count} 个下游编写节点","viewer.passport.reach.noUpstream":"没有上游编写节点","viewer.passport.reach.noDownstream":"没有下游编写节点","viewer.passport.reach.status":"{direction} · {nodes} 个节点 · {links} 条连接 · 最深 {hops} 跳","viewer.route.eyebrow":"路径探测","viewer.route.start":"选择起点节点","viewer.route.start.find":"查找起点","viewer.route.start.find.aria":"查找路径起点","viewer.route.copy":"复制链接","viewer.route.copy.aria":"复制已追踪路径的链接","viewer.route.clear":"清除","viewer.route.clear.aria":"清除路径探测","viewer.route.traced":"已追踪路径","viewer.route.pickTwo":"在图表中选择两个语义节点","viewer.route.pickOne":"在图表中选择一个语义节点","viewer.route.controls":"路径旅程控制","viewer.route.previous":"上一个路径位置","viewer.route.play":"播放路径旅程","viewer.route.pause":"暂停路径旅程","viewer.route.replay":"重播路径旅程","viewer.route.next":"下一个路径位置","viewer.route.journey":"旅程","viewer.route.pause.label":"暂停","viewer.route.replay.label":"重播","viewer.route.overview":"总览","viewer.route.overview.aria":"显示完整路径总览","viewer.route.instructions":"先选择来源，再选择目标；方向很重要。","viewer.route.destination":"选择从{label}出发的目标","viewer.route.destination.find":"查找目标","viewer.route.destination.find.aria":"查找可达的路径目标","viewer.route.differentDestination":"选择其他目标","viewer.route.distinct":"一条路径需要两个不同的语义节点。","viewer.route.unreachable":"没有通往{label}的有向路径","viewer.route.unreachable.detail":"从{source}无法到达{target}。请选择高亮的目标。","viewer.route.start.instructions":"选择来源。下一步只会显示有向可达的目标。","viewer.route.copy.success":"已复制路径链接","viewer.route.copy.failed":"无法复制路径链接","viewer.route.position":"路径位置 {index}/{total}：{label}","viewer.route.step":"第 {index}/{total} 步 · {phase} · {label}","viewer.route.motionRequired":"自动旅程需要动态模式","viewer.route.trigger.clear":"清除已追踪路径","viewer.route.overview.status":"{nodes} · {hops} · 最短编写路径","viewer.route.overview.node.one":"{count} 个节点","viewer.route.overview.node.other":"{count} 个节点","viewer.route.overview.hop.one":"{count} 个有向跳转","viewer.route.overview.hop.other":"{count} 个有向跳转","viewer.route.phase.playing":"播放中","viewer.route.phase.complete":"已完成","viewer.route.phase.inspecting":"检查中","viewer.route.destination.count.one":"有 {count} 个有向目标可用。请选择高亮节点。","viewer.route.destination.count.other":"有 {count} 个有向目标可用。请选择高亮节点。","viewer.route.noOutgoing":"此处没有可用的出向路径。请清除后选择其他来源。","viewer.route.result.title":"{source} 到 {target}","viewer.route.finder.source.title":"选择路径起点","viewer.route.finder.source.placeholder":"搜索路径来源","viewer.route.finder.source.empty":"没有匹配的路径来源","viewer.route.finder.source.results":"可作为路径起点的节点","viewer.route.finder.source.noun":"个路径来源","viewer.route.finder.source.badge":"起点","viewer.route.finder.target.title":"从{label}出发的目标","viewer.route.finder.target.placeholder":"搜索可达目标","viewer.route.finder.target.empty":"没有匹配的可达目标","viewer.route.finder.target.results":"可达路径目标","viewer.route.finder.target.noun":"个可达目标","viewer.route.hop.one":"{count} 跳","viewer.route.hop.other":"{count} 跳","viewer.lens.eyebrow":"语义透镜","viewer.lens.title":"比较系统角色","viewer.lens.close":"关闭语义透镜","viewer.lens.instruction":"最多选择两种语义类型。选择一种可显示其真实流量；选择两种只比较直接编写的关系。","viewer.lens.kinds":"语义类型","viewer.lens.choose":"选择一种类型以检查其节点和相连关系。","viewer.lens.copy":"复制语义透镜链接","viewer.lens.clear":"清除语义透镜","viewer.lens.open":"打开语义透镜","viewer.lens.openActive":"打开当前语义透镜","viewer.lens.legend":"语义图例","viewer.lens.legend.inspect.one":"检查{label}，{count} 个节点","viewer.lens.legend.inspect.other":"检查{label}，{count} 个节点","viewer.lens.kind.count.one":"{label}，{count} 个节点","viewer.lens.kind.count.other":"{label}，{count} 个节点","viewer.lens.compare.one":"{first} → {second}：{forward} · {second} → {first}：{reverse} · 共 {count} 条直接关系","viewer.lens.compare.other":"{first} → {second}：{forward} · {second} → {first}：{reverse} · 共 {count} 条直接关系","viewer.lens.single":"{nodes} · {relationships} · 已连接节点保持可见","viewer.lens.node.one":"{count} 个{label}节点","viewer.lens.node.other":"{count} 个{label}节点","viewer.lens.relationship.one":"{count} 条相连关系","viewer.lens.relationship.other":"{count} 条相连关系","viewer.radar.title":"语义雷达","viewer.radar.building":"正在构建总览","viewer.radar.openFull":"打开完整语义雷达","viewer.radar.open":"打开雷达","viewer.radar.close":"关闭语义雷达","viewer.radar.surface":"图表总览。点击节点进行聚焦，或使用方向键平移。","viewer.radar.click":"点击节点","viewer.radar.drag":"拖动平移","viewer.radar.space":"语义雷达需要更多地图可见空间。","viewer.radar.nodes":"语义图表雷达节点","viewer.radar.focus":"从语义雷达聚焦{label}","viewer.radar.status":"{count} 个节点 · {viewport}","viewer.radar.fullMap":"{count} 个节点 · 完整地图","viewer.radar.compacted":"已收紧雷达，避免遮挡语义护照或地图控件。","viewer.radar.cancelWaiting":"取消等待更多地图空间的语义雷达","viewer.radar.needsSpace":"语义雷达需要更多可见地图空间","viewer.radar.viewport.full":"完整地图","viewer.radar.viewport.width":"宽度 {percent}%","viewer.radar.viewport.scale":"视口 {percent}%","viewer.nav.controls":"图表视图控制","viewer.nav.route":"追踪有向路径","viewer.nav.route.title":"追踪路径（R）","viewer.nav.route.short":"路径","viewer.nav.radar":"打开语义雷达","viewer.nav.radar.title":"语义雷达（M）","viewer.nav.radar.short":"地图","viewer.nav.lens":"打开语义透镜","viewer.nav.lens.title":"语义透镜（L）","viewer.nav.lens.short":"透镜","viewer.nav.find":"查找节点","viewer.nav.find.title":"查找节点（/）","viewer.nav.guide":"打开图表指南","viewer.nav.guide.title":"图表指南（?）","viewer.nav.zoomOut":"缩小","viewer.nav.zoomOut.title":"缩小（-）","viewer.nav.reset":"重置图表视图","viewer.nav.reset.title":"重置视图（0）","viewer.nav.read":"阅读","viewer.nav.zoomIn":"放大","viewer.nav.zoomIn.title":"放大（+）","viewer.nav.camera":"{hint}。重置图表视图","viewer.nav.camera.title":"{semantic}{hint} · 重置视图（0）","viewer.nav.camera.semantic":"语义相机已启用 · ","viewer.nav.level.map":"概览","viewer.nav.level.read":"阅读","viewer.nav.level.full":"完整","viewer.nav.level.auto":"自动","viewer.nav.detail.map":"放大以显示关系标签和节点上下文","viewer.nav.detail.read":"再次放大以显示标签和注释","viewer.nav.detail.full":"完整图表详情","viewer.intent.summary":"{label}。{out} 条出向，{in} 条入向{loops}。共 {total} 条连接。按 Enter 查看详情。","viewer.intent.loops":"，{count} 条自环","viewer.common.copied":"已复制","viewer.common.copyFailed":"复制失败","viewer.common.copyLink":"复制链接","viewer.common.clear":"清除","viewer.common.close":"关闭"}}</script>
     <div class="guided-views no-print" id="guided-views" hidden aria-label="图表引导视图">
       <button id="guided-view-prev" type="button" aria-label="上一个引导视图" title="上一个引导视图（[）">&#8592;</button>
       <div class="guided-view-copy">
@@ -4996,10 +4989,10 @@
 
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
-         data-preset-badge-editorial-plate="ARCHIFY / 图版 04">
-      <svg viewBox="0 0 1237 652" role="img" lang="zh-CN" aria-labelledby="archify-diagram-title archify-diagram-description" data-preset="classic" data-quality-profile="showcase">
-        <title id="archify-diagram-title">Maka 托管执行、受控工具与可恢复事实</title>
-        <desc id="archify-diagram-description">由 Archify 生成的工作流图。</desc>
+         data-preset-badge-editorial-plate="ARCHIPAM / 图版 04">
+      <svg viewBox="0 0 1237 652" role="img" lang="zh-CN" aria-labelledby="archipam-diagram-title archipam-diagram-description" data-preset="classic" data-quality-profile="showcase">
+        <title id="archipam-diagram-title">Maka 托管执行、受控工具与可恢复事实</title>
+        <desc id="archipam-diagram-description">由 ArchiPam 生成的工作流图。</desc>
         <!-- Definitions -->
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -5496,16 +5489,16 @@
   </div>
 
   <script>
-    var Archify = {};
-    var archifyI18nData = (function () {
-      var node = document.getElementById('archify-i18n-data');
+    var ArchiPam = {};
+    var archipamI18nData = (function () {
+      var node = document.getElementById('archipam-i18n-data');
       try { return JSON.parse(node ? node.textContent : '{}'); }
       catch (_) { return { locale: 'en', messages: {} }; }
     })();
-    Archify.locale = archifyI18nData.locale || 'en';
+    ArchiPam.locale = archipamI18nData.locale || 'en';
 
     function viewerText(key, values) {
-      var messages = archifyI18nData.messages || {};
+      var messages = archipamI18nData.messages || {};
       var template = Object.prototype.hasOwnProperty.call(messages, key) ? messages[key] : key;
       return String(template).replace(/\{([a-zA-Z0-9_]+)\}/g, function (match, name) {
         return values && Object.prototype.hasOwnProperty.call(values, name) ? String(values[name]) : match;
@@ -5556,7 +5549,7 @@
        live page and canonical SVG together, but never rewrites the source,
        URL, or a later diagram's authored default.
        ============================================================ */
-    Archify.preset = (function () {
+    ArchiPam.preset = (function () {
       var PRESETS = ['classic', 'signal-flow', 'blueprint', 'editorial'];
       var LABELS = {
         classic: viewerText('viewer.preset.classic.short'),
@@ -5603,7 +5596,7 @@
       function isOpen() { return menu.classList.contains('open'); }
       function open(focusLast) {
         if (html.getAttribute('data-embed') === 'true') return false;
-        if (Archify.exportMenu && Archify.exportMenu.isOpen()) Archify.exportMenu.close(false);
+        if (ArchiPam.exportMenu && ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.close(false);
         menu.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
         var available = options();
@@ -5670,8 +5663,8 @@
        Theme toggle — persists to localStorage, respects system pref
        ============================================================ */
 
-    Archify.theme = (function () {
-      var STORAGE_KEY = 'archify-theme';
+    ArchiPam.theme = (function () {
+      var STORAGE_KEY = 'archipam-theme';
       var html = document.documentElement;
       var btn = document.getElementById('btn-theme');
       var label = document.getElementById('theme-label');
@@ -5754,12 +5747,12 @@
 
       function exportError(key, values) {
         var error = new Error(viewerText(key, values));
-        error.archifyViewerMessage = true;
+        error.archipamViewerMessage = true;
         return error;
       }
 
       function exportMessage(error) {
-        return error && error.archifyViewerMessage
+        return error && error.archipamViewerMessage
           ? error.message
           : viewerText('viewer.export.unknown');
       }
@@ -6169,7 +6162,7 @@
             try { rules = sheet.cssRules; } catch (_) { return; } // cross-origin
             if (!rules) return;
             Array.prototype.forEach.call(rules, function (rule) {
-              if (rule.type === 7 && /^archify-/.test(rule.name || '')) {
+              if (rule.type === 7 && /^archipam-/.test(rule.name || '')) {
                 out.push(rule.cssText);
                 return;
               }
@@ -6529,12 +6522,12 @@
           return Promise.reject(exportError('viewer.export.unknownVariant', { variant: options.variant }));
         }
         if (options.variant === 'route') {
-          var routeSnapshot = Archify.routeProbe && Archify.routeProbe.exportSnapshot();
+          var routeSnapshot = ArchiPam.routeProbe && ArchiPam.routeProbe.exportSnapshot();
           if (!routeSnapshot) return Promise.reject(exportError('viewer.export.routeRequired'));
           return renderShareCard({ routeSnapshot: routeSnapshot });
         }
-        var snapshot = Archify.focus && typeof Archify.focus.reachabilitySnapshot === 'function'
-          ? Archify.focus.reachabilitySnapshot()
+        var snapshot = ArchiPam.focus && typeof ArchiPam.focus.reachabilitySnapshot === 'function'
+          ? ArchiPam.focus.reachabilitySnapshot()
           : null;
         if (!snapshot) return Promise.reject(exportError('viewer.export.reachRequired'));
         return renderShareCard({ reachSnapshot: snapshot });
@@ -6809,8 +6802,8 @@
       };
 
       function syncRouteShareItem() {
-        var snapshot = Archify.routeProbe && typeof Archify.routeProbe.exportSnapshot === 'function'
-          ? Archify.routeProbe.exportSnapshot()
+        var snapshot = ArchiPam.routeProbe && typeof ArchiPam.routeProbe.exportSnapshot === 'function'
+          ? ArchiPam.routeProbe.exportSnapshot()
           : null;
         routeShareItem.hidden = !snapshot;
         routeShareItem.disabled = !snapshot;
@@ -6818,8 +6811,8 @@
       }
 
       function syncReachShareItem() {
-        var snapshot = Archify.focus && typeof Archify.focus.reachabilitySnapshot === 'function'
-          ? Archify.focus.reachabilitySnapshot()
+        var snapshot = ArchiPam.focus && typeof ArchiPam.focus.reachabilitySnapshot === 'function'
+          ? ArchiPam.focus.reachabilitySnapshot()
           : null;
         reachShareItem.hidden = !snapshot;
         reachShareItem.disabled = !snapshot;
@@ -6864,7 +6857,7 @@
       // A live region only announces CHANGES to an existing node, so the toast
       // element is created once up front and updated in place.
       var toastEl = document.createElement('div');
-      toastEl.className = 'archify-toast';
+      toastEl.className = 'archipam-toast';
       toastEl.setAttribute('role', 'status');
       document.body.appendChild(toastEl);
       var toastTimer = null;
@@ -6880,9 +6873,9 @@
       }
 
       function open(focusLast) {
-        if (Archify.preset && Archify.preset.isOpen()) Archify.preset.close(false);
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (Archify.semanticLens && Archify.semanticLens.isOpen()) Archify.semanticLens.close({ restoreFocus: false });
+        if (ArchiPam.preset && ArchiPam.preset.isOpen()) ArchiPam.preset.close(false);
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (ArchiPam.semanticLens && ArchiPam.semanticLens.isOpen()) ArchiPam.semanticLens.close({ restoreFocus: false });
         syncRouteShareItem();
         syncReachShareItem();
         menu.classList.add('open');
@@ -6994,7 +6987,7 @@
       function runRouteShareCard() {
         close(false);
         clearExportReceipt();
-        var snapshot = Archify.routeProbe && Archify.routeProbe.exportSnapshot();
+        var snapshot = ArchiPam.routeProbe && ArchiPam.routeProbe.exportSnapshot();
         var blobPromise = snapshot
           ? renderShareCard({ routeSnapshot: snapshot })
           : Promise.reject(exportError('viewer.export.routeRequired'));
@@ -7016,8 +7009,8 @@
       function runReachShareCard() {
         close(false);
         clearExportReceipt();
-        var snapshot = Archify.focus && typeof Archify.focus.reachabilitySnapshot === 'function'
-          ? Archify.focus.reachabilitySnapshot()
+        var snapshot = ArchiPam.focus && typeof ArchiPam.focus.reachabilitySnapshot === 'function'
+          ? ArchiPam.focus.reachabilitySnapshot()
           : null;
         var blobPromise = snapshot
           ? renderShareCard({ reachSnapshot: snapshot })
@@ -7152,8 +7145,8 @@
         if (formatBtn && !formatBtn.disabled) { runExport(formatBtn.dataset.format); }
       });
 
-      Archify.motion = { canRecord: canRecordMotion, recordWebm: recordWebm };
-      Archify.exportMenu = {
+      ArchiPam.motion = { canRecord: canRecordMotion, recordWebm: recordWebm };
+      ArchiPam.exportMenu = {
         open: open,
         close: close,
         isOpen: isOpen,
@@ -7189,8 +7182,8 @@
        trace yields to the strongest semantic owner; Still also parks bounded
        viewer signals without discarding their static meaning.
        ============================================================ */
-    Archify.motionGovernor = (function () {
-      var STORAGE_KEY = 'archify-motion';
+    ArchiPam.motionGovernor = (function () {
+      var STORAGE_KEY = 'archipam-motion';
       var html = document.documentElement;
       var svg = document.querySelector('.diagram-container svg');
       var btn = document.getElementById('btn-motion');
@@ -7282,17 +7275,17 @@
         btn.setAttribute('aria-pressed', paused ? 'false' : 'true');
         btn.disabled = systemPaused;
         label.textContent = viewerText(paused ? 'viewer.motion.still' : 'viewer.motion.live');
-        if (paused && lastEffectivePaused !== true && Archify.guidedViews && Archify.guidedViews.isPlaying()) {
-          Archify.guidedViews.pause();
+        if (paused && lastEffectivePaused !== true && ArchiPam.guidedViews && ArchiPam.guidedViews.isPlaying()) {
+          ArchiPam.guidedViews.pause();
         }
-        if (paused && lastEffectivePaused !== true && Archify.guidedViews && Archify.guidedViews.settleHandoff) {
-          Archify.guidedViews.settleHandoff(systemPaused ? 'reduced-motion' : (hasSuspension() ? 'hidden' : 'still'));
+        if (paused && lastEffectivePaused !== true && ArchiPam.guidedViews && ArchiPam.guidedViews.settleHandoff) {
+          ArchiPam.guidedViews.settleHandoff(systemPaused ? 'reduced-motion' : (hasSuspension() ? 'hidden' : 'still'));
         }
-        if (paused && lastEffectivePaused !== true && Archify.routeProbe && Archify.routeProbe.isJourneyPlaying && Archify.routeProbe.isJourneyPlaying()) {
-          Archify.routeProbe.pauseJourney({ preserveElapsed: true, reason: systemPaused ? 'reduced-motion' : (hasSuspension() ? 'hidden' : 'still') });
+        if (paused && lastEffectivePaused !== true && ArchiPam.routeProbe && ArchiPam.routeProbe.isJourneyPlaying && ArchiPam.routeProbe.isJourneyPlaying()) {
+          ArchiPam.routeProbe.pauseJourney({ preserveElapsed: true, reason: systemPaused ? 'reduced-motion' : (hasSuspension() ? 'hidden' : 'still') });
         }
         lastEffectivePaused = paused;
-        if (Archify.routeProbe && typeof Archify.routeProbe.syncMotion === 'function') Archify.routeProbe.syncMotion();
+        if (ArchiPam.routeProbe && typeof ArchiPam.routeProbe.syncMotion === 'function') ArchiPam.routeProbe.syncMotion();
         if (systemPaused) {
           btn.setAttribute('aria-label', viewerText('viewer.motion.reduced'));
           btn.title = viewerText('viewer.motion.reduced');
@@ -7453,8 +7446,8 @@
        the authored GitHub revision, source blobs, and optional line ranges
        against the explicit --repo-root. It remains outside the SVG so every
        canonical visual export stays free of repository paths. */
-    Archify.sourceEvidence = (function () {
-      var element = document.getElementById('archify-source-evidence-data');
+    ArchiPam.sourceEvidence = (function () {
+      var element = document.getElementById('archipam-source-evidence-data');
       var payload = null;
       var svgNamespace = 'http://www.w3.org/2000/svg';
       if (element) {
@@ -7518,14 +7511,14 @@
         installBeacons: installBeacons
       };
     })();
-    Archify.sourceEvidence.installBeacons();
+    ArchiPam.sourceEvidence.installBeacons();
 
     /* ============================================================
        Explore — stable-ID neighborhood focus + dependency-free pan/zoom.
        Renderer IDs become deep-linkable semantic hooks without turning the
        standalone artifact into a canvas editor.
        ============================================================ */
-    Archify.focus = (function () {
+    ArchiPam.focus = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector('svg');
@@ -7662,8 +7655,8 @@
         resetReachabilityButtons();
         reachStatus.textContent = '';
         reachStatus.hidden = true;
-        if (Archify.exportMenu && typeof Archify.exportMenu.syncReachShare === 'function') {
-          Archify.exportMenu.syncReachShare();
+        if (ArchiPam.exportMenu && typeof ArchiPam.exportMenu.syncReachShare === 'function') {
+          ArchiPam.exportMenu.syncReachShare();
         }
         if (options.updateUrl === true && activeIds.length === 1) {
           try {
@@ -7697,8 +7690,8 @@
         }
         var result = reachabilityFor(activeIds[0], direction);
         if (!result || result.nodeIds.length <= 1) return false;
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false, resetView: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false, resetView: false });
         }
         clearRelationshipPreview({ clearPin: true });
         clearReachability({ updateUrl: false });
@@ -7741,8 +7734,8 @@
           hops: result.maxDepth
         });
         reachStatus.hidden = false;
-        if (Archify.exportMenu && typeof Archify.exportMenu.syncReachShare === 'function') {
-          Archify.exportMenu.syncReachShare();
+        if (ArchiPam.exportMenu && typeof ArchiPam.exportMenu.syncReachShare === 'function') {
+          ArchiPam.exportMenu.syncReachShare();
         }
         if (options.updateUrl !== false) {
           try {
@@ -7750,8 +7743,8 @@
               encodeURIComponent(activeIds[0]) + '&reach=' + direction);
           } catch (_) {}
         }
-        if (options.reveal !== false && Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal(result.nodeIds, { includeNeighbors: false, reason: 'reachability' });
+        if (options.reveal !== false && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal(result.nodeIds, { includeNeighbors: false, reason: 'reachability' });
         }
         requestLensPlacement();
         return true;
@@ -7857,8 +7850,8 @@
         evidenceLinks.textContent = '';
         repositoryLink.removeAttribute('href');
         repositoryLink.textContent = '';
-        var sources = Archify.sourceEvidence.node(id);
-        var repository = Archify.sourceEvidence.repository();
+        var sources = ArchiPam.sourceEvidence.node(id);
+        var repository = ArchiPam.sourceEvidence.repository();
         if (!repository || !sources.length) {
           evidence.hidden = true;
           return;
@@ -8151,7 +8144,7 @@
         );
         return relationshipTokenGeometry(shape, relationshipTokenKind(edge), key, options);
       }
-      Archify.flowTokens = {
+      ArchiPam.flowTokens = {
         create: createSemanticFlowToken,
         kind: function (edge) { return relationshipTokenKind(edge); },
         path: relationshipTokenPath
@@ -8159,7 +8152,7 @@
       function renderRelationshipPulse(key) {
         removeRelationshipPulse();
         if (!key || document.documentElement.getAttribute('data-embed') === 'true') return false;
-        if (document.hidden || (Archify.motionGovernor && Archify.motionGovernor.isPaused())) return false;
+        if (document.hidden || (ArchiPam.motionGovernor && ArchiPam.motionGovernor.isPaused())) return false;
         if (reducedMotionQuery && reducedMotionQuery.matches) return false;
         var matchingEdges = edges().filter(function (edge) {
           return edge.getAttribute('data-edge-key') === key;
@@ -8290,8 +8283,8 @@
       function revealPinnedRelationship(record) {
         function reveal() {
           if (!record || pinnedRelationshipKey !== record.key) return true;
-          if (!Archify.view || typeof Archify.view.reveal !== 'function') return false;
-          Archify.view.reveal([record.from, record.to], { reason: 'relationship-direct' });
+          if (!ArchiPam.view || typeof ArchiPam.view.reveal !== 'function') return false;
+          ArchiPam.view.reveal([record.from, record.to], { reason: 'relationship-direct' });
           return true;
         }
         if (!reveal()) requestAnimationFrame(reveal);
@@ -8310,8 +8303,8 @@
         }
         var record = relationshipRecordForKey(key);
         if (!record) return false;
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
         set(record.from, { toggle: false, updateUrl: false });
         var row = Array.prototype.slice.call(relationshipList.querySelectorAll('[data-relationship-key]')).find(function (candidate) {
@@ -8350,7 +8343,7 @@
         relationshipHitOverlay.setAttribute('role', 'group');
         relationshipHitOverlay.setAttribute('aria-label', viewerText('viewer.passport.relationship.explorer'));
         var relationshipHelp = document.createElementNS(svgNamespace, 'desc');
-        relationshipHelp.id = 'archify-relationship-help';
+        relationshipHelp.id = 'archipam-relationship-help';
         relationshipHelp.textContent = viewerText('viewer.passport.relationship.help');
         relationshipHitOverlay.appendChild(relationshipHelp);
         records.forEach(function (record, index) {
@@ -8612,7 +8605,7 @@
           if (valid.length) top = valid[0];
         }
         chip.style.top = Math.round(top) + 'px';
-        if (Archify.radar && typeof Archify.radar.sync === 'function') Archify.radar.sync();
+        if (ArchiPam.radar && typeof ArchiPam.radar.sync === 'function') ArchiPam.radar.sync();
       }
       function requestLensPlacement() {
         if (lensFrame) return;
@@ -8624,8 +8617,8 @@
           ? svg.querySelector('[data-node-id="' + activeIds[0] + '"]')
           : null;
         clearReachability({ updateUrl: false });
-        if (Archify.intentTrace && typeof Archify.intentTrace.clear === 'function') {
-          Archify.intentTrace.clear({ announce: false });
+        if (ArchiPam.intentTrace && typeof ArchiPam.intentTrace.clear === 'function') {
+          ArchiPam.intentTrace.clear({ announce: false });
         }
         hoveredRelationship = null;
         focusedRelationship = null;
@@ -8668,8 +8661,8 @@
         relationsBtn.setAttribute('aria-expanded', 'false');
         chip.removeAttribute('data-relations-expanded');
         chip.style.removeProperty('top');
-        if (options.preserveView !== true && Archify.view && typeof Archify.view.reset === 'function') {
-          Archify.view.reset({ automatic: true });
+        if (options.preserveView !== true && ArchiPam.view && typeof ArchiPam.view.reset === 'function') {
+          ArchiPam.view.reset({ automatic: true });
         }
         if (options.updateUrl !== false) {
           try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
@@ -8682,12 +8675,12 @@
 
       function setMany(ids, options) {
         options = options || {};
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (Archify.semanticLens && Archify.semanticLens.active()) {
-          Archify.semanticLens.clear({ updateUrl: false, preserveView: true, closePanel: true });
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (ArchiPam.semanticLens && ArchiPam.semanticLens.active()) {
+          ArchiPam.semanticLens.clear({ updateUrl: false, preserveView: true, closePanel: true });
         }
-        if (options.preserveRoute !== true && Archify.routeProbe && typeof Archify.routeProbe.clear === 'function') {
-          Archify.routeProbe.clear({ updateUrl: false, restoreFocus: false });
+        if (options.preserveRoute !== true && ArchiPam.routeProbe && typeof ArchiPam.routeProbe.clear === 'function') {
+          ArchiPam.routeProbe.clear({ updateUrl: false, restoreFocus: false });
         }
         var nodeList = nodes();
         var byId = {};
@@ -8795,8 +8788,8 @@
         if (node) {
           var id = node.getAttribute('data-node-id');
           set(id);
-          if (activeIds.indexOf(id) !== -1 && Archify.view && typeof Archify.view.reveal === 'function') {
-            Archify.view.reveal([id], { includeNeighbors: true, reason: 'focus' });
+          if (activeIds.indexOf(id) !== -1 && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+            ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'focus' });
           }
         }
         else if (activeIds.length) clear();
@@ -8807,8 +8800,8 @@
         event.preventDefault();
         var id = node.getAttribute('data-node-id');
         set(id);
-        if (activeIds.indexOf(id) !== -1 && Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal([id], { includeNeighbors: true, reason: 'focus' });
+        if (activeIds.indexOf(id) !== -1 && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'focus' });
         }
       });
       clearBtn.addEventListener('click', function () { clear({ restoreFocus: true }); });
@@ -8829,12 +8822,12 @@
         var button = event.target.closest('[data-relationship-target]');
         if (!button) return;
         var id = button.getAttribute('data-relationship-target');
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
         set(id, { toggle: false });
-        if (Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal([id], { includeNeighbors: true, reason: 'relationship' });
+        if (ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'relationship' });
         }
         var node = svg.querySelector('[data-node-id="' + id + '"]');
         if (node) {
@@ -8962,7 +8955,7 @@
        Fine-pointer hover and keyboard focus share the same stable-ID preview;
        touch continues directly to the existing click-to-focus contract.
        ============================================================ */
-    Archify.intentTrace = (function () {
+    ArchiPam.intentTrace = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector(':scope > svg');
@@ -8996,8 +8989,8 @@
           svg.hasAttribute('data-lens-active') ||
           svg.hasAttribute('data-story-active') ||
           svg.hasAttribute('data-relationship-preview-active') ||
-          !!(Archify.routeProbe && typeof Archify.routeProbe.active === 'function' && Archify.routeProbe.active()) ||
-          !!(Archify.focus && typeof Archify.focus.active === 'function' && Archify.focus.active());
+          !!(ArchiPam.routeProbe && typeof ArchiPam.routeProbe.active === 'function' && ArchiPam.routeProbe.active()) ||
+          !!(ArchiPam.focus && typeof ArchiPam.focus.active === 'function' && ArchiPam.focus.active());
       }
       function edgeShapes(edge) {
         if (/^(path|line|polyline)$/i.test(edge.tagName)) return [edge];
@@ -9171,8 +9164,8 @@
       };
     })();
 
-    Archify.guidedViews = (function () {
-      var data = document.getElementById('archify-guided-views-data');
+    ArchiPam.guidedViews = (function () {
+      var data = document.getElementById('archipam-guided-views-data');
       var panel = document.getElementById('guided-views');
       var prev = document.getElementById('guided-view-prev');
       var next = document.getElementById('guided-view-next');
@@ -9297,7 +9290,7 @@
         if (document.hidden || reducedMotion()) return false;
         if (document.documentElement.getAttribute('data-embed') === 'true') return false;
         if (window.matchMedia && window.matchMedia('print').matches) return false;
-        return !(Archify.motionGovernor && Archify.motionGovernor.capable && Archify.motionGovernor.isPaused());
+        return !(ArchiPam.motionGovernor && ArchiPam.motionGovernor.capable && ArchiPam.motionGovernor.isPaused());
       }
 
       function classifyHandoff(delta, anchor) {
@@ -9354,7 +9347,7 @@
         handoff.holdTimer = null;
         currentHandoff = null;
         clearHandoffPresentation();
-        if (handoff.ownerToken && Archify.motionGovernor) Archify.motionGovernor.release(handoff.ownerToken);
+        if (handoff.ownerToken && ArchiPam.motionGovernor) ArchiPam.motionGovernor.release(handoff.ownerToken);
         handoff.resolve({ id: handoff.id, state: outcome || 'complete', anchor: handoff.anchor || null });
         syncStoryControlsDisabled();
         syncChapterPreview();
@@ -9367,7 +9360,7 @@
         if (handoff.holdTimer) clearTimeout(handoff.holdTimer);
         handoff.holdTimer = null;
         if (handoff.camera && handoff.camera.cancel) handoff.camera.cancel(reason || 'settled', true);
-        else if (Archify.view && Archify.view.reveal) Archify.view.reveal(handoff.focus, { instant: true, reason: reason || 'settled' });
+        else if (ArchiPam.view && ArchiPam.view.reveal) ArchiPam.view.reveal(handoff.focus, { instant: true, reason: reason || 'settled' });
         completeHandoff(handoff, reason || 'settled');
         return true;
       }
@@ -9388,15 +9381,15 @@
       }
 
       function beginHandoff(previousIndex, nextIndex, previous, destination, outgoingBeatIndex, reason) {
-        if (!Archify.view || !Archify.view.reveal) return null;
+        if (!ArchiPam.view || !ArchiPam.view.reveal) return null;
         if (!previous || previousIndex === nextIndex) {
-          Archify.view.reveal(destination.focus, { reason: reason });
+          ArchiPam.view.reveal(destination.focus, { reason: reason });
           return null;
         }
         var delta = chapterDelta(previous, destination);
         var anchor = chapterAnchor(previous, destination, outgoingBeatIndex, delta);
         if (!handoffMotionAllowed()) {
-          Archify.view.reveal(destination.focus, { instant: true, reason: reason });
+          ArchiPam.view.reveal(destination.focus, { instant: true, reason: reason });
           return null;
         }
         var resolver;
@@ -9424,8 +9417,8 @@
           });
           handoffReceipt.hidden = false;
         }
-        if (Archify.motionGovernor) {
-          handoff.ownerToken = Archify.motionGovernor.claim('handoff', function () {
+        if (ArchiPam.motionGovernor) {
+          handoff.ownerToken = ArchiPam.motionGovernor.claim('handoff', function () {
             if (currentHandoff === handoff) settleHandoff('preempted');
           });
         }
@@ -9434,7 +9427,7 @@
           handoff.holdTimer = null;
           handoff.mode = 'settling';
           svg.setAttribute('data-chapter-handoff', anchor ? 'settling' : 'no-anchor');
-          handoff.camera = Archify.view.reveal(destination.focus, { reason: reason, duration: 420 });
+          handoff.camera = ArchiPam.view.reveal(destination.focus, { reason: reason, duration: 420 });
           if (handoff.camera && handoff.camera.finished) {
             handoff.camera.finished.then(function (outcome) {
               if (currentHandoff === handoff) completeHandoff(handoff, outcome && outcome.state || 'complete');
@@ -9586,10 +9579,10 @@
         });
         chapterButtons.forEach(function (button) { button.removeAttribute('data-preview-active'); });
         activePreviewIndex = -1;
-        if (previewOwnerToken && Archify.motionGovernor) {
+        if (previewOwnerToken && ArchiPam.motionGovernor) {
           var token = previewOwnerToken;
           previewOwnerToken = 0;
-          Archify.motionGovernor.release(token);
+          ArchiPam.motionGovernor.release(token);
         }
       }
 
@@ -9629,8 +9622,8 @@
         svg.setAttribute('data-chapter-preview', views[index].id);
         chapterButtons[index].setAttribute('data-preview-active', 'true');
         activePreviewIndex = index;
-        if (Archify.motionGovernor && Archify.motionGovernor.capable) {
-          previewOwnerToken = Archify.motionGovernor.claim('chapter-preview', function () {
+        if (ArchiPam.motionGovernor && ArchiPam.motionGovernor.capable) {
+          previewOwnerToken = ArchiPam.motionGovernor.claim('chapter-preview', function () {
             previewOwnerToken = 0;
             clearChapterPreviewPresentation();
           });
@@ -9778,7 +9771,7 @@
         if (!shareCueProgress) return;
         setShareCueProgress(fraction || 0);
         void shareCueProgress.offsetWidth;
-        shareCueProgress.style.animation = 'archify-guided-progress ' + Math.max(1, duration || VIEW_INTERVAL_MS) + 'ms linear forwards';
+        shareCueProgress.style.animation = 'archipam-guided-progress ' + Math.max(1, duration || VIEW_INTERVAL_MS) + 'ms linear forwards';
       }
 
       function storyNodeLabel(node, fallback) {
@@ -10000,13 +9993,13 @@
         if (document.documentElement.getAttribute('data-embed') === 'true' &&
             document.documentElement.getAttribute('data-share-playback') !== 'true') return false;
         if (window.matchMedia && window.matchMedia('print').matches) return false;
-        return !(Archify.motionGovernor && Archify.motionGovernor.isPaused());
+        return !(ArchiPam.motionGovernor && ArchiPam.motionGovernor.isPaused());
       }
 
       function storyAutomaticPlaybackAllowed() {
         if (document.hidden || reducedMotion()) return false;
         if (window.matchMedia && window.matchMedia('print').matches) return false;
-        if (Archify.motionGovernor && Archify.motionGovernor.capable) return !Archify.motionGovernor.isPaused();
+        if (ArchiPam.motionGovernor && ArchiPam.motionGovernor.capable) return !ArchiPam.motionGovernor.isPaused();
         return true;
       }
 
@@ -10019,10 +10012,10 @@
         Array.prototype.forEach.call(svg.querySelectorAll('[data-story-carrier-overlay]'), function (overlay) {
           overlay.remove();
         });
-        if (storyPulseOwnerToken && options.release !== false && Archify.motionGovernor) {
+        if (storyPulseOwnerToken && options.release !== false && ArchiPam.motionGovernor) {
           var token = storyPulseOwnerToken;
           storyPulseOwnerToken = 0;
-          Archify.motionGovernor.release(token);
+          ArchiPam.motionGovernor.release(token);
         } else if (options.release === false) storyPulseOwnerToken = 0;
       }
 
@@ -10032,16 +10025,16 @@
         var flows = Array.prototype.slice.call(svg.querySelectorAll('.story-trail-flow[data-story-beat-step="' + step.index + '"]'));
         if (!flows.length) return false;
         var pulseGeneration = storyPulseGeneration;
-        if (Archify.motionGovernor && Archify.motionGovernor.capable) {
-          storyPulseOwnerToken = Archify.motionGovernor.claim('story', function () {
+        if (ArchiPam.motionGovernor && ArchiPam.motionGovernor.capable) {
+          storyPulseOwnerToken = ArchiPam.motionGovernor.claim('story', function () {
             clearStoryPulse({ release: false });
           });
         }
         flows.forEach(function (flow) { flow.setAttribute('data-story-pulse', 'true'); });
-        if (Archify.flowTokens && typeof Archify.flowTokens.create === 'function') {
+        if (ArchiPam.flowTokens && typeof ArchiPam.flowTokens.create === 'function') {
           var edge = step.edges[0];
           var shapes = storyGeometry(edge);
-          var carrier = shapes.length ? Archify.flowTokens.create(edge, shapes[0], {
+          var carrier = shapes.length ? ArchiPam.flowTokens.create(edge, shapes[0], {
             className: 'story-flow-token',
             duration: '0.78s'
           }) : null;
@@ -10110,12 +10103,12 @@
       function followStoryStep(step, options) {
         options = options || {};
         if (!step || document.hidden) return false;
-        if (!Archify.view || typeof Archify.view.reveal !== 'function') {
+        if (!ArchiPam.view || typeof ArchiPam.view.reveal !== 'function') {
           var deferredIndex = step.index;
           var deferredGeneration = ++storyFollowGeneration;
           requestAnimationFrame(function () {
             if (deferredGeneration !== storyFollowGeneration || storyBeatIndex !== deferredIndex) return;
-            if (Archify.view && typeof Archify.view.reveal === 'function') followStoryStep(step, options);
+            if (ArchiPam.view && typeof ArchiPam.view.reveal === 'function') followStoryStep(step, options);
           });
           return true;
         }
@@ -10128,7 +10121,7 @@
         svg.setAttribute('data-story-follow', step.nodeId);
         panel.setAttribute('data-story-follow', 'moving');
         panel.setAttribute('data-story-follow-node', step.nodeId);
-        var receipt = Archify.view.reveal(ids, {
+        var receipt = ArchiPam.view.reveal(ids, {
           reason: options.manual === true ? 'story-beat' : 'story-follow',
           padding: 64,
           maxScale: 1.65,
@@ -10264,7 +10257,7 @@
       }
 
       function renderStoryTrail(view) {
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
         clearStoryTrail();
         if (!view) return;
 
@@ -10358,7 +10351,7 @@
       function startProgress(fraction, duration) {
         resetProgress(fraction);
         void progressBar.offsetWidth;
-        progressBar.style.animation = 'archify-guided-progress ' + Math.max(1, duration || VIEW_INTERVAL_MS) + 'ms linear forwards';
+        progressBar.style.animation = 'archipam-guided-progress ' + Math.max(1, duration || VIEW_INTERVAL_MS) + 'ms linear forwards';
       }
 
       function currentStoryProgress() {
@@ -10572,7 +10565,7 @@
         storyBeatElapsedMs = 0;
         storyBeatDwellMs = storyBeatDwell(storySteps.length);
         var view = views[activeIndex];
-        Archify.focus.setMany(view.focus, {
+        ArchiPam.focus.setMany(view.focus, {
           toggle: false,
           updateUrl: false,
           mode: 'selection',
@@ -10626,9 +10619,9 @@
         cancelHandoff('overview');
         activeIndex = -1;
         renderStoryTrail(null);
-        if (options.clearFocus !== false) Archify.focus.clear({ updateUrl: false });
-        if (options.resetView !== false && Archify.view && typeof Archify.view.reset === 'function') {
-          Archify.view.reset({ automatic: true });
+        if (options.clearFocus !== false) ArchiPam.focus.clear({ updateUrl: false });
+        if (options.resetView !== false && ArchiPam.view && typeof ArchiPam.view.reset === 'function') {
+          ArchiPam.view.reset({ automatic: true });
         }
         render();
         if (options.updateUrl !== false) updateUrl(null);
@@ -10648,7 +10641,7 @@
         cancelHandoff('replaced');
         activeIndex = index;
         var view = views[index];
-        Archify.focus.setMany(view.focus, {
+        ArchiPam.focus.setMany(view.focus, {
           toggle: false,
           updateUrl: false,
           mode: 'selection',
@@ -10892,7 +10885,7 @@
        embed, presentation, print, and non-wide diagrams retain their own
        established layout contracts.
        ============================================================ */
-    Archify.waitForStableLayout = function (options) {
+    ArchiPam.waitForStableLayout = function (options) {
       options = options || {};
       var maximumFrames = Math.max(1, Number(options.maximumFrames) || 240);
       var fontsReady = document.fonts && document.fonts.ready
@@ -10932,7 +10925,7 @@
       });
     };
 
-    Archify.readerLayout = (function () {
+    ArchiPam.readerLayout = (function () {
       var html = document.documentElement;
       var body = document.body;
       var shell = document.querySelector('.container');
@@ -10979,7 +10972,7 @@
         );
       }
       function clear() {
-        html.style.removeProperty('--archify-reader-width');
+        html.style.removeProperty('--archipam-reader-width');
         html.removeAttribute('data-reader-layout');
         html.removeAttribute('data-reader-overflow');
         lastWidth = 0;
@@ -11000,7 +10993,7 @@
         var rounded = Math.round(width);
         if (Math.abs(rounded - lastWidth) < 1) return false;
         lastWidth = rounded;
-        html.style.setProperty('--archify-reader-width', rounded + 'px');
+        html.style.setProperty('--archipam-reader-width', rounded + 'px');
         html.setAttribute('data-reader-layout', 'adaptive');
         return true;
       }
@@ -11069,7 +11062,7 @@
         ].join('|');
       }
       function whenStable() {
-        return Archify.waitForStableLayout({
+        return ArchiPam.waitForStableLayout({
           schedule: schedule,
           pending: function () { return Boolean(frame || settleFrame); },
           snapshot: stableSnapshot,
@@ -11107,7 +11100,7 @@
        position unless its zero-reserve position would cover the legend; only
        then does a small bottom safe rail become part of the reader budget.
        ============================================================ */
-    Archify.viewerChromeLayout = (function () {
+    ArchiPam.viewerChromeLayout = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container && container.querySelector(':scope > svg');
@@ -11151,14 +11144,14 @@
         if (Math.abs(next - reserve) < 1) return false;
         reserve = next;
         if (reserve) {
-          container.style.setProperty('--archify-nav-reserve', reserve + 'px');
+          container.style.setProperty('--archipam-nav-reserve', reserve + 'px');
           container.setAttribute('data-nav-safe-rail', 'true');
         } else {
-          container.style.removeProperty('--archify-nav-reserve');
+          container.style.removeProperty('--archipam-nav-reserve');
           container.removeAttribute('data-nav-safe-rail');
         }
-        if (Archify.readerLayout && typeof Archify.readerLayout.schedule === 'function') {
-          Archify.readerLayout.schedule();
+        if (ArchiPam.readerLayout && typeof ArchiPam.readerLayout.schedule === 'function') {
+          ArchiPam.readerLayout.schedule();
         }
         if (options.quiet !== true) {
           if (settleFrame) cancelAnimationFrame(settleFrame);
@@ -11231,8 +11224,8 @@
         collisionLatched = false;
         baselineIntersectionArea = 0;
         writeReserve(0, { quiet: true });
-        var readerReady = Archify.readerLayout && typeof Archify.readerLayout.whenStable === 'function'
-          ? Archify.readerLayout.whenStable().catch(function () {})
+        var readerReady = ArchiPam.readerLayout && typeof ArchiPam.readerLayout.whenStable === 'function'
+          ? ArchiPam.readerLayout.whenStable().catch(function () {})
           : Promise.resolve();
         probePromise = readerReady.then(function () {
           probingBaseline = false;
@@ -11263,7 +11256,7 @@
         ].join('|');
       }
       function whenStable() {
-        return Archify.waitForStableLayout({
+        return ArchiPam.waitForStableLayout({
           schedule: schedule,
           pending: function () { return Boolean(frame || settleFrame || probingBaseline); },
           snapshot: stableSnapshot,
@@ -11304,7 +11297,7 @@
       };
     })();
 
-    Archify.view = (function () {
+    ArchiPam.view = (function () {
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector('svg');
       var outBtn = container.querySelector('[data-view="out"]');
@@ -11411,9 +11404,9 @@
         inBtn.disabled = state.scale >= 3;
         container.classList.toggle('is-pannable', state.scale > 1);
         svg.setAttribute('data-view-scale', String(state.scale));
-        if (Archify.radar && typeof Archify.radar.sync === 'function') Archify.radar.sync();
-        if (Archify.viewerChromeLayout && typeof Archify.viewerChromeLayout.schedule === 'function') {
-          Archify.viewerChromeLayout.schedule();
+        if (ArchiPam.radar && typeof ArchiPam.radar.sync === 'function') ArchiPam.radar.sync();
+        if (ArchiPam.viewerChromeLayout && typeof ArchiPam.viewerChromeLayout.schedule === 'function') {
+          ArchiPam.viewerChromeLayout.schedule();
         }
       }
       function sampleRenderedState() {
@@ -11441,7 +11434,7 @@
         container.classList.remove('is-camera-moving');
         container.classList.remove('is-camera-transaction');
         container.removeAttribute('data-camera-transaction');
-        if (Archify.focus && Archify.focus.reposition) Archify.focus.reposition();
+        if (ArchiPam.focus && ArchiPam.focus.reposition) ArchiPam.focus.reposition();
         transaction.resolve({ id: transaction.id, state: transaction.state });
         return true;
       }
@@ -11490,8 +11483,8 @@
         container.removeAttribute('data-camera-transaction');
       }
       function interruptCamera(reason) {
-        if (Archify.guidedViews && Archify.guidedViews.cancelHandoff) {
-          Archify.guidedViews.cancelHandoff(reason || 'manual');
+        if (ArchiPam.guidedViews && ArchiPam.guidedViews.cancelHandoff) {
+          ArchiPam.guidedViews.cancelHandoff(reason || 'manual');
         }
         var rendered = sampleRenderedState();
         stopCameraMotion(reason || 'manual', false);
@@ -11499,11 +11492,11 @@
         state.mode = 'manual';
         apply();
         renderControls();
-        if (Archify.guidedViews && Archify.guidedViews.isPlaying && Archify.guidedViews.isPlaying()) {
-          Archify.guidedViews.pause();
+        if (ArchiPam.guidedViews && ArchiPam.guidedViews.isPlaying && ArchiPam.guidedViews.isPlaying()) {
+          ArchiPam.guidedViews.pause();
         }
-        if (Archify.routeProbe && Archify.routeProbe.isJourneyPlaying && Archify.routeProbe.isJourneyPlaying()) {
-          Archify.routeProbe.pauseJourney({ preserveElapsed: true, reason: reason || 'manual' });
+        if (ArchiPam.routeProbe && ArchiPam.routeProbe.isJourneyPlaying && ArchiPam.routeProbe.isJourneyPlaying()) {
+          ArchiPam.routeProbe.pauseJourney({ preserveElapsed: true, reason: reason || 'manual' });
         }
       }
       function zoom(next, options) {
@@ -11527,8 +11520,8 @@
         else stopCameraMotion('reset', false);
         state = { scale: 1, x: 0, y: 0, mode: 'overview' };
         apply();
-        if (Archify.viewerChromeLayout && typeof Archify.viewerChromeLayout.reprobe === 'function') {
-          Archify.viewerChromeLayout.reprobe();
+        if (ArchiPam.viewerChromeLayout && typeof ArchiPam.viewerChromeLayout.reprobe === 'function') {
+          ArchiPam.viewerChromeLayout.reprobe();
         }
       }
       function centerAt(logicalX, logicalY, options) {
@@ -11560,7 +11553,7 @@
         state.y = metrics.height / 2 - contentY * state.scale;
         state.mode = 'manual';
         apply();
-        if (Archify.focus && Archify.focus.reposition) Archify.focus.reposition();
+        if (ArchiPam.focus && ArchiPam.focus.reposition) ArchiPam.focus.reposition();
         return true;
       }
       function semanticIds(ids, includeNeighbors) {
@@ -11722,20 +11715,20 @@
         return transaction;
       }
       function syncSemantic() {
-        var guided = Archify.guidedViews && typeof Archify.guidedViews.focus === 'function'
-          ? Archify.guidedViews.focus() : [];
+        var guided = ArchiPam.guidedViews && typeof ArchiPam.guidedViews.focus === 'function'
+          ? ArchiPam.guidedViews.focus() : [];
         if (guided && guided.length) return reveal(guided, { reason: 'guided-sync' });
-        var active = Archify.focus && typeof Archify.focus.active === 'function' ? Archify.focus.active() : null;
+        var active = ArchiPam.focus && typeof ArchiPam.focus.active === 'function' ? ArchiPam.focus.active() : null;
         if (typeof active === 'string') return reveal([active], { includeNeighbors: true, reason: 'focus-sync' });
         if (Array.isArray(active) && active.length) return reveal(active, { reason: 'selection-sync' });
         return false;
       }
       function pinControls() {
-        container.style.setProperty('--archify-scroll-x', container.scrollLeft + 'px');
+        container.style.setProperty('--archipam-scroll-x', container.scrollLeft + 'px');
       }
       function onScroll() {
         pinControls();
-        if (Archify.radar && typeof Archify.radar.sync === 'function') Archify.radar.sync();
+        if (ArchiPam.radar && typeof ArchiPam.radar.sync === 'function') ArchiPam.radar.sync();
         if (window.innerWidth <= 720 && container.hasAttribute('data-wide-diagram') && Date.now() > autoScrollUntil) {
           interruptCamera();
         }
@@ -11804,7 +11797,7 @@
        The radar is built at runtime so the checked artifact still contains
        one canonical SVG block, and export serialization remains untouched.
        ============================================================ */
-    Archify.radar = (function () {
+    ArchiPam.radar = (function () {
       var container = document.querySelector('.diagram-container');
       var diagram = container.querySelector(':scope > svg');
       var panel = document.getElementById('overview-map');
@@ -12012,13 +12005,13 @@
         panel.setAttribute('data-docked', 'true');
         panel.setAttribute('data-dock-side', useLeft ? 'left' : 'right');
         if (useLeft) {
-          panel.style.setProperty('--archify-radar-left', Math.round(position.left) + 'px');
-          panel.style.removeProperty('--archify-radar-right');
+          panel.style.setProperty('--archipam-radar-left', Math.round(position.left) + 'px');
+          panel.style.removeProperty('--archipam-radar-right');
         } else {
-          panel.style.setProperty('--archify-radar-right', Math.round(window.innerWidth - position.left - panel.offsetWidth) + 'px');
-          panel.style.removeProperty('--archify-radar-left');
+          panel.style.setProperty('--archipam-radar-right', Math.round(window.innerWidth - position.left - panel.offsetWidth) + 'px');
+          panel.style.removeProperty('--archipam-radar-left');
         }
-        panel.style.setProperty('--archify-radar-top', Math.round(position.top) + 'px');
+        panel.style.setProperty('--archipam-radar-top', Math.round(position.top) + 'px');
         if (remember !== false) lastPlacement = { left: position.left, top: position.top };
       }
       function resetDockingStyles() {
@@ -12031,9 +12024,9 @@
         panel.removeAttribute('data-compact');
         panel.removeAttribute('title');
         panel.style.removeProperty('visibility');
-        panel.style.removeProperty('--archify-radar-right');
-        panel.style.removeProperty('--archify-radar-left');
-        panel.style.removeProperty('--archify-radar-top');
+        panel.style.removeProperty('--archipam-radar-right');
+        panel.style.removeProperty('--archipam-radar-left');
+        panel.style.removeProperty('--archipam-radar-top');
       }
       function updateDocking() {
         var options = arguments[0] || {};
@@ -12153,7 +12146,7 @@
       }
       function syncNow() {
         syncFrame = 0;
-        if (panel.hidden || !Archify.view || typeof Archify.view.logicalViewport !== 'function') return;
+        if (panel.hidden || !ArchiPam.view || typeof ArchiPam.view.logicalViewport !== 'function') return;
         if (!updateDocking()) {
           reflectUnavailable();
           return;
@@ -12166,7 +12159,7 @@
           }
         }
         reflectVisible();
-        var visible = Archify.view.logicalViewport();
+        var visible = ArchiPam.view.logicalViewport();
         if (!visible) return;
         viewport.setAttribute('x', String(visible.x));
         viewport.setAttribute('y', String(visible.y));
@@ -12198,9 +12191,9 @@
       function setOpen(next, options) {
         options = options || {};
         next = Boolean(next);
-        if (next && Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (next && Archify.semanticLens && Archify.semanticLens.isOpen()) {
-          Archify.semanticLens.close({ restoreFocus: false });
+        if (next && ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (next && ArchiPam.semanticLens && ArchiPam.semanticLens.isOpen()) {
+          ArchiPam.semanticLens.close({ restoreFocus: false });
         }
         requestedOpen = next;
         if (next) {
@@ -12243,14 +12236,14 @@
       function focusNode(id) {
         var main = diagram.querySelector('[data-node-id="' + id + '"]');
         if (!main) return false;
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
-        if (Archify.focus && typeof Archify.focus.set === 'function') {
-          Archify.focus.set(id, { toggle: false });
+        if (ArchiPam.focus && typeof ArchiPam.focus.set === 'function') {
+          ArchiPam.focus.set(id, { toggle: false });
         }
-        if (Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal([id], { includeNeighbors: true, reason: 'radar' });
+        if (ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'radar' });
         }
         bringNodeIntoWindow(main);
         try { main.focus({ preventScroll: true }); } catch (_) { try { main.focus(); } catch (_) {} }
@@ -12267,8 +12260,8 @@
       }
       function navigate(event) {
         var point = diagramPoint(event);
-        if (!point || !Archify.view || typeof Archify.view.centerAt !== 'function') return;
-        Archify.view.centerAt(point.x, point.y, { minimumScale: 1.5, instant: true });
+        if (!point || !ArchiPam.view || typeof ArchiPam.view.centerAt !== 'function') return;
+        ArchiPam.view.centerAt(point.x, point.y, { minimumScale: 1.5, instant: true });
         sync();
       }
       function endViewportDrag(event) {
@@ -12374,7 +12367,7 @@
           return;
         }
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
-        var visible = Archify.view && Archify.view.logicalViewport ? Archify.view.logicalViewport() : null;
+        var visible = ArchiPam.view && ArchiPam.view.logicalViewport ? ArchiPam.view.logicalViewport() : null;
         if (!visible) return;
         event.preventDefault();
         var x = visible.x + visible.width / 2;
@@ -12385,7 +12378,7 @@
         else if (event.key === 'ArrowRight') x += stepX;
         else if (event.key === 'ArrowUp') y -= stepY;
         else y += stepY;
-        Archify.view.centerAt(x, y, { minimumScale: 1.5, instant: true });
+        ArchiPam.view.centerAt(x, y, { minimumScale: 1.5, instant: true });
         sync();
       });
       document.addEventListener('keydown', function (event) {
@@ -12433,7 +12426,7 @@
        serialization remain untouched. Escape first clears an active guided
        view/focus, then exits the stage.
        ============================================================ */
-    Archify.presentation = (function () {
+    ArchiPam.presentation = (function () {
       var html = document.documentElement;
       var btn = document.getElementById('btn-present');
       var label = document.getElementById('present-label');
@@ -12465,7 +12458,7 @@
           return next;
         }
         if (next) {
-          if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
+          if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
           previousScrollY = window.scrollY || 0;
           html.setAttribute('data-present', 'true');
           try { window.scrollTo(0, 0); } catch (_) {}
@@ -12475,10 +12468,10 @@
         render(next);
         if (options.updateUrl !== false) updateUrl(next);
         requestAnimationFrame(function () {
-          if (Archify.view && typeof Archify.view.reset === 'function') {
-            Archify.view.reset({ automatic: true });
+          if (ArchiPam.view && typeof ArchiPam.view.reset === 'function') {
+            ArchiPam.view.reset({ automatic: true });
             requestAnimationFrame(function () {
-              if (Archify.view && typeof Archify.view.sync === 'function') Archify.view.sync();
+              if (ArchiPam.view && typeof ArchiPam.view.sync === 'function') ArchiPam.view.sync();
             });
           }
           if (!next && previousScrollY) {
@@ -12506,7 +12499,7 @@
        Search never changes the IR or SVG geometry: selecting a result resets
        the viewport, releases a guided view, and delegates to semantic focus.
        ============================================================ */
-    Archify.finder = (function () {
+    ArchiPam.finder = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector('svg');
@@ -12566,7 +12559,7 @@
         var tag = node.getAttribute('data-node-tag') || '';
         var brand = node.getAttribute('data-node-brand') || '';
         var type = semanticType(node);
-        var sources = Archify.sourceEvidence.node(id);
+        var sources = ArchiPam.sourceEvidence.node(id);
         var sourceSearch = sources.map(function (source) {
           return [source.path, source.label, source.line, source.endLine].filter(Boolean).join(' ');
         }).join(' ');
@@ -12591,8 +12584,8 @@
 
       function resolveContext(options) {
         var requested = options && options.context ? options.context : null;
-        if (!requested && Archify.routeProbe && typeof Archify.routeProbe.finderContext === 'function') {
-          requested = Archify.routeProbe.finderContext();
+        if (!requested && ArchiPam.routeProbe && typeof ArchiPam.routeProbe.finderContext === 'function') {
+          requested = ArchiPam.routeProbe.finderContext();
         }
         if (!requested) return defaultContext();
         var resolved = defaultContext();
@@ -12618,21 +12611,21 @@
         if (!item) return false;
         var routeSelection = context.kind === 'route-source' || context.kind === 'route-target';
         if (routeSelection) {
-          if (!Archify.routeProbe || typeof Archify.routeProbe.choose !== 'function' || !Archify.routeProbe.choose(id)) return false;
-          if (Archify.routeProbe.active() === 'target' && Archify.view && typeof Archify.view.reveal === 'function') {
-            Archify.view.reveal([id], { includeNeighbors: true, reason: 'route-pick' });
+          if (!ArchiPam.routeProbe || typeof ArchiPam.routeProbe.choose !== 'function' || !ArchiPam.routeProbe.choose(id)) return false;
+          if (ArchiPam.routeProbe.active() === 'target' && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+            ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'route-pick' });
           }
           close({ restoreFocus: false });
           try { item.node.focus({ preventScroll: true }); } catch (_) { try { item.node.focus(); } catch (_) {} }
           return true;
         }
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
-        if (Archify.view && typeof Archify.view.reset === 'function') Archify.view.reset({ automatic: true });
-        Archify.focus.set(id, { toggle: false });
-        if (Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal([id], { includeNeighbors: true, reason: 'finder' });
+        if (ArchiPam.view && typeof ArchiPam.view.reset === 'function') ArchiPam.view.reset({ automatic: true });
+        ArchiPam.focus.set(id, { toggle: false });
+        if (ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal([id], { includeNeighbors: true, reason: 'finder' });
         }
         close({ restoreFocus: false });
         try { item.node.focus({ preventScroll: true }); } catch (_) { try { item.node.focus(); } catch (_) {} }
@@ -12687,15 +12680,15 @@
 
       function open(options) {
         if (html.getAttribute('data-embed') === 'true') return false;
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (Archify.exportMenu && Archify.exportMenu.isOpen()) Archify.exportMenu.close(false);
-        if (Archify.semanticLens && Archify.semanticLens.isOpen()) Archify.semanticLens.close({ restoreFocus: false });
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (ArchiPam.exportMenu && ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.close(false);
+        if (ArchiPam.semanticLens && ArchiPam.semanticLens.isOpen()) ArchiPam.semanticLens.close({ restoreFocus: false });
         context = resolveContext(options || {});
         applyContext();
         panel.hidden = false;
         trigger.setAttribute('aria-expanded', 'true');
-        if (context.kind.indexOf('route-') === 0 && Archify.routeProbe && typeof Archify.routeProbe.finderOpening === 'function') {
-          Archify.routeProbe.finderOpening();
+        if (context.kind.indexOf('route-') === 0 && ArchiPam.routeProbe && typeof ArchiPam.routeProbe.finderOpening === 'function') {
+          ArchiPam.routeProbe.finderOpening();
         }
         input.value = '';
         render('');
@@ -12709,8 +12702,8 @@
         panel.hidden = true;
         trigger.setAttribute('aria-expanded', 'false');
         input.value = '';
-        if (routeContext && Archify.routeProbe && typeof Archify.routeProbe.finderClosed === 'function') {
-          Archify.routeProbe.finderClosed({ restoreFocus: options.restoreFocus !== false });
+        if (routeContext && ArchiPam.routeProbe && typeof ArchiPam.routeProbe.finderClosed === 'function') {
+          ArchiPam.routeProbe.finderClosed({ restoreFocus: options.restoreFocus !== false });
         } else if (options.restoreFocus !== false) {
           trigger.focus();
         }
@@ -12773,7 +12766,7 @@
        endpoints. BFS order follows authored DOM edge order, so equal-length
        choices are deterministic without adding weights or a graph runtime.
        ============================================================ */
-    Archify.routeProbe = (function () {
+    ArchiPam.routeProbe = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector(':scope > svg');
@@ -12885,10 +12878,10 @@
         Array.prototype.forEach.call(svg.querySelectorAll('[data-route-journey-overlay]'), function (overlay) {
           overlay.remove();
         });
-        if (journeyOwnerToken && options.release !== false && Archify.motionGovernor) {
+        if (journeyOwnerToken && options.release !== false && ArchiPam.motionGovernor) {
           var token = journeyOwnerToken;
           journeyOwnerToken = 0;
-          Archify.motionGovernor.release(token);
+          ArchiPam.motionGovernor.release(token);
         }
       }
       function stopJourneyTimer(options) {
@@ -13003,8 +12996,8 @@
       function clear(options) {
         options = options || {};
         var wasActive = mode !== 'idle';
-        if (Archify.finder && Archify.finder.isOpen() && typeof Archify.finder.context === 'function' && Archify.finder.context().indexOf('route-') === 0) {
-          Archify.finder.close({ restoreFocus: false });
+        if (ArchiPam.finder && ArchiPam.finder.isOpen() && typeof ArchiPam.finder.context === 'function' && ArchiPam.finder.context().indexOf('route-') === 0) {
+          ArchiPam.finder.close({ restoreFocus: false });
         }
         mode = 'idle';
         startId = null;
@@ -13023,10 +13016,10 @@
         findBtn.setAttribute('aria-label', viewerText('viewer.route.start.find.aria'));
         copyBtn.hidden = true;
         copyBtn.textContent = viewerText('viewer.route.copy');
-        if (Archify.exportMenu && typeof Archify.exportMenu.syncRouteShare === 'function') Archify.exportMenu.syncRouteShare();
+        if (ArchiPam.exportMenu && typeof ArchiPam.exportMenu.syncRouteShare === 'function') ArchiPam.exportMenu.syncRouteShare();
         setTrigger(false);
-        if (wasActive && options.preserveView !== true && Archify.view && typeof Archify.view.reset === 'function') {
-          Archify.view.reset({ automatic: true });
+        if (wasActive && options.preserveView !== true && ArchiPam.view && typeof ArchiPam.view.reset === 'function') {
+          ArchiPam.view.reset({ automatic: true });
         }
         if (options.updateUrl !== false) replaceRouteHash('');
         if (options.restoreFocus === true) trigger.focus();
@@ -13148,9 +13141,9 @@
       function journeyMotionAllowed() {
         return html.getAttribute('data-embed') !== 'true' &&
           !document.hidden &&
-          Archify.motionGovernor &&
-          Archify.motionGovernor.capable === true &&
-          !Archify.motionGovernor.isPaused();
+          ArchiPam.motionGovernor &&
+          ArchiPam.motionGovernor.capable === true &&
+          !ArchiPam.motionGovernor.isPaused();
       }
       function routeOverviewStatus() {
         return viewerText('viewer.route.overview.status', {
@@ -13241,9 +13234,9 @@
         var firstNode = svg.querySelector('[data-node-id]');
         if (firstNode) svg.insertBefore(overlay, firstNode);
         else svg.appendChild(overlay);
-        if (Archify.motionGovernor && Archify.motionGovernor.capable) {
+        if (ArchiPam.motionGovernor && ArchiPam.motionGovernor.capable) {
           var token = 0;
-          token = Archify.motionGovernor.claim('route', function () {
+          token = ArchiPam.motionGovernor.claim('route', function () {
             if (journeyOwnerToken === token) journeyOwnerToken = 0;
             removeJourneyPulse({ release: false });
           });
@@ -13301,8 +13294,8 @@
           label: nodeLabel(byId[activeNodeIds[journeyIndex]], activeNodeIds[journeyIndex])
         });
         if (options.pulse === true && journeyIndex > 0) renderJourneyPulse(activeEdges[journeyIndex - 1]);
-        if (options.reveal !== false && Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal(activeNodeIds.slice(Math.max(0, journeyIndex - 1), Math.min(activeNodeIds.length, journeyIndex + 2)), {
+        if (options.reveal !== false && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal(activeNodeIds.slice(Math.max(0, journeyIndex - 1), Math.min(activeNodeIds.length, journeyIndex + 2)), {
             includeNeighbors: false,
             reason: 'route-journey',
             maxScale: 1.65,
@@ -13347,8 +13340,8 @@
         clearJourneyPresentation({ keepControls: true });
         status.textContent = routeOverviewStatus();
         renderJourneyControls();
-        if (options.reveal !== false && Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal(activeNodeIds, { includeNeighbors: false, reason: 'route', instant: !journeyMotionAllowed() });
+        if (options.reveal !== false && ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal(activeNodeIds, { includeNeighbors: false, reason: 'route', instant: !journeyMotionAllowed() });
         }
         requestDocking();
         return true;
@@ -13518,13 +13511,13 @@
         findBtn.hidden = true;
         copyBtn.hidden = false;
         setTrigger(true);
-        if (Archify.exportMenu && typeof Archify.exportMenu.syncRouteShare === 'function') Archify.exportMenu.syncRouteShare();
+        if (ArchiPam.exportMenu && typeof ArchiPam.exportMenu.syncRouteShare === 'function') ArchiPam.exportMenu.syncRouteShare();
         if (options.updateUrl !== false) {
           replaceRouteHash(encodeURIComponent(startId) + '~' + encodeURIComponent(endId));
         }
         showJourneyOverview({ reveal: false });
-        if (Archify.view && typeof Archify.view.reveal === 'function') {
-          Archify.view.reveal(result.nodes, { includeNeighbors: false, reason: 'route' });
+        if (ArchiPam.view && typeof ArchiPam.view.reveal === 'function') {
+          ArchiPam.view.reveal(result.nodes, { includeNeighbors: false, reason: 'route' });
         }
         return true;
       }
@@ -13555,22 +13548,22 @@
       function begin(options) {
         options = options || {};
         if (html.getAttribute('data-embed') === 'true') return false;
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (Archify.semanticLens && Archify.semanticLens.active()) {
-          Archify.semanticLens.clear({ updateUrl: false, preserveView: true, closePanel: true });
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (ArchiPam.semanticLens && ArchiPam.semanticLens.active()) {
+          ArchiPam.semanticLens.clear({ updateUrl: false, preserveView: true, closePanel: true });
         }
-        var focused = options.source || (Archify.focus && typeof Archify.focus.active === 'function' ? Archify.focus.active() : null);
+        var focused = options.source || (ArchiPam.focus && typeof ArchiPam.focus.active === 'function' ? ArchiPam.focus.active() : null);
         if (Array.isArray(focused)) focused = null;
         clear({ updateUrl: false, preserveView: true, restoreFocus: false });
-        if (Archify.intentTrace && typeof Archify.intentTrace.clear === 'function') Archify.intentTrace.clear({ announce: false });
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.intentTrace && typeof ArchiPam.intentTrace.clear === 'function') ArchiPam.intentTrace.clear({ announce: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
-        if (Archify.focus && typeof Archify.focus.clear === 'function') {
-          Archify.focus.clear({ updateUrl: false, preserveView: true });
+        if (ArchiPam.focus && typeof ArchiPam.focus.clear === 'function') {
+          ArchiPam.focus.clear({ updateUrl: false, preserveView: true });
         }
-        if (Archify.finder && Archify.finder.isOpen()) Archify.finder.close({ restoreFocus: false });
-        if (Archify.radar && Archify.radar.isOpen()) Archify.radar.close({ restoreFocus: false });
+        if (ArchiPam.finder && ArchiPam.finder.isOpen()) ArchiPam.finder.close({ restoreFocus: false });
+        if (ArchiPam.radar && ArchiPam.radar.isOpen()) ArchiPam.radar.close({ restoreFocus: false });
         mode = 'source';
         panel.hidden = false;
         panel.setAttribute('data-state', 'source');
@@ -13650,8 +13643,8 @@
       }
       function openFinder() {
         var context = finderContext();
-        if (!context || !Archify.finder) return false;
-        return Archify.finder.open({ context: context });
+        if (!context || !ArchiPam.finder) return false;
+        return ArchiPam.finder.open({ context: context });
       }
       function fallbackCopy(value) {
         var field = document.createElement('textarea');
@@ -13808,7 +13801,7 @@
        Two selected kinds compare only direct cross-kind relationships while
        preserving the full diagram as a dimmed spatial reference.
        ============================================================ */
-    Archify.semanticLens = (function () {
+    ArchiPam.semanticLens = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector(':scope > svg');
@@ -14253,17 +14246,17 @@
       }
       function prepareForLens() {
         clearLegendPreview();
-        if (Archify.focus && typeof Archify.focus.clear === 'function') {
-          Archify.focus.clear({ updateUrl: false, preserveView: true });
+        if (ArchiPam.focus && typeof ArchiPam.focus.clear === 'function') {
+          ArchiPam.focus.clear({ updateUrl: false, preserveView: true });
         }
-        if (Archify.routeProbe && typeof Archify.routeProbe.clear === 'function') {
-          Archify.routeProbe.clear({ updateUrl: false, restoreFocus: false });
+        if (ArchiPam.routeProbe && typeof ArchiPam.routeProbe.clear === 'function') {
+          ArchiPam.routeProbe.clear({ updateUrl: false, restoreFocus: false });
         }
-        if (Archify.guidedViews && typeof Archify.guidedViews.showAll === 'function') {
-          Archify.guidedViews.showAll({ clearFocus: false, updateUrl: false });
+        if (ArchiPam.guidedViews && typeof ArchiPam.guidedViews.showAll === 'function') {
+          ArchiPam.guidedViews.showAll({ clearFocus: false, updateUrl: false });
         }
-        if (Archify.intentTrace && typeof Archify.intentTrace.clear === 'function') {
-          Archify.intentTrace.clear({ announce: false });
+        if (ArchiPam.intentTrace && typeof ArchiPam.intentTrace.clear === 'function') {
+          ArchiPam.intentTrace.clear({ announce: false });
         }
       }
       function select(kind, options) {
@@ -14292,10 +14285,10 @@
         options = options || {};
         if (html.getAttribute('data-embed') === 'true') return false;
         lensOpener = options.opener || trigger;
-        if (Archify.exportMenu && Archify.exportMenu.isOpen()) Archify.exportMenu.close(false);
-        if (Archify.finder && Archify.finder.isOpen()) Archify.finder.close({ restoreFocus: false });
-        if (Archify.radar && Archify.radar.isOpen()) Archify.radar.close({ restoreFocus: false });
-        if (Archify.guide && Archify.guide.isOpen()) Archify.guide.close({ restoreFocus: false });
+        if (ArchiPam.exportMenu && ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.close(false);
+        if (ArchiPam.finder && ArchiPam.finder.isOpen()) ArchiPam.finder.close({ restoreFocus: false });
+        if (ArchiPam.radar && ArchiPam.radar.isOpen()) ArchiPam.radar.close({ restoreFocus: false });
+        if (ArchiPam.guide && ArchiPam.guide.isOpen()) ArchiPam.guide.close({ restoreFocus: false });
         renderKinds();
         panel.hidden = false;
         trigger.setAttribute('aria-expanded', 'true');
@@ -14318,8 +14311,8 @@
         renderKinds();
         status.textContent = viewerText('viewer.lens.choose');
         if (options.updateUrl !== false) updateHash();
-        if (options.preserveView !== true && Archify.view && typeof Archify.view.reset === 'function') {
-          Archify.view.reset({ automatic: true });
+        if (options.preserveView !== true && ArchiPam.view && typeof ArchiPam.view.reset === 'function') {
+          ArchiPam.view.reset({ automatic: true });
         }
         if (options.closePanel === true) close({ restoreFocus: false });
         return false;
@@ -14484,7 +14477,7 @@
        Probe, Semantic Radar, Semantic Lens, Story Trail, Presentation, theme, export, and
        camera without adding a second command implementation or SVG state.
        ============================================================ */
-    Archify.guide = (function () {
+    ArchiPam.guide = (function () {
       var html = document.documentElement;
       var container = document.querySelector('.diagram-container');
       var svg = container.querySelector(':scope > svg');
@@ -14499,7 +14492,7 @@
       var routePanel = document.getElementById('route-probe');
 
       function viewCount() {
-        return Archify.guidedViews && Number(Archify.guidedViews.count) || 0;
+        return ArchiPam.guidedViews && Number(ArchiPam.guidedViews.count) || 0;
       }
       function relationshipCount() {
         var seen = {};
@@ -14544,16 +14537,16 @@
       }
       function open() {
         if (html.getAttribute('data-embed') === 'true') return false;
-        if (Archify.semanticLens && typeof Archify.semanticLens.clearPreview === 'function') Archify.semanticLens.clearPreview();
-        if (Archify.exportMenu && Archify.exportMenu.isOpen()) Archify.exportMenu.close(false);
-        if (Archify.finder && Archify.finder.isOpen()) Archify.finder.close({ restoreFocus: false });
-        if (Archify.radar && Archify.radar.isOpen()) Archify.radar.close({ restoreFocus: false });
-        if (Archify.semanticLens && Archify.semanticLens.isOpen()) Archify.semanticLens.close({ restoreFocus: false });
-        if (Archify.guidedViews && Archify.guidedViews.isPlaying && Archify.guidedViews.isPlaying()) {
-          Archify.guidedViews.pause();
+        if (ArchiPam.semanticLens && typeof ArchiPam.semanticLens.clearPreview === 'function') ArchiPam.semanticLens.clearPreview();
+        if (ArchiPam.exportMenu && ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.close(false);
+        if (ArchiPam.finder && ArchiPam.finder.isOpen()) ArchiPam.finder.close({ restoreFocus: false });
+        if (ArchiPam.radar && ArchiPam.radar.isOpen()) ArchiPam.radar.close({ restoreFocus: false });
+        if (ArchiPam.semanticLens && ArchiPam.semanticLens.isOpen()) ArchiPam.semanticLens.close({ restoreFocus: false });
+        if (ArchiPam.guidedViews && ArchiPam.guidedViews.isPlaying && ArchiPam.guidedViews.isPlaying()) {
+          ArchiPam.guidedViews.pause();
         }
-        if (Archify.routeProbe && Archify.routeProbe.isJourneyPlaying && Archify.routeProbe.isJourneyPlaying()) {
-          Archify.routeProbe.pauseJourney({ preserveElapsed: true, reason: 'guide' });
+        if (ArchiPam.routeProbe && ArchiPam.routeProbe.isJourneyPlaying && ArchiPam.routeProbe.isJourneyPlaying()) {
+          ArchiPam.routeProbe.pauseJourney({ preserveElapsed: true, reason: 'guide' });
         }
         renderFacts();
         panel.hidden = false;
@@ -14576,18 +14569,18 @@
           return false;
         }
         close({ restoreFocus: false });
-        if (action === 'find') return Archify.finder.open();
-        if (action === 'route') return Archify.routeProbe.begin({ focusNode: true });
-        if (action === 'map') return Archify.radar.open();
-        if (action === 'lens') return Archify.semanticLens.open();
-        if (action === 'story') return Archify.guidedViews.play();
-        if (action === 'present') return Archify.presentation.enter();
-        if (action === 'export') return Archify.exportMenu.open();
-        if (action === 'theme') return Archify.theme.toggle();
-        if (action === 'preset') return Archify.preset.cycle();
-        if (action === 'reset') return Archify.view.reset();
-        if (action === 'zoom-in') return Archify.view.zoomIn();
-        if (action === 'zoom-out') return Archify.view.zoomOut();
+        if (action === 'find') return ArchiPam.finder.open();
+        if (action === 'route') return ArchiPam.routeProbe.begin({ focusNode: true });
+        if (action === 'map') return ArchiPam.radar.open();
+        if (action === 'lens') return ArchiPam.semanticLens.open();
+        if (action === 'story') return ArchiPam.guidedViews.play();
+        if (action === 'present') return ArchiPam.presentation.enter();
+        if (action === 'export') return ArchiPam.exportMenu.open();
+        if (action === 'theme') return ArchiPam.theme.toggle();
+        if (action === 'preset') return ArchiPam.preset.cycle();
+        if (action === 'reset') return ArchiPam.view.reset();
+        if (action === 'zoom-in') return ArchiPam.view.zoomIn();
+        if (action === 'zoom-out') return ArchiPam.view.zoomOut();
         return false;
       }
       function actionForKey(key) {
@@ -14685,72 +14678,72 @@
       if (e.defaultPrevented) return;
       var t = e.target;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-      if (Archify.preset && Archify.preset.isOpen() && e.key !== 'Escape' && e.key !== 's' && e.key !== 'S') {
-        Archify.preset.close(false);
+      if (ArchiPam.preset && ArchiPam.preset.isOpen() && e.key !== 'Escape' && e.key !== 's' && e.key !== 'S') {
+        ArchiPam.preset.close(false);
       }
       if (e.key === '?') {
         e.preventDefault();
-        Archify.guide.toggle();
+        ArchiPam.guide.toggle();
       } else if (e.key === '/') {
         e.preventDefault();
-        Archify.finder.open();
+        ArchiPam.finder.open();
       } else if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
-        Archify.theme.toggle();
+        ArchiPam.theme.toggle();
       } else if (e.key === 's' || e.key === 'S') {
         e.preventDefault();
-        Archify.preset.cycle();
+        ArchiPam.preset.cycle();
       } else if (e.key === 'e' || e.key === 'E') {
         e.preventDefault();
-        if (!Archify.exportMenu.isOpen()) Archify.exportMenu.open();
+        if (!ArchiPam.exportMenu.isOpen()) ArchiPam.exportMenu.open();
       } else if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
-        Archify.presentation.toggle();
+        ArchiPam.presentation.toggle();
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
-        Archify.radar.toggle();
+        ArchiPam.radar.toggle();
       } else if (e.key === 'l' || e.key === 'L') {
         e.preventDefault();
-        Archify.semanticLens.toggle();
+        ArchiPam.semanticLens.toggle();
       } else if (e.key === 'r' || e.key === 'R') {
         e.preventDefault();
-        Archify.routeProbe.toggle({ focusNode: true });
+        ArchiPam.routeProbe.toggle({ focusNode: true });
       } else if (e.key === '+' || e.key === '=') {
         e.preventDefault();
-        Archify.view.zoomIn();
+        ArchiPam.view.zoomIn();
       } else if (e.key === '-') {
         e.preventDefault();
-        Archify.view.zoomOut();
+        ArchiPam.view.zoomOut();
       } else if (e.key === '0') {
         e.preventDefault();
-        Archify.view.reset();
-      } else if (e.key === 'Escape' && Archify.preset.isOpen()) {
+        ArchiPam.view.reset();
+      } else if (e.key === 'Escape' && ArchiPam.preset.isOpen()) {
         e.preventDefault();
-        Archify.preset.close(true);
-      } else if (e.key === 'Escape' && Archify.semanticLens.isOpen()) {
+        ArchiPam.preset.close(true);
+      } else if (e.key === 'Escape' && ArchiPam.semanticLens.isOpen()) {
         e.preventDefault();
-        Archify.semanticLens.close({ restoreFocus: true });
-      } else if (e.key === 'Escape' && Archify.semanticLens.active()) {
+        ArchiPam.semanticLens.close({ restoreFocus: true });
+      } else if (e.key === 'Escape' && ArchiPam.semanticLens.active()) {
         e.preventDefault();
-        Archify.semanticLens.clear({ preserveView: true });
-      } else if (e.key === 'Escape' && Archify.guide.isOpen()) {
+        ArchiPam.semanticLens.clear({ preserveView: true });
+      } else if (e.key === 'Escape' && ArchiPam.guide.isOpen()) {
         e.preventDefault();
-        Archify.guide.close({ restoreFocus: true });
-      } else if (e.key === 'Escape' && Archify.radar.isOpen()) {
+        ArchiPam.guide.close({ restoreFocus: true });
+      } else if (e.key === 'Escape' && ArchiPam.radar.isOpen()) {
         e.preventDefault();
-        Archify.radar.close({ restoreFocus: true });
-      } else if (e.key === 'Escape' && Archify.routeProbe.active()) {
+        ArchiPam.radar.close({ restoreFocus: true });
+      } else if (e.key === 'Escape' && ArchiPam.routeProbe.active()) {
         e.preventDefault();
-        Archify.routeProbe.escape({ restoreFocus: true });
-      } else if (e.key === 'Escape' && Archify.intentTrace.active()) {
+        ArchiPam.routeProbe.escape({ restoreFocus: true });
+      } else if (e.key === 'Escape' && ArchiPam.intentTrace.active()) {
         e.preventDefault();
-        Archify.intentTrace.clear();
-      } else if (e.key === 'Escape' && Archify.focus.active()) {
+        ArchiPam.intentTrace.clear();
+      } else if (e.key === 'Escape' && ArchiPam.focus.active()) {
         e.preventDefault();
-        Archify.focus.clear({ restoreFocus: true });
-      } else if (e.key === 'Escape' && Archify.presentation.active()) {
+        ArchiPam.focus.clear({ restoreFocus: true });
+      } else if (e.key === 'Escape' && ArchiPam.presentation.active()) {
         e.preventDefault();
-        Archify.presentation.exit();
+        ArchiPam.presentation.exit();
       }
     });
   </script>

@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const skillRoot = path.join(repoRoot, 'archify');
+const skillRoot = path.join(repoRoot, 'archipam');
 const testRoot = path.join(skillRoot, 'test');
 const testFiles = fs.readdirSync(testRoot)
   .filter((entry) => entry.endsWith('.test.mjs'))

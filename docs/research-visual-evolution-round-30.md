@@ -6,7 +6,7 @@ Status: implementation-ready research recommendation
 ## Executive decision
 
 Build **Shared Anchor Chapter Handoff** as the next bounded viewer slice.
-Archify already has the right substrate: one canonical SVG, stable semantic node
+ArchiPam already has the right substrate: one canonical SVG, stable semantic node
 IDs, Named Chapter Rail, Story Beats, a bounded Semantic Camera, and the Round 29
 Motion Governor. The missing quality is continuity between chapters. Today a
 chapter activation replaces focus/trail state and asks the camera to fit the new
@@ -24,14 +24,14 @@ canonical SVG, dependency, or export-model change.
 
 The current Guided Views activation writes destination focus, Story Trail,
 camera, rail, and URL state in one synchronous path, while playback advances every
-3.2 seconds ([template](../archify/assets/template.html#L5784-L5890)). Semantic
+3.2 seconds ([template](../archipam/assets/template.html#L5784-L5890)). Semantic
 Camera uses one mutable transform and a 480ms CSS transition; stopping removes the
 moving class, and a new fit immediately replaces target state
-([camera](../archify/assets/template.html#L6083-L6252)). The Governor already has
+([camera](../archipam/assets/template.html#L6083-L6252)). The Governor already has
 replaceable token ownership and stale-release protection
-([governor](../archify/assets/template.html#L4373-L4582)). SVG export clones the
+([governor](../archipam/assets/template.html#L4373-L4582)). SVG export clones the
 canonical graph and strips viewer transforms and overlays
-([serialization](../archify/assets/template.html#L3709-L3830)).
+([serialization](../archipam/assets/template.html#L3709-L3830)).
 
 Primary comparisons are pinned to fixed source:
 
@@ -66,7 +66,7 @@ Primary comparisons are pinned to fixed source:
 | Borrow | reveal.js's stable-ID matching, explicit restart, and unmatched policy. |
 | Borrow | Mapbox/D3 replacement semantics: latest intent wins; cancellation is normal. |
 | Borrow | Fireworks' fixed geometry, small changing area, finite staged motion, and settled frame. |
-| Adapt | Archify needs no cloned views or heuristic matching: both chapters reference the same persistent `data-node-id` elements. |
+| Adapt | ArchiPam needs no cloned views or heuristic matching: both chapters reference the same persistent `data-node-id` elements. |
 | Adapt | One camera transaction must commit semantic destination state immediately, animate only presentation, and expose `finished` settlement. |
 | Skip | View Transitions API snapshots: the same SVG elements already persist; snapshots complicate hit testing, cleanup, support, and export. |
 | Skip | Layout/edge morphing, springs, fly arcs, parallax, full-canvas blur/wipe, and infinite chapter loops. |
@@ -87,7 +87,7 @@ Primary comparisons are pinned to fixed source:
 5. Claim Governor owner `handoff` before visible mutation. One monotonic camera
    generation owns rAF, timer, overlay, completion, and cleanup. Releasing it
    returns ownership to the active chapter/story.
-6. `Archify.view.reveal()` should return a transaction `{ id, state, finished,
+6. `ArchiPam.view.reveal()` should return a transaction `{ id, state, finished,
    cancel(reason) }`. `finished` always settles once as `complete`, `replaced`,
    `manual`, `reduced-motion`, `hidden`, or `resize`.
 7. Animate from the **currently rendered** `{x,y,scale}` to the new bounded fit

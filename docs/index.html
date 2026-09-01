@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Archify — Technical Diagrams from Plain English</title>
+  <title>ArchiPam — Technical Diagrams from Plain English</title>
   <meta name="description" content="An agent skill for Cursor, Claude Code, Codex CLI, and OpenCode that turns plain-English descriptions into polished, explorable, self-contained technical diagrams with semantic focus, motion, and crisp export.">
   <meta name="theme-color" content="#eff2f1">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><polygon points='14,2 26,8 26,20 14,26 2,20 2,8' fill='%23083344' stroke='%2322d3ee' stroke-width='1.5'/><circle cx='14' cy='15' r='2.5' fill='%2322d3ee'/></svg>">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Archify — Technical Diagrams from Plain English">
-  <meta property="og:description" content="Describe your system in chat. Archify generates a polished, explorable HTML diagram with semantic focus, dark/light themes, motion, and ultra-crisp export.">
-  <meta property="og:image" content="https://tt-a1i.github.io/archify/assets/archify-social-preview.png">
-  <meta property="og:url" content="https://tt-a1i.github.io/archify/">
+  <meta property="og:title" content="ArchiPam — Technical Diagrams from Plain English">
+  <meta property="og:description" content="Describe your system in chat. ArchiPam generates a polished, explorable HTML diagram with semantic focus, dark/light themes, motion, and ultra-crisp export.">
+  <meta property="og:image" content="https://licpmb.github.io/Archi/assets/archipam-social-preview.png">
+  <meta property="og:url" content="https://licpmb.github.io/Archi/">
   <meta name="twitter:card" content="summary_large_image">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/site-navigation.css">
+<link rel="stylesheet" href="assets/site-navigation.css">
   <style>
     :root {
       /* Drafted-sheet palette — warm paper, ink, one international-orange accent */
@@ -374,13 +370,13 @@
   <!-- NAV -->
   <nav class="site-nav" aria-label="Primary navigation">
     <a class="nav-logo" href="#">
-      <span class="nav-logo-text">Archify</span>
+      <span class="nav-logo-text">ArchiPam</span>
     </a>
     <div class="nav-right">
       <a class="nav-link" href="guide.html" data-i18n="nav-guide">Guide</a>
       <a class="nav-link" href="gallery.html" data-i18n="nav-gallery">Proof Lab</a>
       <a class="nav-link" href="start.html" data-i18n="nav-start">Start</a>
-      <a class="nav-link" href="https://github.com/tt-a1i/archify" target="_blank" rel="noopener">GitHub</a>
+      <a class="nav-link" href="https://github.com/licpmb/Archi" target="_blank" rel="noopener">GitHub</a>
       <button class="btn btn-lang" id="btn-lang">中文</button>
       <a class="btn btn-primary nav-cta" href="#quickstart" data-i18n="nav-install">Install Skill</a>
     </div>
@@ -396,7 +392,7 @@
             <span data-i18n="hero-badge">Agent Skill &nbsp;·&nbsp; stable &nbsp;·&nbsp; v2.16.0</span>
           </div>
           <h1 class="fade-up d1" data-i18n="hero-h1">From plain English<br>to architecture <em>you can trust.</em></h1>
-          <p class="hero-sub fade-up d2" data-i18n="hero-sub">Describe your system in chat. Archify generates a polished, explorable HTML diagram — with progressive MAP → READ → FULL detail, a semantic camera, path-aware stories, motion, and ultra-crisp export built in.</p>
+          <p class="hero-sub fade-up d2" data-i18n="hero-sub">Describe your system in chat. ArchiPam generates a polished, explorable HTML diagram — with progressive MAP → READ → FULL detail, a semantic camera, path-aware stories, motion, and ultra-crisp export built in.</p>
           <div class="hero-actions fade-up d3">
             <a class="btn btn-primary" href="guide.html">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -424,7 +420,7 @@
             </a>
           </div>
           <div class="proof-viewport" id="hero-proof-panel" role="tabpanel" aria-labelledby="proof-tab-signal">
-            <iframe id="hero-proof-frame" data-proof="signal" src="gallery/artifacts/agent-tool-call.workflow.html?embed=1&amp;play=1&amp;theme=dark#view=happy-path" title="Agent Tool Call live Archify proof" loading="eager" sandbox="allow-scripts"></iframe>
+            <iframe id="hero-proof-frame" data-proof="signal" src="gallery/artifacts/agent-tool-call.workflow.html?embed=1&amp;play=1&amp;theme=dark#view=happy-path" title="Agent Tool Call live ArchiPam proof" loading="eager" sandbox="allow-scripts"></iframe>
           </div>
           <div class="proof-caption" aria-live="polite">
             <div class="proof-caption-main">
@@ -436,7 +432,7 @@
         </div>
 
         <!-- SPECIMEN RAIL (tablist) -->
-        <div class="proof-rail fade-up d3" id="proof-tabs" role="tablist" aria-label="Choose a live Archify proof">
+        <div class="proof-rail fade-up d3" id="proof-tabs" role="tablist" aria-label="Choose a live ArchiPam proof">
           <div class="rail-label" data-i18n="rail-label">Live specimens — select to load</div>
           <button class="spec-card" id="proof-tab-signal" type="button" role="tab" aria-controls="hero-proof-panel" aria-selected="true" tabindex="0" data-proof="signal">
             <div class="spec-top">
@@ -510,7 +506,7 @@
         <div class="fade-up">
           <div class="section-label" data-i18n="label-types">Diagram Types</div>
           <h2 class="section-heading" data-i18n="types-h2">Five ways to see your system.</h2>
-          <p class="section-body" data-i18n="types-body">Architecture, workflows, sequences, data flows, or state machines — describe what you need and Archify picks the right visual language.</p>
+          <p class="section-body" data-i18n="types-body">Architecture, workflows, sequences, data flows, or state machines — describe what you need and ArchiPam picks the right visual language.</p>
         </div>
       </div>
 
@@ -518,7 +514,7 @@
         <div class="type-card big fade-up" data-type="arch">
           <div class="type-media">
             <span class="type-tag">T·01</span>
-            <img src="assets/archify-architecture.png" alt="Architecture diagram">
+            <img src="assets/archipam-architecture.png" alt="Architecture diagram">
           </div>
           <div class="type-body">
             <h3 data-i18n="arch-h">Architecture</h3>
@@ -535,7 +531,7 @@
         <div class="type-card sm fade-up d1" data-type="wf">
           <div class="type-media">
             <span class="type-tag">T·02</span>
-            <img src="assets/archify-workflow.png" alt="Workflow diagram">
+            <img src="assets/archipam-workflow.png" alt="Workflow diagram">
           </div>
           <div class="type-body">
             <h3 data-i18n="wf-h">Workflow</h3>
@@ -546,7 +542,7 @@
         <div class="type-card sm fade-up d2" data-type="seq">
           <div class="type-media">
             <span class="type-tag">T·03</span>
-            <img src="assets/archify-sequence.png" alt="Sequence diagram">
+            <img src="assets/archipam-sequence.png" alt="Sequence diagram">
           </div>
           <div class="type-body">
             <h3 data-i18n="seq-h">Sequence</h3>
@@ -557,7 +553,7 @@
         <div class="type-card sm fade-up d1" data-type="flow">
           <div class="type-media">
             <span class="type-tag">T·04</span>
-            <img src="assets/archify-dataflow.png" alt="Data flow diagram">
+            <img src="assets/archipam-dataflow.png" alt="Data flow diagram">
           </div>
           <div class="type-body">
             <h3 data-i18n="flow-h">Data Flow</h3>
@@ -568,7 +564,7 @@
         <div class="type-card sm fade-up d2" data-type="life">
           <div class="type-media">
             <span class="type-tag">T·05</span>
-            <img src="assets/archify-lifecycle.png" alt="Lifecycle diagram">
+            <img src="assets/archipam-lifecycle.png" alt="Lifecycle diagram">
           </div>
           <div class="type-body">
             <h3 data-i18n="life-h">Lifecycle</h3>
@@ -733,7 +729,7 @@
       <div class="fade-up" style="margin-bottom:2.75rem">
         <div class="section-label" data-i18n="label-qs">Quick Start</div>
         <h2 class="section-heading" data-i18n="qs-h2">Up and running<br>in three steps.</h2>
-        <p class="section-body" data-i18n="qs-body">One checked Skill for Cursor, Claude Code, Codex, and OpenCode. Their switcher generates exact commands; for Raven, extract archify.zip into ~/.raven/workspace/skills, which yields ~/.raven/workspace/skills/archify.</p>
+        <p class="section-body" data-i18n="qs-body">One checked Skill for Cursor, Claude Code, Codex, and OpenCode. Their switcher generates exact commands; for Raven, extract archipam.zip into ~/.raven/workspace/skills, which yields ~/.raven/workspace/skills/archipam.</p>
       </div>
       <div class="quickstart-layout">
         <div class="qs-card fade-up d1">
@@ -742,7 +738,7 @@
               <div class="step-num">1</div>
               <div class="step-content">
                 <h4 data-i18n="step1-h">Install in one command</h4>
-                <p data-i18n="step1-p">Run <code>npx skills add tt-a1i/archify -g</code>, or open the <a href="start.html?agent=cursor&amp;type=architecture">agent-aware quick start</a> for an exact Cursor, Codex, Claude Code, or OpenCode command. Raven is not a switcher target; for a manual ZIP install, extract archify.zip into <code>~/.raven/workspace/skills</code>, which yields <code>~/.raven/workspace/skills/archify</code>.</p>
+                <p data-i18n="step1-p">Run <code>npx skills add licpmb/Archi -g</code>, or open the <a href="start.html?agent=cursor&amp;type=architecture">agent-aware quick start</a> for an exact Cursor, Codex, Claude Code, or OpenCode command. Raven is not a switcher target; for a manual ZIP install, extract archipam.zip into <code>~/.raven/workspace/skills</code>, which yields <code>~/.raven/workspace/skills/archipam</code>.</p>
               </div>
             </div>
             <div class="step">
@@ -756,7 +752,7 @@
               <div class="step-num">3</div>
               <div class="step-content">
                 <h4 data-i18n="step3-h">Ask your agent to draw it</h4>
-                <p data-i18n="step3-p">Tell your agent to use Archify. It generates a self-contained HTML file you can open in any browser and refine in chat.</p>
+                <p data-i18n="step3-p">Tell your agent to use ArchiPam. It generates a self-contained HTML file you can open in any browser and refine in chat.</p>
               </div>
             </div>
           </div>
@@ -788,15 +784,15 @@
           <div class="install-strip">
             <div id="code-en">
               <p class="install-cmt"># Install globally for Cursor</p>
-              <p class="install-cmd">npx -y skills add tt-a1i/archify --skill archify --agent cursor --global --copy --yes</p>
+              <p class="install-cmd">npx -y skills add licpmb/Archi --skill archipam --agent cursor --global --copy --yes</p>
               <p class="install-cmt"># Or try with Codex, without a permanent install</p>
-              <p class="install-cmd">npx skills use tt-a1i/archify@archify --agent codex</p>
+              <p class="install-cmd">npx skills use licpmb/Archi@archipam --agent codex</p>
             </div>
             <div id="code-zh" style="display:none">
               <p class="install-cmt"># 全局安装到 Cursor</p>
-              <p class="install-cmd">npx -y skills add tt-a1i/archify --skill archify --agent cursor --global --copy --yes</p>
+              <p class="install-cmd">npx -y skills add licpmb/Archi --skill archipam --agent cursor --global --copy --yes</p>
               <p class="install-cmt"># 或者用临时副本启动 Codex</p>
-              <p class="install-cmd">npx skills use tt-a1i/archify@archify --agent codex</p>
+              <p class="install-cmd">npx skills use licpmb/Archi@archipam --agent codex</p>
             </div>
           </div>
       </div>
@@ -811,9 +807,9 @@
         <p class="cta-sub" data-i18n="cta-sub">One command installs the checked skill for Cursor, Claude Code, Codex, or OpenCode — and your next diagram is a chat message away.</p>
         <div class="cta-actions">
           <a class="cta-install" href="start.html" data-i18n="cta-install">Install the skill</a>
-          <a class="cta-gh" href="https://github.com/tt-a1i/archify" target="_blank" rel="noopener">github.com/tt-a1i/archify ↗</a>
+          <a class="cta-gh" href="https://github.com/licpmb/Archi" target="_blank" rel="noopener">github.com/licpmb/Archi ↗</a>
         </div>
-        <p class="cta-cmd">$ <b>npx skills add tt-a1i/archify -g</b></p>
+        <p class="cta-cmd">$ <b>npx skills add licpmb/Archi -g</b></p>
       </div>
     </div>
   </section>
@@ -823,14 +819,14 @@
     <div class="footer-inner">
       <div class="footer-left">
         <a class="nav-logo" href="#">
-          <span style="font-size:.8125rem;font-weight:700;color:var(--muted)">Archify</span>
+          <span style="font-size:.8125rem;font-weight:700;color:var(--muted)">ArchiPam</span>
         </a>
         <p class="footer-meta" data-i18n="footer-meta">stable &nbsp;·&nbsp; v2.16.0 &nbsp;·&nbsp; MIT License<br>Based on Cocoon-AI/architecture-diagram-generator</p>
       </div>
       <div class="footer-links">
-        <a href="https://github.com/tt-a1i/archify" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/tt-a1i/archify/blob/main/CHANGELOG.md" target="_blank" rel="noopener" data-i18n="footer-changelog">Changelog</a>
-        <a href="https://github.com/tt-a1i/archify/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="footer-license">License</a>
+        <a href="https://github.com/licpmb/Archi" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/licpmb/Archi/blob/main/CHANGELOG.md" target="_blank" rel="noopener" data-i18n="footer-changelog">Changelog</a>
+        <a href="https://github.com/licpmb/Archi/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="footer-license">License</a>
       </div>
     </div>
   </footer>
@@ -845,14 +841,14 @@
       'nav-guide':'Guide','nav-gallery':'Proof Lab','nav-start':'Start','nav-install':'Install Skill',
       'hero-badge':'Agent Skill &nbsp;·&nbsp; stable &nbsp;·&nbsp; v2.16.0',
       'hero-h1':'From plain English<br>to architecture <em>you can trust.</em>',
-      'hero-sub':'Describe your system in chat. Archify generates a polished, explorable HTML diagram — with progressive MAP → READ → FULL detail, a semantic camera, path-aware stories, motion, and ultra-crisp export built in.',
+      'hero-sub':'Describe your system in chat. ArchiPam generates a polished, explorable HTML diagram — with progressive MAP → READ → FULL detail, a semantic camera, path-aware stories, motion, and ultra-crisp export built in.',
       'hero-cta':'Choose the right diagram','hero-gallery':'Explore proof gallery',
       'proof-live':'Live proof','proof-status':'Generated, checked, interactive','proof-receipt':'Real gallery artifact · 9/9 validation checks','proof-open':'Open artifact','proof-hint':'Play a story that follows the current authored moment, then pin and share that exact node.',
       'rail-label':'Live specimens — select to load',
       'stat-types':'Diagram types','stat-presets':'Visual presets','stat-themes':'Coordinated themes','stat-export':'Native export scale','stat-deps':'Dependencies',
       'label-types':'Diagram Types',
       'types-h2':'Five ways to see your system.',
-      'types-body':'Architecture, workflows, sequences, data flows, or state machines — describe what you need and Archify picks the right visual language.',
+      'types-body':'Architecture, workflows, sequences, data flows, or state machines — describe what you need and ArchiPam picks the right visual language.',
       'label-gallery':'Index',
       'types-more':'Browse the full proof gallery','types-more-sub':'Live artifacts · every preset · every type',
       'arch-h':'Architecture',
@@ -890,10 +886,10 @@
       'chip-external':'External','chip-external-use':'Users, 3rd parties, generic',
       'label-qs':'Quick Start',
       'qs-h2':'Up and running<br>in three steps.',
-      'qs-body':'One checked Skill for Cursor, Claude Code, Codex, and OpenCode. Their switcher generates exact commands; for Raven, extract archify.zip into ~/.raven/workspace/skills, which yields ~/.raven/workspace/skills/archify.',
-      'step1-h':'Install in one command','step1-p':'Run <code>npx skills add tt-a1i/archify -g</code>, or open the <a href="start.html?agent=cursor&amp;type=architecture">agent-aware quick start</a> for an exact Cursor, Codex, Claude Code, or OpenCode command. Raven is not a switcher target; for a manual ZIP install, extract archify.zip into <code>~/.raven/workspace/skills</code>, which yields <code>~/.raven/workspace/skills/archify</code>.',
+      'qs-body':'One checked Skill for Cursor, Claude Code, Codex, and OpenCode. Their switcher generates exact commands; for Raven, extract archipam.zip into ~/.raven/workspace/skills, which yields ~/.raven/workspace/skills/archipam.',
+      'step1-h':'Install in one command','step1-p':'Run <code>npx skills add licpmb/Archi -g</code>, or open the <a href="start.html?agent=cursor&amp;type=architecture">agent-aware quick start</a> for an exact Cursor, Codex, Claude Code, or OpenCode command. Raven is not a switcher target; for a manual ZIP install, extract archipam.zip into <code>~/.raven/workspace/skills</code>, which yields <code>~/.raven/workspace/skills/archipam</code>.',
       'step2-h':'Describe your system','step2-p':'Describe components, connections, and cloud services — or ask your agent to analyze the repository first.',
-      'step3-h':'Ask your agent to draw it','step3-p':'Tell your agent to use Archify. It generates a self-contained HTML file you can open in any browser and refine in chat.',
+      'step3-h':'Ask your agent to draw it','step3-p':'Tell your agent to use ArchiPam. It generates a self-contained HTML file you can open in any browser and refine in chat.',
       'kbd-label':'Keyboard shortcuts','kbd-guide':'Diagram guide','kbd-theme':'Toggle theme','kbd-find':'Find node / route endpoint','kbd-route':'Trace, inspect, and play a route','kbd-radar':'Semantic radar','kbd-lens':'Compare semantic kinds','kbd-present':'Presentation stage','kbd-export':'Open export menu','kbd-focus':'Focus node','kbd-views':'Guided views','kbd-play':'Play story','kbd-zoom':'Reading depth / reset','kbd-nav':'Navigate menu','kbd-close':'Close menu',
       'footer-meta':'stable &nbsp;·&nbsp; v2.16.0 &nbsp;·&nbsp; MIT License<br>Based on Cocoon-AI/architecture-diagram-generator',
       'cta-h':'Describe it once.<br><em>Share the map.</em>',
@@ -905,14 +901,14 @@
       'nav-guide':'场景指南','nav-gallery':'验证作品集','nav-start':'快速上手','nav-install':'安装技能',
       'hero-badge':'Agent 技能 &nbsp;·&nbsp; 稳定版 &nbsp;·&nbsp; v2.16.0',
       'hero-h1':'用自然语言，<br>生成<em>可信的架构图。</em>',
-      'hero-sub':'在对话中描述你的系统，Archify 生成精美、可探索的 HTML 技术图——信息会按 MAP → READ → FULL 渐进展开，并内置语义镜头、路径故事、动态效果和超清导出。',
+      'hero-sub':'在对话中描述你的系统，ArchiPam 生成精美、可探索的 HTML 技术图——信息会按 MAP → READ → FULL 渐进展开，并内置语义镜头、路径故事、动态效果和超清导出。',
       'hero-cta':'选择合适的图','hero-gallery':'查看验证作品集',
       'proof-live':'实时成品','proof-status':'自动生成 · 检查通过 · 可交互','proof-receipt':'真实作品集成品 · 9/9 项验证通过','proof-open':'打开完整成品','proof-hint':'播放会跟随当前作者时刻的故事，再钉住并分享这个精确节点。',
       'rail-label':'实时标本 · 点击加载',
       'stat-types':'图表类型','stat-presets':'视觉预设','stat-themes':'深浅主题','stat-export':'原生导出倍率','stat-deps':'外部依赖',
       'label-types':'图表类型',
       'types-h2':'五种方式，读懂你的系统。',
-      'types-body':'架构图、工作流、时序图、数据流图、状态机——描述需求，Archify 自动选择最合适的可视化语言。',
+      'types-body':'架构图、工作流、时序图、数据流图、状态机——描述需求，ArchiPam 自动选择最合适的可视化语言。',
       'label-gallery':'索引',
       'types-more':'浏览完整作品集','types-more-sub':'实时成品 · 全部预设 · 全部图型',
       'arch-h':'架构图',
@@ -950,10 +946,10 @@
       'chip-external':'外部系统','chip-external-use':'用户、第三方、通用外部',
       'label-qs':'快速开始',
       'qs-h2':'三步上手，<br>即刻运行。',
-      'qs-body':'同一份经过检查的 Skill 可用于 Cursor、Claude Code、Codex 和 OpenCode，切换器会生成准确命令；Raven 采用 ZIP 手动安装：将 archify.zip 解压到 ~/.raven/workspace/skills，解压后会得到 ~/.raven/workspace/skills/archify。',
-      'step1-h':'一条命令安装','step1-p':'运行 <code>npx skills add tt-a1i/archify -g</code>，或打开<a href="start.html?agent=cursor&amp;type=architecture">可切换 Agent 的快速开始页</a>，获取准确的 Cursor、Codex、Claude Code 或 OpenCode 命令。Raven 不属于切换器目标；请将 archify.zip 解压到 <code>~/.raven/workspace/skills</code>，解压后会得到 <code>~/.raven/workspace/skills/archify</code>。',
+      'qs-body':'同一份经过检查的 Skill 可用于 Cursor、Claude Code、Codex 和 OpenCode，切换器会生成准确命令；Raven 采用 ZIP 手动安装：将 archipam.zip 解压到 ~/.raven/workspace/skills，解压后会得到 ~/.raven/workspace/skills/archipam。',
+      'step1-h':'一条命令安装','step1-p':'运行 <code>npx skills add licpmb/Archi -g</code>，或打开<a href="start.html?agent=cursor&amp;type=architecture">可切换 Agent 的快速开始页</a>，获取准确的 Cursor、Codex、Claude Code 或 OpenCode 命令。Raven 不属于切换器目标；请将 archipam.zip 解压到 <code>~/.raven/workspace/skills</code>，解压后会得到 <code>~/.raven/workspace/skills/archipam</code>。',
       'step2-h':'描述你的系统','step2-p':'描述组件、连接关系和云服务，也可以先让 agent 分析代码仓库。',
-      'step3-h':'让 agent 绘制','step3-p':'告诉 agent 使用 Archify，它会生成可在任意浏览器打开的单文件 HTML，并可继续在对话中迭代。',
+      'step3-h':'让 agent 绘制','step3-p':'告诉 agent 使用 ArchiPam，它会生成可在任意浏览器打开的单文件 HTML，并可继续在对话中迭代。',
       'kbd-label':'键盘快捷键','kbd-guide':'图表指南','kbd-theme':'切换主题','kbd-find':'查找节点 / 路径端点','kbd-route':'探查、检查并播放路径','kbd-radar':'语义雷达','kbd-lens':'对比语义类型','kbd-present':'演示舞台','kbd-export':'打开导出菜单','kbd-focus':'聚焦节点','kbd-views':'引导视图','kbd-play':'播放故事','kbd-zoom':'阅读层级 / 复位','kbd-nav':'菜单导航','kbd-close':'关闭菜单',
       'footer-meta':'稳定版 &nbsp;·&nbsp; v2.16.0 &nbsp;·&nbsp; MIT 许可证<br>基于 Cocoon-AI/architecture-diagram-generator',
       'cta-h':'描述一次，<br><em>分享这张图。</em>',
@@ -967,7 +963,7 @@
     signal: {
       artifact: 'gallery/artifacts/agent-tool-call.workflow.html',
       view: 'happy-path',
-      iframeTitle: { en: 'Agent Tool Call live Archify proof', zh: '智能体工具调用 Archify 实时成品' },
+      iframeTitle: { en: 'Agent Tool Call live ArchiPam proof', zh: '智能体工具调用 ArchiPam 实时成品' },
       name: { en: 'Agent Tool Call', zh: '智能体工具调用' },
       meta: { en: 'Workflow · Signal Flow · 12 nodes · 11 edges', zh: '工作流 · Signal Flow · 12 节点 · 11 条关系' },
       title: { en: 'Agent Tool Call — policy, execution, recovery, and evidence', zh: '智能体工具调用——策略、执行、恢复与证据闭环' }
@@ -975,7 +971,7 @@
     blueprint: {
       artifact: 'gallery/artifacts/production-deployment.architecture.html',
       view: 'request-boundary',
-      iframeTitle: { en: 'Production Deployment live Archify proof', zh: '生产部署架构 Archify 实时成品' },
+      iframeTitle: { en: 'Production Deployment live ArchiPam proof', zh: '生产部署架构 ArchiPam 实时成品' },
       name: { en: 'Production Deployment', zh: '生产部署' },
       meta: { en: 'Architecture · Blueprint · 12 nodes · 12 edges', zh: '架构图 · Blueprint · 12 节点 · 12 条关系' },
       title: { en: 'Production Deployment — regions, ownership, state, and audit', zh: '生产部署——区域、归属、状态与审计边界' }
@@ -983,14 +979,14 @@
     classic: {
       artifact: 'gallery/artifacts/cache-miss.sequence.html',
       view: 'cache-fallback',
-      iframeTitle: { en: 'Cache Miss Request live Archify proof', zh: '缓存未命中请求 Archify 实时成品' },
+      iframeTitle: { en: 'Cache Miss Request live ArchiPam proof', zh: '缓存未命中请求 ArchiPam 实时成品' },
       name: { en: 'Cache Miss', zh: '缓存未命中' },
       meta: { en: 'Sequence · Classic · 7 participants · 12 messages', zh: '时序图 · Classic · 7 个参与者 · 12 条消息' },
       title: { en: 'Cache Miss — authentication, fallback, return, and trace', zh: '缓存未命中——鉴权、回退、返回与追踪' }
     }
   };
 
-  let lang = ArchifySiteLanguage.read();
+  let lang = ArchiPamSiteLanguage.read();
   let activeProof = 'signal';
   const btnLang = document.getElementById('btn-lang');
   const proofStage = document.getElementById('hero-proof-stage');
@@ -1058,7 +1054,7 @@
   });
 
   function applyLang(l) {
-    lang = ArchifySiteLanguage.write(l);
+    lang = ArchiPamSiteLanguage.write(l);
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btnLang.textContent = lang === 'zh' ? 'EN' : '中文';
     btnLang.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');

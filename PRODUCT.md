@@ -10,11 +10,11 @@ Software engineers, architects, technical leads, reviewers, and AI coding agents
 
 ## Product Purpose
 
-Archify turns repository evidence or a bounded system description into a polished, interactive technical map directly in an agent conversation. Success means a reader can understand the primary story quickly, inspect exact authored relationships and evidence when needed, and carry either the complete artifact or one explicitly scoped Route / Reach Share Card into review, documentation, or presentation.
+ArchiPam turns repository evidence or a bounded system description into a polished, interactive technical map directly in an agent conversation. Success means a reader can understand the primary story quickly, inspect exact authored relationships and evidence when needed, and carry either the complete artifact or one explicitly scoped Route / Reach Share Card into review, documentation, or presentation.
 
 ## Brand Personality
 
-Precise, composed, vivid. Archify should feel like a confident technical instrument: visually memorable enough to invite exploration, restrained enough to keep topology and evidence authoritative, and explicit about what is generated, verified, optional, or unavailable.
+Precise, composed, vivid. ArchiPam should feel like a confident technical instrument: visually memorable enough to invite exploration, restrained enough to keep topology and evidence authoritative, and explicit about what is generated, verified, optional, or unavailable.
 
 ## Anti-references
 

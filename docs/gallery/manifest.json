@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generator": "scripts/build-gallery.mjs",
-  "archifyVersion": "2.16.0",
+  "archipamVersion": "2.16.0",
   "entryCount": 11,
   "checkCount": 99,
   "entries": [

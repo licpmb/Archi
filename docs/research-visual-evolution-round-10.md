@@ -2,7 +2,7 @@
 
 ## Reader problem
 
-Archify could already focus a node and highlight its one-hop neighborhood, but the reader still had to decode arrow direction and small edge labels directly from the canvas. Focus answered “what is near this node?” without answering “what comes in, what leaves, what is the relationship called, and where can I go next?”
+ArchiPam could already focus a node and highlight its one-hop neighborhood, but the reader still had to decode arrow direction and small edge labels directly from the canvas. Focus answered “what is near this node?” without answering “what comes in, what leaves, what is the relationship called, and where can I go next?”
 
 ## Patterns worth borrowing
 
@@ -10,7 +10,7 @@ Archify could already focus a node and highlight its one-hop neighborhood, but t
 - [React Flow `useNodeConnections`](https://reactflow.dev/api-reference/hooks/use-node-connections) and [`getIncomers`](https://reactflow.dev/api-reference/utils/get-incomers) expose connections by source and target instead of forcing consumers to rediscover direction from pixels.
 - [G6 behaviors](https://g6.antv.antgroup.com/en/manual/behavior/overview) keep focus, hover, zoom, drag, and selection as separate exploration behaviors; its element states distinguish selected, highlighted, and inactive content.
 
-## Archify boundary
+## ArchiPam boundary
 
 Add a read-only Relationship Lens, not an editor sidebar or graph-analysis runtime.
 
@@ -24,4 +24,4 @@ Add a read-only Relationship Lens, not an editor sidebar or graph-analysis runti
 
 ## What we deliberately did not borrow
 
-Archify remains a technical-diagram compiler that produces a self-contained artifact. It does not add draggable editing, a global graph store, plugin installation, layout mutation, or relationship drill-down DSL in this slice. A future multi-view drill-down should be justified by real diagrams that cannot be understood through named one-hop traversal and bounded guided views.
+ArchiPam remains a technical-diagram compiler that produces a self-contained artifact. It does not add draggable editing, a global graph store, plugin installation, layout mutation, or relationship drill-down DSL in this slice. A future multi-view drill-down should be justified by real diagrams that cannot be understood through named one-hop traversal and bounded guided views.

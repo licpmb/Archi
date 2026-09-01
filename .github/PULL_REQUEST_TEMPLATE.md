@@ -24,12 +24,12 @@ For visible changes, attach before/after final-artifact screenshots and state wh
 
 ## Generated artifacts
 
-List regenerated files such as Gallery pages, guides, README proofs, or `archify.zip`. If none changed, explain why they remain fresh.
+List regenerated files such as Gallery pages, guides, README proofs, or `archipam.zip`. If none changed, explain why they remain fresh.
 
 ## Checklist
 
 - [ ] I used a minimal focused change and preserved existing typed JSON behavior unless the issue requires a contract change.
-- [ ] I ran the relevant targeted tests and `npm test` in `archify/`.
+- [ ] I ran the relevant targeted tests and `npm test` in `archipam/`.
 - [ ] I added or updated a regression test for behavioral changes.
 - [ ] I checked generated artifacts and package freshness when their sources changed.
 - [ ] I removed secrets, private repository content, and customer data from fixtures and screenshots.

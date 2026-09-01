@@ -9,13 +9,13 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const defaultPackageRoot = process.env.RUNNER_TEMP
-  ? path.join(process.env.RUNNER_TEMP, 'archify-package', 'archify')
-  : path.join(repoRoot, 'archify');
+  ? path.join(process.env.RUNNER_TEMP, 'archipam-package', 'archipam')
+  : path.join(repoRoot, 'archipam');
 const skillRoot = path.resolve(process.argv[2] || defaultPackageRoot);
-const cli = path.join(skillRoot, 'bin', 'archify.mjs');
+const cli = path.join(skillRoot, 'bin', 'archipam.mjs');
 const updateChecker = path.join(skillRoot, 'scripts', 'check-update.mjs');
 const updateContract = path.join(skillRoot, 'scripts', 'update-contract.mjs');
-const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-package-smoke-'));
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-package-smoke-'));
 
 function requireAbsent(relative) {
   if (fs.existsSync(path.join(skillRoot, relative))) {
@@ -31,7 +31,7 @@ function run(args, options = {}) {
   });
   if (result.status !== 0) {
     throw new Error([
-      `archify ${args.join(' ')} failed with ${result.status}`,
+      `archipam ${args.join(' ')} failed with ${result.status}`,
       result.stdout,
       result.stderr,
     ].filter(Boolean).join('\n'));
@@ -45,7 +45,7 @@ function runExpectFailure(args, options = {}) {
     encoding: 'utf8',
     ...options,
   });
-  if (result.status === 0) throw new Error(`archify ${args.join(' ')} unexpectedly passed`);
+  if (result.status === 0) throw new Error(`archipam ${args.join(' ')} unexpectedly passed`);
   return result.stdout;
 }
 
@@ -97,7 +97,7 @@ try {
   const updateCheck = spawnSync(process.execPath, [updateChecker], {
     cwd: skillRoot,
     encoding: 'utf8',
-    env: { ...process.env, ARCHIFY_UPDATE_CHECK_DISABLED: '1' },
+    env: { ...process.env, ARCHIPAM_UPDATE_CHECK_DISABLED: '1' },
   });
   if (updateCheck.status !== 0) {
     throw new Error(`packaged update checker failed with ${updateCheck.status}\n${updateCheck.stderr}`);
@@ -118,18 +118,18 @@ try {
   const candidateVersion = `${versionCore[1]}.${versionCore[2]}.${BigInt(versionCore[3]) + 1n}`;
   const candidate = {
     schemaVersion: 1,
-    skillId: 'archify',
+    skillId: 'archipam',
     channel: 'stable',
     version: candidateVersion,
     publishedAt: '2026-08-28T00:00:00Z',
     source: {
-      repository: 'https://github.com/tt-a1i/archify',
+      repository: 'https://github.com/licpmb/Archi',
       ref: `v${candidateVersion}`,
       treeSha: 'a'.repeat(40),
     },
     artifact: { sha256: 'b'.repeat(64) },
     summary: 'Package smoke candidate.',
-    releaseNotes: `https://github.com/tt-a1i/archify/releases/tag/v${candidateVersion}`,
+    releaseNotes: `https://github.com/licpmb/Archi/releases/tag/v${candidateVersion}`,
     severity: 'normal',
   };
   const notifierCache = path.join(scratch, 'update-cache');
@@ -273,7 +273,7 @@ try {
   const visualSkipped = JSON.parse(runExpectFailure([
     'visual-check', delivered.output, '--json',
   ], {
-    env: { ...process.env, ARCHIFY_CHROME: path.join(scratch, 'missing-chrome') },
+    env: { ...process.env, ARCHIPAM_CHROME: path.join(scratch, 'missing-chrome') },
   }));
   if (visualSkipped.status !== 'skipped' || visualSkipped.visualReview !== 'pending'
     || visualSkipped.chrome?.status !== 'unavailable') {
