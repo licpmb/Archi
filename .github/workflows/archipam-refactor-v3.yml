@@ -1,4 +1,4 @@
-name: One-time Archipam security refactor v3
+name: One-time ArchiPam security refactor v3
 
 on:
   push:
@@ -19,11 +19,20 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22.19.0
-          cache: npm
-          cache-dependency-path: archify/package-lock.json
 
       - name: Apply validated rename and hardening
-        run: python .github/archipam-refactor.py .
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -d archify ]]; then
+            sed -i "s/('Archify','Archipam')/('Archify','ArchiPam')/g; s/replace('Archify','Archipam')/replace('Archify','ArchiPam')/g" .github/archipam-refactor.py
+            python .github/archipam-refactor.py .
+          elif [[ -d archipam ]]; then
+            echo 'ArchiPam migration already materialized'
+          else
+            echo '::error::neither archify nor archipam package directory exists'
+            exit 1
+          fi
 
       - name: Refresh patched dependency lock
         working-directory: archipam
@@ -37,6 +46,18 @@ jobs:
           git add -A
           bash scripts/build-zip.sh archipam.zip
           git add archipam.zip
+
+      - name: Persist migration snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: persist ArchiPam migration snapshot'
+            git push origin HEAD:security/archipam-hardening
+          fi
 
       - name: Install dependencies
         working-directory: archipam
@@ -106,5 +127,5 @@ jobs:
           git add -A
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'feat: rename Archify to Archipam and harden security'
+          git commit -m 'feat: rename Archify to ArchiPam and harden security'
           git push origin HEAD:security/archipam-hardening
