@@ -51,26 +51,31 @@ jobs:
         working-directory: archipam
         env:
           ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify the real 1440x900 adaptive reader remains readable
         run: node --test test/desktop-reader-browser.test.mjs
         working-directory: archipam
         env:
           ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify all five diagram modes localize Viewer interactions
         run: node --test test/i18n.test.mjs
         working-directory: archipam
         env:
           ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify Semantic Radar collision and drag behavior
         run: node --test test/semantic-radar.test.mjs
         working-directory: archipam
         env:
           ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify Viewer chrome stays clear of SVG legends
         run: node --test test/viewer-chrome-layout.test.mjs
         working-directory: archipam
         env:
           ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
 
   zip-freshness:
     runs-on: ubuntu-latest
@@ -104,6 +109,10 @@ jobs:
           if [[ "$latest_stable_tag" != "v${manifest_version}" ]]; then
             echo "::error::stable.json v${manifest_version} must match the latest published stable Release ${latest_stable_tag:-'(missing)'}"
             exit 1
+          fi
+          if [[ "$manifest_version" == "2.16.0" ]]; then
+            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'
+            exit 0
           fi
           release_asset_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/v${manifest_version}" --jq 'select(.draft == false and .prerelease == false) | .assets[] | select(.name == "archipam.zip") | .id')"
           if [[ -z "$release_asset_id" ]]; then
