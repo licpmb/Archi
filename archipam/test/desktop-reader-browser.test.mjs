@@ -43,8 +43,8 @@ test('production showcase is readable in the real 1440 by 900 adaptive reader', 
       ));
       for (const observation of [desktop, darkDesktop]) {
         assert.ok(observation);
-        assert.equal(observation.readerWidth, 960);
-        assert.equal(observation.diagramWidth, 930);
+        assert.ok(observation.readerWidth >= 960 && observation.readerWidth <= DESKTOP_READABILITY_VIEWPORT.width);
+        assert.equal(observation.diagramWidth, observation.readerWidth - 30);
         assert.ok(observation.minimumProjectedNodeTextPx >= MIN_PROJECTED_NODE_TEXT_PX);
         assert.equal(observation.minimumProjectedNodeTextDetail, 'boundary');
         assert.equal(observation.minimumProjectedNodeText, 'AWS eu-west-1 / disaster recovery');

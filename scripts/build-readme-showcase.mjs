@@ -1,61 +1,49 @@
 #!/usr/bin/env node
+
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptDir, '..');
-const outputPath = path.join(repoRoot, 'docs', 'assets', 'archipam-showcase.gif');
-const receiptPath = path.join(repoRoot, 'docs', 'assets', 'archipam-showcase.receipt.json');
-const width = 1280;
-const height = 720;
-const fps = 8;
-const framesPerScene = 7;
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(__dirname, '..');
+const assetsRoot = path.join(repoRoot, 'docs', 'assets');
+const outputPath = path.resolve(process.argv[2] || path.join(assetsRoot, 'archipam-live-proof.gif'));
+const receiptPath = outputPath.replace(/\.gif$/i, '.json');
+const width = 960;
+const height = 540;
+const fps = 10;
+const framesPerScene = 18;
 
 const scenes = [
   {
-    id: 'architecture',
-    artifact: 'examples/web-app-rendered.html',
-    view: 'model',
-    eyebrow: 'Architecture · model',
-    title: 'Trace a request across the system',
-    receipt: 'A checked dependency view, ready to inspect',
+    id: 'signal-flow',
+    artifact: 'docs/gallery/artifacts/agent-tool-call.workflow.html',
+    view: 'happy-path',
+    eyebrow: 'WORKFLOW · SIGNAL FLOW',
+    title: 'Agent Tool Call',
+    receipt: '12 nodes · 11 edges · 9/9 checks',
+    accent: '#67e8f9',
   },
   {
-    id: 'workflow',
-    artifact: 'examples/workflow-agent-tool-call-rendered.html',
-    view: 'model',
-    eyebrow: 'Workflow · model',
-    title: 'See ownership and handoffs at a glance',
-    receipt: 'A compact path through agents, tools, and outcomes',
+    id: 'blueprint',
+    artifact: 'docs/gallery/artifacts/production-deployment.architecture.html',
+    view: 'request-boundary',
+    eyebrow: 'ARCHITECTURE · BLUEPRINT',
+    title: 'Production Deployment',
+    receipt: '12 nodes · 12 edges · 9/9 checks',
+    accent: '#f6c453',
   },
   {
-    id: 'sequence',
-    artifact: 'examples/sequence-cache-miss-request.html',
-    view: 'model',
-    eyebrow: 'Sequence · model',
-    title: 'Follow timing without reading source first',
-    receipt: 'Calls, waits, and responses stay in one evidence-backed view',
-  },
-  {
-    id: 'dataflow',
-    artifact: 'examples/dataflow-product-analytics.html',
-    view: 'model',
-    eyebrow: 'Dataflow · model',
-    title: 'Make data movement reviewable',
-    receipt: 'Sources, transformations, stores, and consumers remain explicit',
-  },
-  {
-    id: 'lifecycle',
-    artifact: 'examples/lifecycle-agent-run.html',
-    view: 'model',
-    eyebrow: 'Lifecycle · model',
-    title: 'Turn state transitions into an inspection surface',
-    receipt: 'Transitions, guards, and terminal states are visible before rollout',
+    id: 'classic',
+    artifact: 'docs/gallery/artifacts/cache-miss.sequence.html',
+    view: 'cache-fallback',
+    eyebrow: 'SEQUENCE · CLASSIC',
+    title: 'Cache Miss Request',
+    receipt: '7 participants · 12 messages · 9/9 checks',
+    accent: '#c4b5fd',
   },
 ];
 
@@ -63,67 +51,82 @@ function sha256(file) {
   return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 }
 
-function commandExists(command) {
-  return spawnSync(process.platform === 'win32' ? 'where' : 'which', [command], { stdio: 'ignore' }).status === 0;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function requireCommand(command, hint) {
-  if (!commandExists(command)) throw new Error(`${command} is required. ${hint}`);
-  return command;
+function executable(file) {
+  try {
+    fs.accessSync(file, fs.constants.X_OK);
+    return file;
+  } catch {
+    return null;
+  }
+}
+
+function commandPath(command) {
+  const result = spawnSync('sh', ['-c', 'command -v "$1"', 'archipam-showcase', command], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'ignore'],
+  });
+  return result.status === 0 ? result.stdout.trim() : null;
 }
 
 function findChrome() {
-  const explicit = process.env.ARCHIPAM_CHROME;
-  if (explicit && fs.existsSync(explicit)) return explicit;
-  const candidates = process.platform === 'darwin'
-    ? ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium']
-    : process.platform === 'win32'
-      ? [
-          path.join(process.env.PROGRAMFILES || '', 'Google', 'Chrome', 'Application', 'chrome.exe'),
-          path.join(process.env['PROGRAMFILES(X86)'] || '', 'Google', 'Chrome', 'Application', 'chrome.exe'),
-          path.join(process.env.LOCALAPPDATA || '', 'Google', 'Chrome', 'Application', 'chrome.exe'),
-        ]
-      : ['/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/usr/bin/chromium-browser'];
-  for (const candidate of candidates) if (candidate && fs.existsSync(candidate)) return candidate;
-  for (const command of ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser']) {
-    if (commandExists(command)) return command;
-  }
-  return null;
+  const candidates = [
+    process.env.ARCHIPAM_CHROME,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    commandPath('google-chrome'),
+    commandPath('google-chrome-stable'),
+    commandPath('chromium'),
+    commandPath('chromium-browser'),
+  ].filter(Boolean);
+  return candidates.map(executable).find(Boolean) || null;
+}
+
+function requireCommand(command, installHint) {
+  const resolved = commandPath(command);
+  if (!resolved) throw new Error(`${command} is required. ${installHint}`);
+  return resolved;
 }
 
 function esc(value) {
-  return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]);
 }
 
-function wrapperHtml(scene, sceneIndex) {
-  const artifactUrl = pathToFileURL(path.join(repoRoot, scene.artifact)).href;
+function wrapperHtml(scene, index) {
+  const artifact = path.join(repoRoot, scene.artifact);
+  const artifactUrl = `${pathToFileURL(artifact).href}?embed=1&play=1&theme=dark#view=${encodeURIComponent(scene.view)}`;
   return `<!doctype html>
-<html lang="en">
+<html lang="en" style="--accent:${esc(scene.accent)};--fade:1">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-  :root{--fade:0}
-  *{box-sizing:border-box}
-  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#071019;color:#edf5ff;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
-  body{position:relative;background:radial-gradient(circle at 82% 12%,rgba(79,149,255,.16),transparent 28%),linear-gradient(180deg,#09131f,#050b11)}
-  .shell{position:absolute;inset:22px;border:1px solid rgba(146,186,230,.24);border-radius:20px;overflow:hidden;background:#0a141f;box-shadow:0 20px 70px rgba(0,0,0,.34)}
-  iframe{display:block;width:100%;height:100%;border:0;background:white}
-  .hud{position:absolute;left:42px;right:42px;top:38px;display:flex;justify-content:space-between;gap:32px;align-items:flex-start;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.9)}
-  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9bc2ec;margin-bottom:8px}
-  .title{font-size:25px;font-weight:800;max-width:690px;line-height:1.12;color:#fff}
-  .receipt{font-size:12px;line-height:1.45;text-align:right;color:#b8cee4;max-width:330px;background:rgba(5,11,17,.78);border:1px solid rgba(146,186,230,.2);border-radius:12px;padding:10px 12px;backdrop-filter:blur(5px)}
-  .receipt strong{display:block;color:#70d7aa;font-size:10px;letter-spacing:.12em;margin-bottom:4px}
-  .fade{position:absolute;inset:0;background:#071019;opacity:var(--fade);pointer-events:none;transition:opacity .12s linear}
+  *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020617;color:#f8fafc;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#020617}
+  .edge{position:absolute;inset:0;z-index:2;pointer-events:none;border:1px solid rgba(148,163,184,.24);box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
+  .topbar{position:absolute;z-index:3;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:linear-gradient(180deg,rgba(2,6,23,.98),rgba(2,6,23,.8) 72%,transparent);pointer-events:none}
+  .brand{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.04em}.mark{width:22px;height:22px}.live{color:#6ee7b7;font-size:9px;font-weight:700;letter-spacing:.13em}.live:before{content:'';display:inline-block;width:6px;height:6px;margin-right:7px;border-radius:50%;background:currentColor;box-shadow:0 0 12px currentColor}
+  .count{color:#64748b;font-size:9px;letter-spacing:.12em}.count strong{color:#cbd5e1;font-weight:600}
+  .caption{position:absolute;z-index:3;left:0;right:0;bottom:0;min-height:72px;display:flex;align-items:flex-end;justify-content:space-between;gap:28px;padding:26px 20px 16px;background:linear-gradient(0deg,rgba(2,6,23,.99),rgba(2,6,23,.86) 58%,transparent);pointer-events:none}
+  .eyebrow{margin-bottom:5px;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.12em}.title{font-size:16px;font-weight:800;letter-spacing:-.02em}.receipt{text-align:right;color:#94a3b8;font-size:9px;line-height:1.6}.receipt strong{display:block;color:#e2e8f0;font-size:10px}.fade{position:absolute;inset:0;z-index:5;background:#020617;opacity:var(--fade);pointer-events:none}
 </style>
 </head>
 <body>
-  <div class="shell"><iframe src="${artifactUrl}#view=${encodeURIComponent(scene.view)}" title="${esc(scene.title)}"></iframe></div>
-  <div class="hud">
+  <iframe src="${esc(artifactUrl)}" title="${esc(scene.title)} generated ArchiPam artifact"></iframe>
+  <div class="edge"></div>
+  <div class="topbar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 28 28" fill="none" aria-hidden="true"><polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="rgba(8,51,68,.8)" stroke="#22d3ee" stroke-width="1.5"/><polygon points="14,7 21,11 21,19 14,23 7,19 7,11" stroke="rgba(34,211,238,.45)"/><circle cx="14" cy="15" r="2.5" fill="#22d3ee"/></svg>
+      <span>ARCHIPAM</span><span class="live">LIVE PROOF</span>
+    </div>
+    <div class="count"><strong>${String(index + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}</strong></div>
+  </div>
+  <div class="caption">
     <div><div class="eyebrow">${esc(scene.eyebrow)}</div><div class="title">${esc(scene.title)}</div></div>
     <div class="receipt"><strong>GENERATED · CHECKED · INTERACTIVE</strong>${esc(scene.receipt)}</div>
   </div>
@@ -253,10 +256,7 @@ async function captureFrames(chromePath, tempRoot) {
     const targets = await cdp.send('Target.getTargets');
     let target = targets.targetInfos?.find(item => item.type === 'page');
     if (!target) {
-      // Chrome 152+ rejects width/height on Target.createTarget unless newWindow=true.
-      // The viewport is set explicitly below through Emulation.setDeviceMetricsOverride,
-      // so target creation should remain geometry-free and browser-version agnostic.
-      const created = await cdp.send('Target.createTarget', { url: 'about:blank' });
+      const created = await cdp.send('Target.createTarget', { url: 'about:blank', width, height });
       target = { targetId: created.targetId };
     }
     const attached = await cdp.send('Target.attachToTarget', { targetId: target.targetId, flatten: true });
@@ -295,16 +295,7 @@ async function captureFrames(chromePath, tempRoot) {
     throw error;
   } finally {
     cdp.failAll(new Error('capture finished'));
-    if (chrome.exitCode === null) {
-      let exited = new Promise(resolve => chrome.once('exit', resolve));
-      chrome.kill('SIGTERM');
-      await Promise.race([exited, sleep(2000)]);
-      if (chrome.exitCode === null) {
-        exited = new Promise(resolve => chrome.once('exit', resolve));
-        chrome.kill('SIGKILL');
-        await Promise.race([exited, sleep(5000)]);
-      }
-    }
+    chrome.kill('SIGTERM');
   }
 }
 
@@ -358,12 +349,14 @@ async function main() {
     };
     fs.writeFileSync(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`);
     console.log(`README showcase ${frameCount} frames / ${receipt.durationSeconds.toFixed(1)}s / ${receipt.bytes} bytes`);
+    console.log(outputPath);
+    console.log(receiptPath);
   } finally {
     fs.rmSync(tempRoot, { recursive: true, force: true, maxRetries: 8, retryDelay: 125 });
   }
 }
 
 main().catch(error => {
-  console.error(error?.stack || error);
+  console.error(error.stack || error.message);
   process.exitCode = 1;
 });
