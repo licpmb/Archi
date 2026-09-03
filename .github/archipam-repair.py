@@ -44,6 +44,10 @@ s = s.replace(
     "    fs.rmSync(tempRoot, { recursive: true, force: true });",
     "    fs.rmSync(tempRoot, { recursive: true, force: true, maxRetries: 8, retryDelay: 125 });",
 )
+s = s.replace(
+    "    cdp.failAll(new Error('capture finished'));\n    chrome.kill('SIGTERM');",
+    "    cdp.failAll(new Error('capture finished'));\n    if (chrome.exitCode === null && chrome.signalCode === null) {\n      chrome.kill('SIGTERM');\n      await Promise.race([\n        new Promise(resolve => chrome.once('exit', resolve)),\n        sleep(3000),\n      ]);\n      if (chrome.exitCode === null && chrome.signalCode === null) {\n        chrome.kill('SIGKILL');\n        await Promise.race([\n          new Promise(resolve => chrome.once('exit', resolve)),\n          sleep(1000),\n        ]);\n      }\n    }",
+)
 p.write_text(s, 'utf-8')
 for stale in [root/'docs/assets/archipam-showcase.gif', root/'docs/assets/archipam-showcase.receipt.json']:
     stale.unlink(missing_ok=True)
