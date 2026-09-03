@@ -256,7 +256,7 @@ async function captureFrames(chromePath, tempRoot) {
     const targets = await cdp.send('Target.getTargets');
     let target = targets.targetInfos?.find(item => item.type === 'page');
     if (!target) {
-      const created = await cdp.send('Target.createTarget', { url: 'about:blank', width, height });
+      const created = await cdp.send('Target.createTarget', { url: 'about:blank' });
       target = { targetId: created.targetId };
     }
     const attached = await cdp.send('Target.attachToTarget', { targetId: target.targetId, flatten: true });
