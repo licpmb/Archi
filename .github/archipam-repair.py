@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# Repair revision 3: rerun after Chrome 152 CDP compatibility fix.
 root = Path('.').resolve()
 exclude = {'.github/archipam-repair.py', '.github/workflows/archipam-repair.yml'}
 binary_ext = {'.png','.jpg','.jpeg','.gif','.webm','.ico','.zip','.woff','.woff2','.ttf','.otf','.pdf'}
