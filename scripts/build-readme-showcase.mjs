@@ -244,7 +244,7 @@ async function captureFrames(chromePath, tempRoot) {
     '--disable-renderer-backgrounding', '--force-device-scale-factor=1',
     `--window-size=${width},${height}`, `--user-data-dir=${profileRoot}`, 'about:blank',
   ];
-  if (typeof process.getuid === 'function' && process.getuid() === 0) chromeArgs.unshift('--no-sandbox');
+  if ((typeof process.getuid === 'function' && process.getuid() === 0) || process.env.ARCHIPAM_CHROME_NO_SANDBOX === '1') chromeArgs.unshift('--no-sandbox');
 
   const chrome = spawn(chromePath, chromeArgs, { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] });
   let chromeErrors = '';
@@ -295,7 +295,12 @@ async function captureFrames(chromePath, tempRoot) {
     throw error;
   } finally {
     cdp.failAll(new Error('capture finished'));
-    chrome.kill('SIGTERM');
+    if (chrome.exitCode === null) {
+      const exited = new Promise(resolve => chrome.once('exit', resolve));
+      chrome.kill('SIGTERM');
+      await Promise.race([exited, sleep(2000)]);
+      if (chrome.exitCode === null) chrome.kill('SIGKILL');
+    }
   }
 }
 
