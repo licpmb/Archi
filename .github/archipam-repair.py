@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+# Repair revision 2: rerun after the migration tree was materialized.
 root = Path('.').resolve()
 exclude = {'.github/archipam-repair.py', '.github/workflows/archipam-repair.yml'}
 binary_ext = {'.png','.jpg','.jpeg','.gif','.webm','.ico','.zip','.woff','.woff2','.ttf','.otf','.pdf'}
