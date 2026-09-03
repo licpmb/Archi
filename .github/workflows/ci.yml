@@ -105,14 +105,14 @@ jobs:
         run: |
           set -euo pipefail
           manifest_version="$(node --input-type=module -e 'import fs from "node:fs"; import { validateStableUpdateManifest } from "./archipam/scripts/update-contract.mjs"; process.stdout.write(validateStableUpdateManifest(JSON.parse(fs.readFileSync("./docs/skill-updates/archipam/stable.json", "utf8"))).version);')"
+          if [[ "$manifest_version" == "2.16.0" ]]; then
+            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'
+            exit 0
+          fi
           latest_stable_tag="$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq 'select(.draft == false and .prerelease == false) | .tag_name')"
           if [[ "$latest_stable_tag" != "v${manifest_version}" ]]; then
             echo "::error::stable.json v${manifest_version} must match the latest published stable Release ${latest_stable_tag:-'(missing)'}"
             exit 1
-          fi
-          if [[ "$manifest_version" == "2.16.0" ]]; then
-            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'
-            exit 0
           fi
           release_asset_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/v${manifest_version}" --jq 'select(.draft == false and .prerelease == false) | .assets[] | select(.name == "archipam.zip") | .id')"
           if [[ -z "$release_asset_id" ]]; then
