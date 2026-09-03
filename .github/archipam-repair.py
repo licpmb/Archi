@@ -84,21 +84,8 @@ s = p.read_text('utf-8')
 s = s.replace("        assert.equal(observation.readerWidth, 960);\n        assert.equal(observation.diagramWidth, 930);", "        assert.ok(observation.readerWidth >= 960 && observation.readerWidth <= DESKTOP_READABILITY_VIEWPORT.width);\n        assert.equal(observation.diagramWidth, observation.readerWidth - 30);")
 p.write_text(s, 'utf-8')
 
-# v2.16.0 belongs to the pre-rename repository. Skip external release provenance for that one
-# historical manifest before querying this repository; future ArchiPam releases remain enforced.
-p = root/'.github/workflows/ci.yml'
-s = p.read_text('utf-8')
-old = "          latest_stable_tag=\"$(gh api \"repos/${GITHUB_REPOSITORY}/releases/latest\" --jq 'select(.draft == false and .prerelease == false) | .tag_name')\""
-pre = "          if [[ \"$manifest_version\" == \"2.16.0\" ]]; then\n            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'\n            exit 0\n          fi\n          latest_stable_tag=\"$(gh api \"repos/${GITHUB_REPOSITORY}/releases/latest\" --jq 'select(.draft == false and .prerelease == false) | .tag_name')\""
-if old in s and pre not in s:
-    s = s.replace(old, pre, 1)
-# Remove the now-unreachable duplicate special-case block later in the job.
-dup = "          if [[ \"$manifest_version\" == \"2.16.0\" ]]; then\n            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'\n            exit 0\n          fi\n"
-first = s.find(dup)
-second = s.find(dup, first + len(dup)) if first >= 0 else -1
-if second >= 0:
-    s = s[:second] + s[second + len(dup):]
-p.write_text(s, 'utf-8')
+# CI workflow changes are applied directly through the repository connector so the Actions token
+# never needs workflow-write permission. Do not touch .github/workflows from this repair process.
 
 # Preserve the DSH stderr-aware discovery assertion from the prior repair.
 p = root/'integrations/deepseek-harness/test/zero-regression.test.mjs'
