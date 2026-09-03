@@ -1,4 +1,5 @@
 name: Temporary ArchiPam repair
+# Retry after Chrome profile cleanup hardening.
 
 on:
   push:
