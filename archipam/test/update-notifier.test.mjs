@@ -373,7 +373,7 @@ function cachedUpdateState() {
       version: '2.16.0',
       targetDigest: `sha256:${'b'.repeat(64)}`,
       severity: 'normal',
-      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
+      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
     },
   };
 }

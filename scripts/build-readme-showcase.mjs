@@ -295,7 +295,20 @@ async function captureFrames(chromePath, tempRoot) {
     throw error;
   } finally {
     cdp.failAll(new Error('capture finished'));
-    chrome.kill('SIGTERM');
+    if (chrome.exitCode === null && chrome.signalCode === null) {
+      chrome.kill('SIGTERM');
+      await Promise.race([
+        new Promise(resolve => chrome.once('exit', resolve)),
+        sleep(3000),
+      ]);
+      if (chrome.exitCode === null && chrome.signalCode === null) {
+        chrome.kill('SIGKILL');
+        await Promise.race([
+          new Promise(resolve => chrome.once('exit', resolve)),
+          sleep(1000),
+        ]);
+      }
+    }
   }
 }
 
