@@ -1,5 +1,4 @@
 name: Temporary ArchiPam repair
-# Retry after Chrome profile cleanup hardening.
 
 on:
   push:
@@ -34,22 +33,6 @@ jobs:
       - name: Install GIF/WebM decoder
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
 
-      - name: Preserve immutable DSH release under renamed tag
-        shell: bash
-        run: |
-          set -euo pipefail
-          git fetch --tags --force
-          old_tag='archify-dsh-v0.1.0'
-          new_tag='archipam-dsh-v0.1.0'
-          if git rev-parse -q --verify "refs/tags/$new_tag" >/dev/null; then
-            echo "$new_tag already exists"
-          elif git rev-parse -q --verify "refs/tags/$old_tag" >/dev/null; then
-            git tag "$new_tag" "$old_tag"
-            git push origin "refs/tags/$new_tag"
-          else
-            echo "::warning::historical DSH tag is unavailable; DSH tarball tests may remain blocked"
-          fi
-
       - name: Apply migration gate repairs
         run: python .github/archipam-repair.py
 
@@ -77,6 +60,18 @@ jobs:
             --receipt examples/checkout-platform-delta.receipt.json \
             --quality showcase --json >/tmp/archipam-delta.json
 
+      - name: Persist migration gate repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: repair ArchiPam migration gates'
+            git push origin HEAD:security/archipam-hardening
+          fi
+
       - name: Regenerate checked documentation
         working-directory: archipam
         env:
@@ -100,7 +95,7 @@ jobs:
           cp /tmp/archipam-a.zip archipam.zip
           git add archipam.zip
 
-      - name: Persist repaired migration before validation
+      - name: Persist generated artifacts
         shell: bash
         run: |
           set -euo pipefail
@@ -108,7 +103,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --cached --quiet; then
-            git commit -m 'fix: finish ArchiPam migration gates'
+            git commit -m 'chore: refresh ArchiPam deterministic artifacts'
             git push origin HEAD:security/archipam-hardening
           fi
 
