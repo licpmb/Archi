@@ -32,13 +32,17 @@ for p in root.rglob('*'):
         p.write_text(new, 'utf-8')
 
 # Restore the proven README motion builder from main, then apply only the product migration
-# and Chrome process-hardening deltas. A previous temporary repair had accidentally replaced it.
+# and Chrome process-hardening/compatibility deltas. A previous temporary repair had accidentally replaced it.
 p = root/'scripts/build-readme-showcase.mjs'
 s = subprocess.check_output(['git', 'show', 'origin/main:scripts/build-readme-showcase.mjs'], text=True)
 s = migrate_text(s)
 s = s.replace(
     "  if (typeof process.getuid === 'function' && process.getuid() === 0) chromeArgs.unshift('--no-sandbox');",
     "  if ((typeof process.getuid === 'function' && process.getuid() === 0) || process.env.ARCHIPAM_CHROME_NO_SANDBOX === '1') chromeArgs.unshift('--no-sandbox');",
+)
+s = s.replace(
+    "      const created = await cdp.send('Target.createTarget', { url: 'about:blank', width, height });",
+    "      const created = await cdp.send('Target.createTarget', { url: 'about:blank' });",
 )
 s = s.replace(
     "    fs.rmSync(tempRoot, { recursive: true, force: true });",
@@ -64,9 +68,7 @@ s = s.replace('4e493db1977889675ce7b04bf9ba60fb97cb50f01fc0fd9e8446861282c65645'
 s = s.replace('28b0167460d16c55ae6bf38bde41368248671a78b3a49133da05ed1efb4354af', '2a511033c3980507676e5b6efd9bed01ba257068d64bde7237be0e5d2c8a8364')
 p.write_text(s, 'utf-8')
 
-# Keep 64 KiB boundary tests byte-equivalent to the pre-rename fixtures. The new repository URL
-# is two bytes shorter while skillId is one byte longer, so a one-byte synthetic query restores
-# the same boundary without changing production URLs.
+# Keep 64 KiB boundary tests byte-equivalent to the pre-rename fixtures.
 p = root/'archipam/test/update-notifier.test.mjs'
 s = p.read_text('utf-8')
 s = s.replace("releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',\n    },\n  };\n}\n", "releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',\n    },\n  };\n}\n", 1)
@@ -81,15 +83,13 @@ tail = tail.replace("'https://github.com/licpmb/Archi/releases/tag/v2.16.0'", "'
 tail = tail.replace('assert.equal(Buffer.byteLength(compactStateSource(state)), 65_524);', 'assert.equal(Buffer.byteLength(compactStateSource(state)), 65_525);')
 p.write_text(head + marker + tail, 'utf-8')
 
-# Chrome versions may choose a wider adaptive reader, but the hard contract is a >=960px reader,
-# 30px diagram chrome, readability threshold, and no vertical overflow.
+# Chrome versions may choose a wider adaptive reader, but the hard contract remains readability + no overflow.
 p = root/'archipam/test/desktop-reader-browser.test.mjs'
 s = p.read_text('utf-8')
 s = s.replace("        assert.equal(observation.readerWidth, 960);\n        assert.equal(observation.diagramWidth, 930);", "        assert.ok(observation.readerWidth >= 960 && observation.readerWidth <= DESKTOP_READABILITY_VIEWPORT.width);\n        assert.equal(observation.diagramWidth, observation.readerWidth - 30);")
 p.write_text(s, 'utf-8')
 
-# CI workflow changes are applied directly through the repository connector so the Actions token
-# never needs workflow-write permission. Do not touch .github/workflows from this repair process.
+# CI workflow changes are applied directly through the repository connector.
 
 # Preserve the DSH stderr-aware discovery assertion from the prior repair.
 p = root/'integrations/deepseek-harness/test/zero-regression.test.mjs'
