@@ -296,10 +296,14 @@ async function captureFrames(chromePath, tempRoot) {
   } finally {
     cdp.failAll(new Error('capture finished'));
     if (chrome.exitCode === null) {
-      const exited = new Promise(resolve => chrome.once('exit', resolve));
+      let exited = new Promise(resolve => chrome.once('exit', resolve));
       chrome.kill('SIGTERM');
       await Promise.race([exited, sleep(2000)]);
-      if (chrome.exitCode === null) chrome.kill('SIGKILL');
+      if (chrome.exitCode === null) {
+        exited = new Promise(resolve => chrome.once('exit', resolve));
+        chrome.kill('SIGKILL');
+        await Promise.race([exited, sleep(5000)]);
+      }
     }
   }
 }
@@ -357,7 +361,7 @@ async function main() {
     console.log(outputPath);
     console.log(receiptPath);
   } finally {
-    fs.rmSync(tempRoot, { recursive: true, force: true });
+    fs.rmSync(tempRoot, { recursive: true, force: true, maxRetries: 8, retryDelay: 125 });
   }
 }
 

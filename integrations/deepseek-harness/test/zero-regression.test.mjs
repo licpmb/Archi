@@ -43,12 +43,13 @@ test('full-depth Skills CLI discovery still finds only one skill named archipam'
     encoding: 'utf8',
   });
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  const names = [...result.stdout.matchAll(/^\s*[-*]\s+(\S+)/gm)].map((match) => match[1])
+  const output = `${result.stdout}\n${result.stderr}`;
+  const names = [...output.matchAll(/^\s*[-*]\s+(\S+)/gm)].map((match) => match[1])
     .filter((name) => name === 'archipam' || /archipam/i.test(name));
   const unique = new Set(
-    [...result.stdout.matchAll(/\barchipam\b/gi)].map((match) => match[0].toLowerCase()),
+    [...output.matchAll(/\barchipam\b/gi)].map((match) => match[0].toLowerCase()),
   );
-  assert.ok(result.stdout.includes('archipam'), result.stdout);
-  assert.equal(unique.size, 1, result.stdout);
-  assert.ok(names.length <= 1 || new Set(names).size === 1, result.stdout);
+  assert.ok(output.includes('archipam'), output);
+  assert.equal(unique.size, 1, output);
+  assert.ok(names.length <= 1 || new Set(names).size === 1, output);
 });
