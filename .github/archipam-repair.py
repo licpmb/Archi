@@ -1,7 +1,5 @@
 from pathlib import Path
-import re
 
-# Repair revision 2: rerun after the migration tree was materialized.
 root = Path('.').resolve()
 exclude = {'.github/archipam-repair.py', '.github/workflows/archipam-repair.yml'}
 binary_ext = {'.png','.jpg','.jpeg','.gif','.webm','.ico','.zip','.woff','.woff2','.ttf','.otf','.pdf'}
@@ -19,32 +17,24 @@ replacements = [
 ]
 
 for p in root.rglob('*'):
-    rel = str(p.relative_to(root)).replace('\\','/') if p.exists() else ''
-    if not p.is_file() or '.git' in p.parts or rel in exclude or p.suffix.lower() in binary_ext:
+    rel = str(p.relative_to(root)).replace('\\', '/')
+    if (
+        not p.is_file()
+        or '.git' in p.parts
+        or rel in exclude
+        or rel.startswith('.github/workflows/')
+        or p.suffix.lower() in binary_ext
+    ):
         continue
     try:
         text = p.read_text('utf-8')
     except UnicodeDecodeError:
         continue
     old = text
-    for a,b in replacements:
-        text = text.replace(a,b)
+    for source, target in replacements:
+        text = text.replace(source, target)
     if text != old:
         p.write_text(text, 'utf-8')
-
-ci = root/'.github/workflows/ci.yml'
-s = ci.read_text('utf-8')
-needle = "          if [[ \"$latest_stable_tag\" != \"v${manifest_version}\" ]]; then\n            echo \"::error::stable.json v${manifest_version} must match the latest published stable Release ${latest_stable_tag:-'(missing)'}\"\n            exit 1\n          fi\n"
-insert = needle + "          if [[ \"$manifest_version\" == \"2.16.0\" ]]; then\n            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'\n            exit 0\n          fi\n"
-if 'pre-rename stable release' not in s:
-    if needle not in s:
-        raise RuntimeError('published manifest insertion point not found')
-    s = s.replace(needle, insert, 1)
-chrome_line = '          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}'
-chrome_block = chrome_line + '\n          ARCHIPAM_CHROME_NO_SANDBOX: "1"'
-s = s.replace(chrome_block + '\n          ARCHIPAM_CHROME_NO_SANDBOX: "1"', chrome_block)
-s = s.replace(chrome_line, chrome_block)
-ci.write_text(s, 'utf-8')
 
 p = root/'scripts/build-readme-showcase.mjs'
 s = p.read_text('utf-8')
@@ -70,26 +60,4 @@ if old in s:
     s = s.replace(old, new, 1)
 p.write_text(s, 'utf-8')
 
-pins = {
-    'actions/checkout@v4': 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4',
-    'actions/setup-node@v4': 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4',
-    'browser-actions/setup-chrome@v2': 'browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0',
-    'softprops/action-gh-release@v2': 'softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2',
-    'pnpm/action-setup@v4': 'pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4',
-}
-for rel in ['.github/workflows/release.yml', '.github/workflows/dsh.yml']:
-    p = root/rel
-    s = p.read_text('utf-8')
-    for a,b in pins.items():
-        s = s.replace(a,b)
-    s = re.sub(r'node-version:\s*22\s*$', 'node-version: 22.19.0', s, flags=re.M)
-    p.write_text(s, 'utf-8')
-
-p = root/'.github/workflows/release.yml'
-s = p.read_text('utf-8')
-chrome_line = '          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}'
-if chrome_line in s and 'ARCHIPAM_CHROME_NO_SANDBOX' not in s:
-    s = s.replace(chrome_line, chrome_line + '\n          ARCHIPAM_CHROME_NO_SANDBOX: "1"')
-p.write_text(s, 'utf-8')
-
-print('textual repair phase complete')
+print('non-workflow repair phase complete')
