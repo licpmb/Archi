@@ -1,3 +1,4 @@
+# External validation trigger after materialized ArchiPam migration
 name: Temporary ArchiPam repair
 
 on:
