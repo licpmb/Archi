@@ -1,4 +1,5 @@
 # External validation trigger after materialized ArchiPam migration
+# Final validation trigger: run all migration, security, packaging and browser gates.
 name: Temporary ArchiPam repair
 
 on:
