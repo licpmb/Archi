@@ -373,7 +373,7 @@ const taggedSmoke = run('git', ['show', `${DSH_RELEASE_REF}:scripts/package-smok
 requireStatus('package-smoke', taggedSmoke, { command: `git show ${DSH_RELEASE_REF}:scripts/package-smoke.mjs` });
 const taggedSmokePath = path.join(scratch, 'package-smoke-v0.1.0.mjs');
 fs.writeFileSync(taggedSmokePath, taggedSmoke.stdout);
-const smoke = run(process.execPath, [taggedSmokePath, skillRoot], {
+const smoke = run(process.execPath, [taggedSmokePath, skillRoot, '--without-update-notifier'], {
   cwd: repoRoot,
   timeout: 120_000,
 });
