@@ -60,7 +60,7 @@ test('bundle patch inserts one uniquely named filesystem Skill provider resolved
   assert.doesNotMatch(patch, /customSkillDirs/);
   assert.match(
     patch,
-    /createRequire\(baseUrl\)\.resolve\('@tt-a1i\/archipam-dsh\/package\.json'\)/,
+    /createRequire\(baseUrl\)\.resolve\('@licpmb\/archipam-dsh\/package\.json'\)/,
   );
   assert.doesNotMatch(patch, /new URL\(\s*['"]skills\//);
   assert.doesNotMatch(patch, /archipam_render|archipam_deliver|dsh\.client|ui-deliverables/);

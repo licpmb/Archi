@@ -83,5 +83,7 @@ jobs:
         with:
           version: 10
       - name: Real DSH distribution acceptance
+        env:
+          ARCHIPAM_DSH_SOURCE_REF: ${{ github.ref_name }}
         run: node integrations/deepseek-harness/scripts/distribution-acceptance.mjs
         shell: bash

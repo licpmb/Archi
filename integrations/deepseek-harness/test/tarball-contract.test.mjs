@@ -10,7 +10,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
 const packScript = path.join(integrationRoot, 'scripts', 'pack.mjs');
-const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
+const DSH_RELEASE_REF = process.env.ARCHIPAM_DSH_SOURCE_REF || 'HEAD';
 
 const FORBIDDEN = [
   '/test/',
@@ -26,7 +26,7 @@ const FORBIDDEN = [
 
 function packTarball() {
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-tarball-'));
-  const out = path.join(scratch, 'tt-a1i-archipam-dsh-0.1.0.tgz');
+  const out = path.join(scratch, 'licpmb-archipam-dsh-0.1.0.tgz');
   const result = spawnSync(process.execPath, [packScript, '--out', out, '--json'], {
     cwd: repoRoot,
     encoding: 'utf8',
@@ -74,7 +74,7 @@ test('pack command emits a real npm tarball with the expected identity and file 
   }
 });
 
-test('packed Skill payload remains byte-identical to the DSH 0.1.0 release tag', () => {
+test('packed Skill payload remains byte-identical to the selected immutable source ref', () => {
   const { scratch, out, result } = packTarball();
   try {
     assert.equal(result.status, 0, result.stderr || result.stdout);

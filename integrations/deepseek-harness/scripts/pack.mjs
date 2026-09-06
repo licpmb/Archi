@@ -9,7 +9,7 @@ import { spawnCliSync } from './resolve-cli.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
-const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
+const DSH_RELEASE_REF = process.env.ARCHIPAM_DSH_SOURCE_REF || 'HEAD';
 
 function argValue(flag) {
   const index = process.argv.indexOf(flag);

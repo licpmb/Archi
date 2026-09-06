@@ -43,7 +43,7 @@ test('full-depth Skills CLI discovery still finds only one skill named archipam'
     encoding: 'utf8',
   });
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  const output = `${result.stdout}\n${result.stderr}`;
+  const output = `${result.stdout}\n${result.stderr}`.replace(/\u001b\[[0-?]*[ -\/]*[@-~]/g, '');
   const names = [...output.matchAll(/^\s*[-*]\s+(\S+)/gm)].map((match) => match[1])
     .filter((name) => name === 'archipam' || /archipam/i.test(name));
   const unique = new Set(

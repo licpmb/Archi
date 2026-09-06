@@ -79,7 +79,7 @@ function candidateStateForDigest(state, digest) {
       version: '2.16.0',
       targetDigest: digest,
       severity: 'normal',
-      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
+      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
     },
   };
 }
@@ -373,7 +373,7 @@ function cachedUpdateState() {
       version: '2.16.0',
       targetDigest: `sha256:${'b'.repeat(64)}`,
       severity: 'normal',
-      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
+      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
     },
   };
 }
@@ -603,11 +603,6 @@ test('an acknowledged candidate stays suppressed after a later candidate and man
 });
 
 
-function capacityRemoteReleaseForVersion(version, digest = 'b'.repeat(64)) {
-  const release = remoteReleaseForVersion(version, digest);
-  return { ...release, releaseNotes: `${release.releaseNotes}?` };
-}
-
 test('a 64 KiB multi-offer cache only returns an event whose acknowledgement closure can commit', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
@@ -624,7 +619,7 @@ test('a 64 KiB multi-offer cache only returns an event whose acknowledgement clo
     version: cachedVersion,
     targetDigest: currentDigest,
     severity: 'normal',
-    releaseNotes: `https://github.com/licpmb/Archi/releases/tag/v${cachedVersion}?`,
+    releaseNotes: `https://github.com/licpmb/Archi/releases/tag/v${cachedVersion}`,
   };
   assert.equal(Buffer.byteLength(compactStateSource(state)), maxCacheStateBytes);
   writeCompactCommittedState(testFixture, state);
@@ -632,7 +627,7 @@ test('a 64 KiB multi-offer cache only returns an event whose acknowledgement clo
 
   const offered = await checkForUpdate(options(testFixture, async () => {
     requests += 1;
-    return response(capacityRemoteReleaseForVersion('2.16.0', 'c'.repeat(64)));
+    return response(remoteReleaseForVersion('2.16.0', 'c'.repeat(64)));
   }));
   assert.equal(offered.status, 'update_available');
   const acknowledgement = await acknowledgeUpdate({
@@ -665,7 +660,7 @@ test('a recoverable multi-offer boundary acknowledges every event without prunin
     version: cachedVersion,
     targetDigest: currentDigest,
     severity: 'normal',
-    releaseNotes: `https://github.com/licpmb/Archi/releases/tag/v${cachedVersion}?`,
+    releaseNotes: `https://github.com/licpmb/Archi/releases/tag/v${cachedVersion}`,
   };
   assert.equal(Buffer.byteLength(compactStateSource(state)), maxCacheStateBytes - 1);
   writeCompactCommittedState(testFixture, state);
@@ -701,7 +696,7 @@ test('a near-capacity null schedule does not retry the network on every activati
     acknowledgedDigests: Array.from({ length: 883 }, (_, index) => historyDigest(index)),
   });
   state.check.nextCheckAt = null;
-  assert.equal(Buffer.byteLength(compactStateSource(state)), 65_525);
+  assert.equal(Buffer.byteLength(compactStateSource(state)), 65_524);
   writeCompactCommittedState(testFixture, state);
   let requests = 0;
   const fetchImpl = async () => {
@@ -737,7 +732,7 @@ test('a saturated exact acknowledgement history never returns an unacknowledgeab
 
   const result = await checkForUpdate(options(testFixture, async () => {
     requests += 1;
-    return response(capacityRemoteReleaseForVersion('2.16.0', 'f'.repeat(64)));
+    return response(remoteReleaseForVersion('2.16.0', 'f'.repeat(64)));
   }));
   const acknowledgement = result.status === 'update_available'
     ? await acknowledgeUpdate({
@@ -762,7 +757,7 @@ test('a saturated exact acknowledgement history never returns an unacknowledgeab
 
   assert.deepEqual(await checkForUpdate(options(testFixture, async () => {
     requests += 1;
-    return response(capacityRemoteReleaseForVersion('2.16.0', 'f'.repeat(64)));
+    return response(remoteReleaseForVersion('2.16.0', 'f'.repeat(64)));
   })), { status: 'silent', reason: 'cache-valid' });
   assert.equal(requests, 1, 'capacity rejection should commit a bounded retry delay');
 });
@@ -777,7 +772,7 @@ test('capacity backoff withdraws a stale candidate while preserving its late ack
     version: '2.16.0',
     targetDigest: staleDigest,
     severity: 'normal',
-    releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
+    releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
   };
   let replacement = candidateStateForDigest(state, replacementDigest);
   let index = 0;
@@ -793,7 +788,7 @@ test('capacity backoff withdraws a stale candidate while preserving its late ack
   let requests = 0;
   const fetchImpl = async () => {
     requests += 1;
-    return response(capacityRemoteReleaseForVersion('2.16.0', 'c'.repeat(64)));
+    return response(remoteReleaseForVersion('2.16.0', 'c'.repeat(64)));
   };
 
   const refresh = await checkForUpdate(options(testFixture, fetchImpl));
@@ -829,7 +824,7 @@ test('a 64 KiB state can be acknowledged but a 64 KiB plus one state is ignored'
     version: '2.16.0',
     targetDigest,
     severity: 'normal',
-    releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
+    releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
   };
   const initialBytes = Buffer.byteLength(compactStateSource(exactState));
   exactState.check.nextCheckAt += 'x'.repeat(maxCacheStateBytes - initialBytes);
@@ -894,7 +889,7 @@ test('a boundary offer remains acknowledgeable without pruning exact history', a
   )) > maxCacheStateBytes);
   const exactHistory = [...state.notification.acknowledgedDigests];
   writeCompactCommittedState(testFixture, state);
-  const fetchImpl = async () => response(capacityRemoteReleaseForVersion('2.16.0', 'd'.repeat(64)));
+  const fetchImpl = async () => response(remoteReleaseForVersion('2.16.0', 'd'.repeat(64)));
 
   const offered = await checkForUpdate(options(testFixture, fetchImpl));
   assert.equal(offered.status, 'update_available');
@@ -2344,8 +2339,8 @@ test('acknowledgement waits briefly for an in-flight refresh instead of losing t
 test('a last-good notice remains acknowledgeable after the refresh commits a new candidate', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
-  const firstRelease = capacityRemoteReleaseForVersion('2.16.0', 'b'.repeat(64));
-  const secondRelease = capacityRemoteReleaseForVersion('2.17.0', 'c'.repeat(64));
+  const firstRelease = remoteReleaseForVersion('2.16.0', 'b'.repeat(64));
+  const secondRelease = remoteReleaseForVersion('2.17.0', 'c'.repeat(64));
   const offered = await checkForUpdate(options(
     testFixture,
     async () => response(firstRelease),
@@ -2408,8 +2403,8 @@ test('acknowledgement retry budget uses a monotonic clock', async (t) => {
 test('a delayed allocator cannot reuse a generation after its reservation name was taken', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
-  const firstRelease = capacityRemoteReleaseForVersion('2.16.0', 'b'.repeat(64));
-  const secondRelease = capacityRemoteReleaseForVersion('2.17.0', 'c'.repeat(64));
+  const firstRelease = remoteReleaseForVersion('2.16.0', 'b'.repeat(64));
+  const secondRelease = remoteReleaseForVersion('2.17.0', 'c'.repeat(64));
   const offered = await checkForUpdate(options(
     testFixture,
     async () => response(firstRelease),
@@ -2457,8 +2452,8 @@ test('an oversized generation name cannot poison future allocation', async (t) =
 test('a lower generation stalled after reservation cannot commit behind a newer generation', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
-  const firstRelease = capacityRemoteReleaseForVersion('2.16.0', 'b'.repeat(64));
-  const secondRelease = capacityRemoteReleaseForVersion('2.17.0', 'c'.repeat(64));
+  const firstRelease = remoteReleaseForVersion('2.16.0', 'b'.repeat(64));
+  const secondRelease = remoteReleaseForVersion('2.17.0', 'c'.repeat(64));
   const offered = await checkForUpdate(options(
     testFixture,
     async () => response(firstRelease),
@@ -2870,12 +2865,12 @@ test('a fenced stale owner cannot overwrite a newer committed candidate after re
 
   const newer = await checkForUpdate(options(
     testFixture,
-    async () => response(capacityRemoteReleaseForVersion('3.0.0', 'c'.repeat(64))),
+    async () => response(remoteReleaseForVersion('3.0.0', 'c'.repeat(64))),
   ));
   assert.equal(newer.status, 'update_available');
   assert.equal(newer.latestVersion, '3.0.0');
 
-  resumeOldOwner(response(capacityRemoteReleaseForVersion('2.16.0', 'b'.repeat(64))));
+  resumeOldOwner(response(remoteReleaseForVersion('2.16.0', 'b'.repeat(64))));
   assert.deepEqual(await oldCheck, { status: 'silent', reason: 'check-in-progress' });
   const persisted = JSON.parse(fs.readFileSync(statePath(testFixture), 'utf8'));
   assert.equal(persisted.candidate.version, '3.0.0');
@@ -2933,7 +2928,7 @@ test('an identity mismatch is rejected silently and never cached as a candidate'
 });
 
 test('release notes must byte-match the exact trusted GitHub URL', async () => {
-  const base = 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?';
+  const base = 'https://github.com/licpmb/Archi/releases/tag/v2.16.0';
   for (const releaseNotes of [
     'https://github.com:443/licpmb/Archi/releases/tag/v2.16.0',
     'https://github.com:444/licpmb/Archi/releases/tag/v2.16.0',
@@ -2992,7 +2987,7 @@ test('stable candidates cannot use prerelease or build metadata', async () => {
     try {
       const result = await checkForUpdate(options(
         testFixture,
-        async () => response(capacityRemoteReleaseForVersion(version)),
+        async () => response(remoteReleaseForVersion(version)),
       ));
       assert.deepEqual(result, { status: 'silent', reason: 'invalid-manifest' }, version);
     } finally {
@@ -3192,14 +3187,14 @@ test('a newer cached candidate without offered or acknowledged provenance is reb
       version: '2.16.0',
       targetDigest: `sha256:${'b'.repeat(64)}`,
       severity: 'normal',
-      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0?',
+      releaseNotes: 'https://github.com/licpmb/Archi/releases/tag/v2.16.0',
     },
   });
   let requests = 0;
 
   const result = await checkForUpdate(options(testFixture, async () => {
     requests += 1;
-    return response(capacityRemoteReleaseForVersion('2.15.0', 'd'.repeat(64)));
+    return response(remoteReleaseForVersion('2.15.0', 'd'.repeat(64)));
   }));
 
   assert.deepEqual(result, { status: 'silent', reason: 'current' });
@@ -3255,7 +3250,7 @@ test('CLI acknowledgement emits the documented one-line success schema', async (
   const offered = await checkForUpdate({
     releasePath,
     cacheDirectory,
-    fetchImpl: async () => response(capacityRemoteReleaseForVersion(candidateVersion)),
+    fetchImpl: async () => response(remoteReleaseForVersion(candidateVersion)),
     now: () => baseTime,
     random: () => 0.5,
     timeoutMs: 50,
