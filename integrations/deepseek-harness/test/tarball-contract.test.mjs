@@ -90,7 +90,7 @@ test('packed Skill payload remains byte-identical to the selected immutable sour
     const skillFiles = receipt.files
       .map((file) => file.path.replace(/^package\//, ''))
       .filter((file) => file.startsWith('skills/archipam/'))
-      .filter((file) => file !== 'skills/archipam/package.json');
+      .filter((file) => !['skills/archipam/package.json', 'skills/archipam/SKILL.md'].includes(file));
     for (const packagedPath of skillFiles) {
       const relative = packagedPath.slice('skills/archipam/'.length);
       const tagged = spawnSync('git', [
@@ -108,7 +108,8 @@ test('packed Skill payload remains byte-identical to the selected immutable sour
       );
     }
     const skillPackage = JSON.parse(fs.readFileSync(path.join(skillRoot, 'package.json'), 'utf8'));
-    assert.equal(skillPackage.version, '2.14.0');
+    const sourcePackage = JSON.parse(fs.readFileSync(path.join(repoRoot, 'archipam', 'package.json'), 'utf8'));
+    assert.equal(skillPackage.version, sourcePackage.version);
     assert.doesNotMatch(fs.readFileSync(path.join(skillRoot, 'SKILL.md'), 'utf8'), /## Update awareness/);
   } finally {
     fs.rmSync(scratch, { recursive: true, force: true });

@@ -27,6 +27,7 @@ function excludeFromCleanSkill(relative) {
   if (parts.some((part) => part.startsWith('.validator-check-'))) return true;
   if (parts.join('/') === 'scripts/generate-brand-marks.mjs') return true;
   if (parts.join('/') === 'scripts/generate-validators.mjs') return true;
+  if (['skill-release.json', 'scripts/check-update.mjs', 'scripts/update-contract.mjs'].includes(parts.join('/'))) return true;
   return false;
 }
 
@@ -76,6 +77,9 @@ function stageCleanArchiPam(sourceRoot, dest) {
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.copyFileSync(source, destination);
   }
+  const skillPath = path.join(dest, 'SKILL.md');
+  const skill = fs.readFileSync(skillPath, 'utf8').replace(/\n## Update awareness\n[\s\S]*?(?=\n## |$)/, '');
+  fs.writeFileSync(skillPath, skill);
   const packagePath = path.join(dest, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   delete pkg.scripts;
