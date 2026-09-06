@@ -1,0 +1,56 @@
+name: ArchiPam migration security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  migration-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+
+      - name: Reject legacy Archify paths and text
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -path './.git' -prune -o -iname '*archify*' -print | grep -q .; then
+            echo '::error::legacy Archify path remains'
+            find . -path './.git' -prune -o -iname '*archify*' -print
+            exit 1
+          fi
+          if git grep -n -i 'archify' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf'; then
+            echo '::error::legacy Archify text remains'
+            exit 1
+          fi
+          if git grep -n 'Archipam' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf'; then
+            echo '::error::incorrect Archipam capitalization remains; use ArchiPam'
+            exit 1
+          fi
+
+      - name: Renderer failures must not expose stack traces or file URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '{bad json' > "$RUNNER_TEMP/bad.json"
+          set +e
+          node archipam/bin/archipam.mjs render architecture "$RUNNER_TEMP/bad.json" "$RUNNER_TEMP/out.html" >"$RUNNER_TEMP/stdout.log" 2>"$RUNNER_TEMP/stderr.log"
+          status=$?
+          set -e
+          if [[ "$status" -eq 0 ]]; then
+            echo '::error::malformed JSON unexpectedly rendered successfully'
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/stdout.log" "$RUNNER_TEMP/stderr.log" > "$RUNNER_TEMP/error.log"
+          if grep -Eq 'file:///|[[:space:]]at[[:space:]].*\(|node:internal|/home/runner/work/' "$RUNNER_TEMP/error.log"; then
+            echo '::error::renderer error output exposed an internal stack trace or filesystem path'
+            cat "$RUNNER_TEMP/error.log"
+            exit 1
+          fi
