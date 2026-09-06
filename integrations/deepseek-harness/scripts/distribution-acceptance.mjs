@@ -12,7 +12,7 @@ const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
 const PACKAGE_NAME = '@licpmb/archipam-dsh';
 const PACKAGE_VERSION = '0.1.0';
-const DSH_RELEASE_REF = 'archipam-dsh-v0.1.0';
+const DSH_RELEASE_REF = process.env.ARCHIPAM_DSH_SOURCE_REF || 'HEAD';
 const DSH_SPEC = '@deepseek-ai/dsh@0.1.0-rc.6';
 const PROFILE = 'archipam-dsh-acceptance';
 const DSH_RUNTIME_INSTALL_TIMEOUT = process.platform === 'win32' ? 600_000 : 300_000;
