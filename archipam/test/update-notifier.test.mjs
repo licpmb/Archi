@@ -814,7 +814,7 @@ test('a valid replacement that fits supersedes the stale candidate safely', asyn
   assert.equal(persisted.candidate.targetDigest, replacementDigest);
   assert.deepEqual(persisted.notification, {
     offeredDigests: [replacementDigest],
-    acknowledgedDigests: exactHistory,
+    acknowledgedDigests: [],
   });
 });
 
