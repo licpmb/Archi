@@ -132,7 +132,7 @@ function waitForProbe(child, file, timeoutMs) {
 }
 
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-acceptance-'));
-const tarball = path.join(scratch, 'tt-a1i-archipam-dsh-0.1.0.tgz');
+const tarball = path.join(scratch, 'licpmb-archipam-dsh-0.1.0.tgz');
 const dshHome = path.join(scratch, 'dsh-home');
 const agentsHome = path.join(scratch, 'agents-home');
 const dshRuntime = path.join(scratch, 'dsh-runtime');
@@ -342,7 +342,7 @@ if (!probeReceipt.definition?.contentLength || probeReceipt.definition.provider 
 pass('skill-load', { contentLength: probeReceipt.definition.contentLength });
 
 const resourcePath = probeReceipt.definition.resourceBase?.path || probeReceipt.definition.path;
-const installedPackage = path.join(profileDir, 'node_modules', '@tt-a1i', 'archipam-dsh');
+const installedPackage = path.join(profileDir, 'node_modules', '@licpmb', 'archipam-dsh');
 let resourceReal;
 let packageReal;
 try {
