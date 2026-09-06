@@ -26,11 +26,11 @@ jobs:
             find . -path './.git' -prune -o -iname '*archify*' -print
             exit 1
           fi
-          if git grep -n -i 'archify' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf'; then
+          if git grep -n -i 'archify' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf' ':!.github/workflows/migration-security.yml'; then
             echo '::error::legacy Archify text remains'
             exit 1
           fi
-          if git grep -n 'Archipam' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf'; then
+          if git grep -n 'Archipam' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.webm' ':!*.zip' ':!*.woff' ':!*.woff2' ':!*.ttf' ':!*.otf' ':!*.pdf' ':!.github/workflows/migration-security.yml'; then
             echo '::error::incorrect Archipam capitalization remains; use ArchiPam'
             exit 1
           fi
