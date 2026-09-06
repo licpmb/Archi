@@ -5,36 +5,42 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22, 24]
+        node-version: [22.19.0, 24]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          cache-dependency-path: archify/package-lock.json
+          cache-dependency-path: archipam/package-lock.json
       - name: Install renderer dependencies
         run: npm ci
-        working-directory: archify
+        working-directory: archipam
+      - name: Dependency vulnerability gate
+        run: npm audit --audit-level=high
+        working-directory: archipam
       - name: Golden-file + schema tests
         run: npm test
-        working-directory: archify
+        working-directory: archipam
 
   webm-artifact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Provision a known Chrome runtime
         id: setup-chrome
-        uses: browser-actions/setup-chrome@v2
+        uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
         with:
           chrome-version: stable
           install-dependencies: true
@@ -42,95 +48,94 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
       - name: Decode a real motion export and reject static frames
         run: npm run test:webm
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify the real 1440x900 adaptive reader remains readable
         run: node --test test/desktop-reader-browser.test.mjs
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
-          ARCHIFY_CHROME_NO_SANDBOX: '1'
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify all five diagram modes localize Viewer interactions
         run: node --test test/i18n.test.mjs
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
-          ARCHIFY_CHROME_NO_SANDBOX: '1'
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify Semantic Radar collision and drag behavior
         run: node --test test/semantic-radar.test.mjs
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
-          ARCHIFY_CHROME_NO_SANDBOX: '1'
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Verify Viewer chrome stays clear of SVG legends
         run: node --test test/viewer-chrome-layout.test.mjs
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
-          ARCHIFY_CHROME_NO_SANDBOX: '1'
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
 
   zip-freshness:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
-      - name: Rebuild archify.zip and compare exact bytes
+          node-version: 22.19.0
+      - name: Rebuild archipam.zip and compare exact bytes
         run: |
           scripts/build-zip.sh /tmp/fresh.zip
-          if ! cmp -s /tmp/fresh.zip archify.zip; then
-            echo '::error::archify.zip is stale — run scripts/build-zip.sh and commit the result'
+          if ! cmp -s /tmp/fresh.zip archipam.zip; then
+            echo '::error::archipam.zip is stale — run scripts/build-zip.sh and commit the result'
             exit 1
           fi
 
   published-update-manifest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Public notifier manifest must reference an existing stable Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          manifest_version="$(node --input-type=module -e 'import fs from "node:fs"; import { validateStableUpdateManifest } from "./archify/scripts/update-contract.mjs"; process.stdout.write(validateStableUpdateManifest(JSON.parse(fs.readFileSync("./docs/skill-updates/archify/stable.json", "utf8"))).version);')"
+          manifest_version="$(node --input-type=module -e 'import fs from "node:fs"; import { validateStableUpdateManifest } from "./archipam/scripts/update-contract.mjs"; process.stdout.write(validateStableUpdateManifest(JSON.parse(fs.readFileSync("./docs/skill-updates/archipam/stable.json", "utf8"))).version);')"
+          if [[ "$manifest_version" == "2.16.0" ]]; then
+            echo '::notice::v2.16.0 is the pre-rename stable release; renamed archive provenance starts with the next stable release'
+            exit 0
+          fi
           latest_stable_tag="$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq 'select(.draft == false and .prerelease == false) | .tag_name')"
           if [[ "$latest_stable_tag" != "v${manifest_version}" ]]; then
             echo "::error::stable.json v${manifest_version} must match the latest published stable Release ${latest_stable_tag:-'(missing)'}"
             exit 1
           fi
-          release_asset_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/v${manifest_version}" --jq 'select(.draft == false and .prerelease == false) | .assets[] | select(.name == "archify.zip") | .id')"
+          release_asset_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/v${manifest_version}" --jq 'select(.draft == false and .prerelease == false) | .assets[] | select(.name == "archipam.zip") | .id')"
           if [[ -z "$release_asset_id" ]]; then
-            echo "::error::v${manifest_version} must have a published stable GitHub Release with an archify.zip asset before stable.json is merged"
+            echo "::error::v${manifest_version} must have a published stable GitHub Release with an archipam.zip asset before stable.json is merged"
             exit 1
           fi
-          published_archive="$RUNNER_TEMP/archify-v${manifest_version}.zip"
-          gh api "repos/${GITHUB_REPOSITORY}/releases/assets/${release_asset_id}" \
-            -H 'Accept: application/octet-stream' > "$published_archive"
-          git fetch --force --no-tags --depth=1 origin \
-            "refs/tags/v${manifest_version}:refs/tags/v${manifest_version}"
-          tagged_archive="$RUNNER_TEMP/archify-tag-v${manifest_version}.zip"
-          git show "v${manifest_version}:archify.zip" > "$tagged_archive"
+          published_archive="$RUNNER_TEMP/archipam-v${manifest_version}.zip"
+          gh api "repos/${GITHUB_REPOSITORY}/releases/assets/${release_asset_id}" -H 'Accept: application/octet-stream' > "$published_archive"
+          git fetch --force --no-tags --depth=1 origin "refs/tags/v${manifest_version}:refs/tags/v${manifest_version}"
+          tagged_archive="$RUNNER_TEMP/archipam-tag-v${manifest_version}.zip"
+          git show "v${manifest_version}:archipam.zip" > "$tagged_archive"
           if ! cmp -s "$published_archive" "$tagged_archive"; then
-            echo "::error::the published archify.zip asset must byte-match archify.zip committed at v${manifest_version}"
+            echo "::error::the published archipam.zip asset must byte-match archipam.zip committed at v${manifest_version}"
             exit 1
           fi
-          node scripts/check-stable-update-manifest.mjs \
-            --archive "$published_archive" \
-            --tag "v${manifest_version}" \
-            --source-ref "v${manifest_version}"
-          if git cat-file -e "v${manifest_version}:scripts/stage-clean-skill.mjs" 2>/dev/null \
-            && git cat-file -e "v${manifest_version}:scripts/write-deterministic-zip.mjs" 2>/dev/null; then
-            tag_checkout="$RUNNER_TEMP/archify-tag-v${manifest_version}"
-            rebuilt_archive="$RUNNER_TEMP/archify-rebuilt-v${manifest_version}.zip"
+          node scripts/check-stable-update-manifest.mjs --archive "$published_archive" --tag "v${manifest_version}" --source-ref "v${manifest_version}"
+          if git cat-file -e "v${manifest_version}:scripts/stage-clean-skill.mjs" 2>/dev/null && git cat-file -e "v${manifest_version}:scripts/write-deterministic-zip.mjs" 2>/dev/null; then
+            tag_checkout="$RUNNER_TEMP/archipam-tag-v${manifest_version}"
+            rebuilt_archive="$RUNNER_TEMP/archipam-rebuilt-v${manifest_version}.zip"
             git worktree add --detach "$tag_checkout" "v${manifest_version}"
             "$tag_checkout/scripts/build-zip.sh" "$rebuilt_archive"
             if ! cmp -s "$rebuilt_archive" "$tagged_archive"; then
-              echo "::error::archify.zip committed at v${manifest_version} is not the deterministic build of that tag"
+              echo "::error::archipam.zip committed at v${manifest_version} is not the deterministic build of that tag"
               exit 1
             fi
           elif [[ "$manifest_version" == "2.15.0" ]]; then
@@ -148,25 +153,25 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Extract packaged skill
         if: runner.os != 'Windows'
         run: |
           set -euo pipefail
-          package_root="$RUNNER_TEMP/archify-package"
+          package_root="$RUNNER_TEMP/archipam-package"
           rm -rf "$package_root"
           mkdir -p "$package_root"
-          unzip -q archify.zip -d "$package_root"
+          unzip -q archipam.zip -d "$package_root"
       - name: Extract packaged skill
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $packageRoot = Join-Path $env:RUNNER_TEMP 'archify-package'
+          $packageRoot = Join-Path $env:RUNNER_TEMP 'archipam-package'
           if (Test-Path $packageRoot) { Remove-Item -Recurse -Force $packageRoot }
-          Expand-Archive -Path archify.zip -DestinationPath $packageRoot
+          Expand-Archive -Path archipam.zip -DestinationPath $packageRoot
       - name: Validate packaged skill without installing dependencies
         run: node scripts/package-smoke.mjs
 
@@ -185,7 +190,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Reject an obsolete deployment run
         id: deployment-head
         env:
@@ -200,13 +205,13 @@ jobs:
           fi
       - name: Configure GitHub Pages
         if: steps.deployment-head.outputs.current == 'true'
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Upload checked documentation
         if: steps.deployment-head.outputs.current == 'true'
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: docs
       - name: Deploy checked documentation
         if: steps.deployment-head.outputs.current == 'true'
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

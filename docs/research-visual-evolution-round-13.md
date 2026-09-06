@@ -2,7 +2,7 @@
 
 ## Reader problem
 
-Archify could play named guided views and let Semantic Camera frame each selection, but the transition still read like a sequence of static screenshots. The viewer named the chapter without showing the ordered semantic stops or making the relationships inside that chapter visibly move. Ambient trace animation helped a demo feel alive, but it did not answer the reader's more important question: **what is moving in this view, and which direction is real?**
+ArchiPam could play named guided views and let Semantic Camera frame each selection, but the transition still read like a sequence of static screenshots. The viewer named the chapter without showing the ordered semantic stops or making the relationships inside that chapter visibly move. Ambient trace animation helped a demo feel alive, but it did not answer the reader's more important question: **what is moving in this view, and which direction is real?**
 
 ## Patterns worth borrowing
 
@@ -13,7 +13,7 @@ Archify could play named guided views and let Semantic Camera frame each selecti
 
 The useful borrowing is not “make every line move.” It is **bind motion to the exact semantic subgraph currently being explained**.
 
-## Archify decision
+## ArchiPam decision
 
 Story Trail is derived entirely from an existing guided view; it adds no schema fields and performs no topology inference beyond the rendered semantic hooks.
 
@@ -41,4 +41,4 @@ The browser pass also verified:
 
 ## What we deliberately did not borrow
 
-Archify does not add an animation timeline schema, moving nodes, editable keyframes, a graph runtime, or arbitrary path authoring. Story Trail is a truthful reading layer over compiled SVG semantics. If the source graph does not contain a relationship, the viewer does not invent one for visual continuity.
+ArchiPam does not add an animation timeline schema, moving nodes, editable keyframes, a graph runtime, or arbitrary path authoring. Story Trail is a truthful reading layer over compiled SVG semantics. If the source graph does not contain a relationship, the viewer does not invent one for visual continuity.

@@ -1,7 +1,7 @@
 {
-  "name": "@tt-a1i/archify-dsh",
+  "name": "@licpmb/archipam-dsh",
   "version": "0.1.0",
-  "description": "Opt-in DeepSeek Harness Skill-only bundle for the Archify architecture-diagram skill.",
+  "description": "Opt-in DeepSeek Harness Skill-only bundle for the ArchiPam architecture-diagram skill.",
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",
@@ -23,15 +23,15 @@
     "architecture-diagram"
   ],
   "engines": {
-    "node": "^22.19.0 || >=24.0.0"
+    "node": "^22.19.0 || >=24.0.0 <25"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tt-a1i/archify.git",
+    "url": "git+https://github.com/licpmb/Archi.git",
     "directory": "integrations/deepseek-harness"
   },
-  "homepage": "https://github.com/tt-a1i/archify/tree/main/integrations/deepseek-harness",
-  "bugs": "https://github.com/tt-a1i/archify/issues",
+  "homepage": "https://github.com/licpmb/Archi/tree/main/integrations/deepseek-harness",
+  "bugs": "https://github.com/licpmb/Archi/issues",
   "publishConfig": {
     "access": "public"
   },

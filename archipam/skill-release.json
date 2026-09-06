@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "skillId": "archipam",
+  "channel": "stable",
+  "version": "2.16.0",
+  "source": {
+    "repository": "https://github.com/licpmb/Archi"
+  },
+  "updateManifestUrl": "https://licpmb.github.io/Archi/skill-updates/archipam/stable.json"
+}

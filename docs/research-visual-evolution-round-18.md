@@ -4,7 +4,7 @@ Date: 2026-07-19
 
 ## Question
 
-What should Archify add after Node Finder, Semantic Camera, Relationship Lens,
+What should ArchiPam add after Node Finder, Semantic Camera, Relationship Lens,
 Story Trail, and Semantic Passport so that large diagrams remain pleasant to
 navigate without turning the standalone artifact into a canvas editor?
 
@@ -34,7 +34,7 @@ rich surface: animations, images, and SVG are omitted.
 
 - Reference: <https://gojs.net/latest/intro/overview.html>
 
-This is a useful boundary for Archify: the overview should preserve spatial
+This is a useful boundary for ArchiPam: the overview should preserve spatial
 meaning while simplifying rendering aggressively.
 
 ### Structurizr keeps navigation redundant and keyboard-addressable
@@ -56,7 +56,7 @@ keyboard shortcuts stay fully usable.
 1. A compact SVG overview derived from semantic node bounds.
 2. A live viewport rectangle synchronized with zoom, pan, semantic framing,
    resize, and mobile horizontal scroll.
-3. Node colors derived from Archify's authored semantic kinds.
+3. Node colors derived from ArchiPam's authored semantic kinds.
 4. Click a radar node to focus and reveal it in the main diagram.
 5. Drag or click the radar surface to recenter an already-zoomed diagram.
 6. An accessible toggle, accessible name, visible focus states, Escape close,
@@ -72,7 +72,7 @@ keyboard shortcuts stay fully usable.
 - Do not open it automatically and cover authored content; keep the reader in
   control through one compact toolbar toggle.
 
-## Archify synthesis
+## ArchiPam synthesis
 
 Build a dependency-free **Semantic Radar** inside the shared HTML template. It
 will render only simplified semantic node bounds and one viewport rectangle,

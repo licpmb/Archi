@@ -6,13 +6,13 @@ new schema field, or another interaction owner.
 
 ## Question
 
-Archify already has stronger semantic exploration, guided stories, export, and
+ArchiPam already has stronger semantic exploration, guided stories, export, and
 geometry validation than a conventional static diagram generator. The current
 desktop artifacts are nevertheless visually conservative at the node level:
 frontend, backend, database, cloud, security, message-bus, and external nodes
 all share the same rounded-rectangle silhouette and differ mainly by color.
 
-What can Archify learn from `fireworks-tech-graph` without copying its breadth
+What can ArchiPam learn from `fireworks-tech-graph` without copying its breadth
 or turning the project into a vendor-icon catalogue?
 
 ## Primary-source findings
@@ -33,7 +33,7 @@ The inspected upstream revision is
    [Icon reference](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/icons.md)
 3. The same reference contains a large product/brand catalogue. That breadth is
    visually useful but creates licensing, versioning, brand-color, and name
-   matching responsibilities that Archify does not need for its core promise.
+   matching responsibilities that ArchiPam does not need for its core promise.
 4. Cloud Fabric deliberately avoids becoming a vendor-logo poster: it uses
    manifest-backed neutral glyphs, reserves icon space before fitting text, and
    requires provider facts rather than inventing service identity.
@@ -48,7 +48,7 @@ The inspected upstream revision is
    evidence rather than being blindly selectable skins.
    [Style-to-diagram matrix](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/style-diagram-matrix.md)
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 All five typed renderers currently emit an opaque mask rectangle followed by a
 semantic-color rectangle for their primary node surface. That two-rectangle
@@ -67,7 +67,7 @@ same base silhouette. This is the highest-value remaining first-glance visual
 gap because it affects every generated diagram without requiring a new user
 workflow.
 
-## Decision: Archify Semantic Sigils
+## Decision: ArchiPam Semantic Sigils
 
 Add one small, renderer-owned inline SVG sigil to each node. A sigil is a quiet
 semantic stamp, not a logo and not a replacement node shape.
@@ -95,7 +95,7 @@ semantic stamp, not a logo and not a replacement node shape.
 | `failure` | cross |
 | `neutral` | neutral state square |
 
-## Why this adaptation fits Archify
+## Why this adaptation fits ArchiPam
 
 - It preserves the existing deliberate layout, masks, coordinates, routing,
   labels, schema, JSON IR, and semantic IDs.
@@ -112,12 +112,12 @@ semantic stamp, not a logo and not a replacement node shape.
 
 ## Deliberately not adopted
 
-- Twelve generic selectable skins: Archify keeps three coherent presets.
+- Twelve generic selectable skins: ArchiPam keeps three coherent presets.
 - Product logos and brand colors: these are downstream content concerns, not a
   core renderer contract.
 - Different node geometry per product: that would change anchors, routing, hit
   geometry, and text budgets.
-- Style-specific looping signatures for every scene: Archify already uses
+- Style-specific looping signatures for every scene: ArchiPam already uses
   finite, reader-controlled motion and should not return to decorative loops.
 - Mobile-specific sigil work: the product is desktop-first. Mobile remains a
   basic containment fallback, not an acceptance surface for this slice.

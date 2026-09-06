@@ -1,6 +1,6 @@
-# Archify visual evolution decision map
+# ArchiPam visual evolution decision map
 
-Goal: make Archify visibly richer, stable, and more shareable while preserving
+Goal: make ArchiPam visibly richer, stable, and more shareable while preserving
 typed IR, deterministic validation, zero-install use, and self-contained output.
 
 ## #1: Which visual direction should become the first production preset?
@@ -11,7 +11,7 @@ Type: Prototype
 ### Question
 
 Which of three real-diagram treatments creates the clearest improvement without
-turning Archify into a skin collection?
+turning ArchiPam into a skin collection?
 
 ### Answer
 

@@ -12,7 +12,7 @@ an unrelated semantic node box.
 The first slice should not promise that every edge crossing is bad. It should
 not treat containers, lanes, stages, lifecycle bands, sequence segments,
 lifelines, or activation bars as ordinary node obstacles. It should also not
-copy Fireworks' complete showcase budget into Archify. Instead, it should move
+copy Fireworks' complete showcase budget into ArchiPam. Instead, it should move
 the existing workflow-only guard into one shared geometry contract and apply
 that contract to architecture, workflow, dataflow, lifecycle, and sequence
 before output is written.
@@ -26,7 +26,7 @@ resolved relationship + exact authored route points + semantic node boxes
   -> hit: fail with a stable, actionable geometry receipt
 ```
 
-This is deliberately a correctness gate, not an auto-router. Archify keeps the
+This is deliberately a correctness gate, not an auto-router. ArchiPam keeps the
 author's topology and route controls; it refuses to silently publish a route
 that erases an unrelated node.
 
@@ -44,15 +44,15 @@ that erases an unrelated node.
 
 The relevant implementation evidence is in:
 
-- `archify/renderers/shared/geometry.mjs`: `segmentIntersectsRect` already
+- `archipam/renderers/shared/geometry.mjs`: `segmentIntersectsRect` already
   provides the shared segment/rectangle primitive;
-- `archify/renderers/workflow/render-workflow.mjs`: the only renderer that
+- `archipam/renderers/workflow/render-workflow.mjs`: the only renderer that
   currently expands unrelated node boxes by 2px and rejects a crossing;
-- `archify/renderers/architecture/render-architecture.mjs`,
+- `archipam/renderers/architecture/render-architecture.mjs`,
   `dataflow/render-dataflow.mjs`, and `lifecycle/render-lifecycle.mjs`: all
   compute exact route points before validation, but only enforce distance and
   label collisions; and
-- `archify/scripts/check-render-output.mjs`: performs a separate, post-render
+- `archipam/scripts/check-render-output.mjs`: performs a separate, post-render
   segment/box calculation only for legend clearance. It does not check
   relationship paths against semantic nodes.
 
@@ -63,9 +63,9 @@ that must reconstruct author intent from markup.
 
 ### The existing test suite proves the asymmetry
 
-`archify/test/layout-rules.test.mjs` has a focused negative fixture for a
+`archipam/test/layout-rules.test.mjs` has a focused negative fixture for a
 workflow edge crossing a non-endpoint node, and
-`archify/test/geometry.test.mjs` directly tests the segment/rectangle
+`archipam/test/geometry.test.mjs` directly tests the segment/rectangle
 primitive. There is no equivalent negative fixture for architecture,
 dataflow, or lifecycle, and no sequence-specific exemption fixture.
 
@@ -88,11 +88,11 @@ Source: [Fireworks composition-quality contract](https://github.com/yizhiyanhua-
 
 **Borrow:** successful rendering is not sufficient evidence of a clean
 composition; geometry needs a delivery gate.
-**Adapt:** begin with the one invariant Archify can infer exactly from its
+**Adapt:** begin with the one invariant ArchiPam can infer exactly from its
 current schemas: no relationship through an unrelated semantic node.
 **Skip for this slice:** Fireworks' zero edge-crossing, bend, stretch, 40px
 spacing, container-gutter, and bridge budgets. Those belong to a future named
-quality profile, not an unconditional retrofit over Archify's existing
+quality profile, not an unconditional retrofit over ArchiPam's existing
 engineering examples.
 
 ### Graphviz: route around nodes, but do not generalize across routing modes
@@ -107,7 +107,7 @@ Source: [Graphviz `splines` attribute](https://graphviz.org/docs/attrs/splines/)
 
 **Borrow:** semantic nodes and grouping containers are different obstacle
 classes.
-**Adapt:** Archify should hard-gate peer node boxes and explicitly exempt
+**Adapt:** ArchiPam should hard-gate peer node boxes and explicitly exempt
 container frames until it has container ports/corridors.
 **Skip:** assuming that choosing an orthogonal path automatically makes ports,
 labels, and clusters correct.
@@ -128,10 +128,10 @@ Sources:
 
 **Borrow:** edge-node clearance should be one explicit, reusable contract;
 source/target ports and compound containers require their own semantics.
-**Adapt:** retain Archify's current 2px workflow clearance in the first shared
+**Adapt:** retain ArchiPam's current 2px workflow clearance in the first shared
 gate so the rollout fixes inconsistency without silently tightening every
 existing layout.
-**Skip:** claiming a global zero-crossing guarantee when Archify is not running
+**Skip:** claiming a global zero-crossing guarantee when ArchiPam is not running
 a crossing-minimizing layout algorithm.
 
 ### D2: specialized layout semantics and containers limit universal rules
@@ -169,7 +169,7 @@ Sources:
 
 **Borrow:** a failed route needs a repair path, not a generic “invalid layout”
 message.
-**Adapt:** Archify's receipt should point directly to `via`, `route`,
+**Adapt:** ArchiPam's receipt should point directly to `via`, `route`,
 `fromSide`, `toSide`, or the renderer's placement controls.
 **Skip:** automatic mutation of authored JSON during validation.
 
@@ -182,7 +182,7 @@ specific routing algorithms, D2 exposes different engines and special sequence
 semantics, and Structurizr offers manual vertices/routing when automatic layout
 needs correction.
 
-Archify currently has no schema concept for a junction, shared corridor,
+ArchiPam currently has no schema concept for a junction, shared corridor,
 bridge, or intentional crossing. A geometric intersection alone therefore
 cannot distinguish:
 
@@ -202,7 +202,7 @@ as a substitute: they decorate ambiguity rather than remove it.
 
 ### Product sentence
 
-**Archify never publishes a relationship through an unrelated semantic node,
+**ArchiPam never publishes a relationship through an unrelated semantic node,
 and when it refuses a route it tells the author exactly which segment and
 which knob to change.**
 
@@ -244,7 +244,7 @@ The gate must not treat the following as semantic node obstacles:
   the owner of label geometry in this slice.
 
 Container boundaries are not “ignored because they do not matter.” They are
-exempt because crossing them can be semantically necessary and Archify has no
+exempt because crossing them can be semantically necessary and ArchiPam has no
 open-gap/container-port model yet. Existing boundary-bounds and legend
 clearance checks remain intact.
 
@@ -355,7 +355,7 @@ fall through to a `TypeError` or write an apparently successful output.
 2. Existing golden/canonical output remains byte-identical for accepted input.
 3. Existing label, legend, overlap, finite-coordinate, schema, degraded-mode,
    route, animation, print, and export tests remain green.
-4. `archify validate <type> <input>` and direct renderer invocation reject the
+4. `archipam validate <type> <input>` and direct renderer invocation reject the
    same bad geometry.
 5. No new schema property or dependency is required.
 
@@ -386,7 +386,7 @@ the terminal.
 | Borrow | Graphviz/ELK's distinction between node avoidance and compound/container routing. |
 | Borrow | ELK's explicit edge-node spacing concept. |
 | Borrow | Structurizr's actionable manual route controls as the repair path. |
-| Adapt | Reuse Archify's exact authored route points and the existing 2px workflow clearance. |
+| Adapt | Reuse ArchiPam's exact authored route points and the existing 2px workflow clearance. |
 | Adapt | Apply one pure helper across all five renderers while keeping renderer-specific nouns and hints. |
 | Adapt | Preserve sequence lifeline/activation semantics and cross-container routes through explicit exemptions. |
 | Skip | Automatic rerouting or mutation of authored JSON. |
@@ -400,5 +400,5 @@ The next geometry step should be evidence-driven. If the 11 canonical examples
 and real user diagrams show repeated edge-edge ambiguity, design an explicit
 `showcase` profile with junction/port/shared-corridor semantics and report
 crossing counts, bends, route stretch, and container-border runs. Until then,
-the right improvement is the small, strict statement Archify can prove today:
+the right improvement is the small, strict statement ArchiPam can prove today:
 an unrelated node is never used as an edge corridor.

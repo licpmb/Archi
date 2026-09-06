@@ -11,8 +11,8 @@ import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
-const skillRoot = path.join(repoRoot, 'archify');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-visual-prototype-'));
+const skillRoot = path.join(repoRoot, 'archipam');
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-visual-prototype-'));
 const input = path.join(tmp, 'workflow.json');
 const rendered = path.join(tmp, 'workflow.html');
 const output = path.join(here, 'prototype.html');
@@ -47,7 +47,7 @@ try {
 }
 
 function prototypeStyle() {
-  return `  <style id="archify-visual-evolution-prototype">
+  return `  <style id="archipam-visual-evolution-prototype">
     /* PROTOTYPE ONLY — intentionally isolated from the production template. */
     html { --prototype-accent: #67e8f9; }
     body { background-attachment: fixed; }

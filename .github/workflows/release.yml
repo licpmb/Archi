@@ -11,24 +11,24 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Fetch exact tag object
         shell: bash
         run: git fetch --force --no-tags origin "+refs/tags/${GITHUB_REF_NAME}:refs/tags/${GITHUB_REF_NAME}"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version: 22.19.0
           cache: npm
-          cache-dependency-path: archify/package-lock.json
+          cache-dependency-path: archipam/package-lock.json
       - name: Install renderer dependencies
         run: npm ci
-        working-directory: archify
+        working-directory: archipam
       - name: Tests must pass before releasing
         run: npm test
-        working-directory: archify
+        working-directory: archipam
       - name: Provision a known Chrome runtime
         id: setup-chrome
-        uses: browser-actions/setup-chrome@v2
+        uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
         with:
           chrome-version: stable
           install-dependencies: true
@@ -36,15 +36,16 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
       - name: WebM export must contain distinct decoded frames
         run: npm run test:webm
-        working-directory: archify
+        working-directory: archipam
         env:
-          ARCHIFY_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          ARCHIPAM_CHROME_NO_SANDBOX: "1"
       - name: Tag must match package.json version
         run: |
-          pkg_version="$(node -p "require('./archify/package.json').version")"
+          pkg_version="$(node -p "require('./archipam/package.json').version")"
           tag="${GITHUB_REF_NAME#v}"
           if [ "$pkg_version" != "$tag" ]; then
-            echo "::error::tag v$tag does not match archify/package.json version $pkg_version"
+            echo "::error::tag v$tag does not match archipam/package.json version $pkg_version"
             exit 1
           fi
       - name: Classify stable and prerelease tags
@@ -52,7 +53,7 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-          channel="$(node --input-type=module -e 'import fs from "node:fs"; import { validateLocalRelease } from "./archify/scripts/update-contract.mjs"; const release = validateLocalRelease(JSON.parse(fs.readFileSync("./archify/skill-release.json", "utf8"))); if (release.version !== process.argv[1]) process.exit(1); process.stdout.write(release.channel);' "$version")"
+          channel="$(node --input-type=module -e 'import fs from "node:fs"; import { validateLocalRelease } from "./archipam/scripts/update-contract.mjs"; const release = validateLocalRelease(JSON.parse(fs.readFileSync("./archipam/skill-release.json", "utf8"))); if (release.version !== process.argv[1]) process.exit(1); process.stdout.write(release.channel);' "$version")"
           if [[ "$channel" == "development" ]]; then
             echo "prerelease=true" >> "$GITHUB_OUTPUT"
             echo "make_latest=false" >> "$GITHUB_OUTPUT"
@@ -73,33 +74,33 @@ jobs:
         run: |
           node --input-type=module -e '
             import fs from "node:fs";
-            import { compareSemver, validateStableUpdateManifest } from "./archify/scripts/update-contract.mjs";
+            import { compareSemver, validateStableUpdateManifest } from "./archipam/scripts/update-contract.mjs";
             const releasing = process.argv[1];
-            const published = validateStableUpdateManifest(JSON.parse(fs.readFileSync("./docs/skill-updates/archify/stable.json", "utf8")));
+            const published = validateStableUpdateManifest(JSON.parse(fs.readFileSync("./docs/skill-updates/archipam/stable.json", "utf8")));
             if (compareSemver(published.version, releasing) >= 0) {
               console.error(`::error::stable.json must remain below v${releasing} until its GitHub Release exists; publish the manifest in a follow-up commit`);
               process.exit(1);
             }
           ' "${GITHUB_REF_NAME#v}"
       - name: Build skill archive
-        run: scripts/build-zip.sh /tmp/archify-built.zip
+        run: scripts/build-zip.sh /tmp/archipam-built.zip
       - name: Validate the exact release archive without installing dependencies
         run: |
           set -euo pipefail
-          package_root="$RUNNER_TEMP/archify-release-package"
+          package_root="$RUNNER_TEMP/archipam-release-package"
           mkdir -p "$package_root"
-          unzip -q /tmp/archify-built.zip -d "$package_root"
-          node scripts/package-smoke.mjs "$package_root/archify"
+          unzip -q /tmp/archipam-built.zip -d "$package_root"
+          node scripts/package-smoke.mjs "$package_root/archipam"
       - name: Committed zip must match the build (same gate as CI)
-        run: cmp -s /tmp/archify-built.zip archify.zip
+        run: cmp -s /tmp/archipam-built.zip archipam.zip
       - name: Create GitHub Release with the zip attached
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
-          files: archify.zip
+          files: archipam.zip
           generate_release_notes: true
           prerelease: ${{ steps.release-kind.outputs.prerelease }}
           make_latest: ${{ steps.release-kind.outputs.make_latest }}
       - name: Record stable notifier publication follow-up
         if: steps.release-kind.outputs.prerelease == 'false'
         run: |
-          echo 'After the repository Pages source is set to GitHub Actions, publish docs/skill-updates/archify/stable.json in a follow-up commit; the gated deploy job will verify this Release, its archify.zip digest, and the tagged Skill tree before exposure.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'After the repository Pages source is set to GitHub Actions, publish docs/skill-updates/archipam/stable.json in a follow-up commit; the gated deploy job will verify this Release, its archipam.zip digest, and the tagged Skill tree before exposure.' >> "$GITHUB_STEP_SUMMARY"

@@ -15,7 +15,7 @@ Round 15 made the chapter and route legible. Round 16 makes the motion tell the 
 
 The useful fusion is **progressive viewer state derived from existing stable semantic IDs**.
 
-## Archify decision
+## ArchiPam decision
 
 Every manual Story Trail playback and one-shot shared chapter now uses Semantic Story Beats:
 
@@ -42,4 +42,4 @@ The generated Signal Flow workflow was exercised in the built-in browser:
 
 ## What we deliberately did not borrow
 
-Archify does not add D2-style inherited boards, a parallel-step DSL, a second dynamic-view schema, animated canonical SVG exports, or an endless loop. Story Beats are a bounded reading aid over one stable technical diagram, not a presentation authoring platform.
+ArchiPam does not add D2-style inherited boards, a parallel-step DSL, a second dynamic-view schema, animated canonical SVG exports, or an endless loop. Story Beats are a bounded reading aid over one stable technical diagram, not a presentation authoring platform.

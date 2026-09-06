@@ -66,7 +66,7 @@ Verified on the generated Production Deployment artifact:
 - Guided Story enters a finite five-beat request path with Pause available.
 - A fresh standalone artifact tab and a fresh direct-embed tab reported zero console warnings/errors.
 
-The built-in browser's multi-iframe Gallery host emitted source-less observer messages from its inspection environment; isolated standalone and direct-embed artifact pages were clean, so these were not attributed to Archify source.
+The built-in browser's multi-iframe Gallery host emitted source-less observer messages from its inspection environment; isolated standalone and direct-embed artifact pages were clean, so these were not attributed to ArchiPam source.
 
 ## Release gates
 
@@ -83,7 +83,7 @@ The built-in browser's multi-iframe Gallery host emitted source-less observer me
 
 ## Artifact fingerprints
 
-- `archify.zip`: `0d129612c2dfd4145f03a5f9b67730a1001dfe043c23e3287cd050663227e3cc`
+- `archipam.zip`: `0d129612c2dfd4145f03a5f9b67730a1001dfe043c23e3287cd050663227e3cc`
 - Deployment HTML: `3a8d12813da45b465f3f633a8c4341760e300d10961768274511c2203b331e0b`
 - README live proof GIF: `06526e75b813681bee1a8157774f2875603f6f75e1aa9497388aa810bff4e41e`
 

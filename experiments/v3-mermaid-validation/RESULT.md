@@ -1,14 +1,14 @@
 # v3.0 Mermaid Validation — Results
 
-> **Purpose:** Verify the core hypothesis: "Mermaid input + Claude layout + archify CSS" produces diagrams rated significantly better than stock Mermaid. See `../../ROADMAP.md` for the experiment design.
+> **Purpose:** Verify the core hypothesis: "Mermaid input + Claude layout + archipam CSS" produces diagrams rated significantly better than stock Mermaid. See `../../ROADMAP.md` for the experiment design.
 
 ## Versions
 
 | Code | What it is |
 |---|---|
 | **A** | Stock Mermaid via `mmdc` — default theme, dagre layout, no customization |
-| **B** | Mermaid via `mmdc` + archify-style themeCSS — same dagre layout, archify color palette / font / background |
-| **C** | Hand-placed archify HTML — Claude-assigned semantic classes + hand-placed coordinates + archify CSS |
+| **B** | Mermaid via `mmdc` + archipam-style themeCSS — same dagre layout, archipam color palette / font / background |
+| **C** | Hand-placed archipam HTML — Claude-assigned semantic classes + hand-placed coordinates + archipam CSS |
 
 ## How to blind-rate
 
@@ -64,12 +64,12 @@
 
 ### Notes (2026-04-16)
 
-Owner self-evaluation result: **C (archify hand-placed) looks good; A and B both don't look good.** B is not meaningfully better than A — swapping CSS without changing layout does not bridge the aesthetic gap. The experiment confirms all three pre-experiment reviews: layout is the product, not CSS.
+Owner self-evaluation result: **C (archipam hand-placed) looks good; A and B both don't look good.** B is not meaningfully better than A — swapping CSS without changing layout does not bridge the aesthetic gap. The experiment confirms all three pre-experiment reviews: layout is the product, not CSS.
 
 **Consequence:**
 - P1 (Mermaid flowchart parser → IR with dagre layout) is **killed**.
 - P0 / P0.5 (JSON IR + render.js for coordinate stability) remain **viable** — they solve the coordinate-drift problem independent of Mermaid input.
-- Mermaid input becomes a **SKILL.md prompt-engineering trick**: user pastes Mermaid, Claude reads the structure and lays out from scratch in archify style. No dagre, no parser, no auto-layout. This is already how archify works today (user describes → Claude draws), just with Mermaid as the input dialect instead of natural language.
+- Mermaid input becomes a **SKILL.md prompt-engineering trick**: user pastes Mermaid, Claude reads the structure and lays out from scratch in archipam style. No dagre, no parser, no auto-layout. This is already how archipam works today (user describes → Claude draws), just with Mermaid as the input dialect instead of natural language.
 - External 5-engineer panel is **skipped** — self-eval conclusively failed both criteria.
 
 ---

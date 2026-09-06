@@ -13,12 +13,12 @@ unanswered reader question is categorical rather than spatial:
 Finder can locate a known node, Intent Trace can preview one node's neighborhood,
 and Route Probe can connect two known endpoints. None of them gives a whole-graph
 comparison by semantic kind. The highest-leverage next capability is therefore
-an interactive, counted **Semantic Lens** over the semantics Archify already
+an interactive, counted **Semantic Lens** over the semantics ArchiPam already
 compiled—not a generic database-style filter builder.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
-- [`focusNodeAttrs()`](../archify/renderers/shared/cli.mjs) already emits a stable
+- [`focusNodeAttrs()`](../archipam/renderers/shared/cli.mjs) already emits a stable
   `data-node-kind` together with node ID, label, sublabel, tag, and context. All
   five typed renderers call this helper, so a kind lens needs no schema or IR
   change.
@@ -32,7 +32,7 @@ compiled—not a generic database-style filter builder.
   conflate different authored meanings. The shared viewer should derive a
   separate Lens from `data-node-kind` instead.
 - The viewer already owns temporary focus, route, story, camera, URL, print, and
-  export state in [`template.html`](../archify/assets/template.html). Lens belongs
+  export state in [`template.html`](../archipam/assets/template.html). Lens belongs
   in that same viewer boundary and must not modify canonical SVG geometry.
 
 ## Primary-source findings
@@ -48,7 +48,7 @@ toggleable `selected` state for click, and fades unselected legend items. The
 transferable pattern is a clean split between transient preview and durable,
 multi-category selection.
 
-Archify should borrow that interaction grammar, not G6's plugin/canvas stack or
+ArchiPam should borrow that interaction grammar, not G6's plugin/canvas stack or
 generic state engine.
 
 ### Sigma.js: visual reduction can be derived without mutating graph data
@@ -60,7 +60,7 @@ changing the underlying Graphology graph. Its official
 greys nonmatching nodes, preserves matching labels, and suppresses unrelated
 edges while search or hover state is active.
 
-Archify already has the simpler SVG equivalent: set viewer-only match/context
+ArchiPam already has the simpler SVG equivalent: set viewer-only match/context
 attributes and let CSS change emphasis. No data copy, layout pass, or dependency
 is needed.
 
@@ -73,7 +73,7 @@ described as “hidden” remain light grey in the visualization. That preserves
 reader's mental map while making the active slice unmistakable.
 
 The useful lesson is smaller than the product: show exact counts, keep the active
-set visible, and offer an obvious reset. Archify does not need nested property
+set visible, and offer an obvious reset. ArchiPam does not need nested property
 trees, numeric ranges, dates, schema inference, or a full investigation sidebar.
 
 ### Cytoscape.js: hard hiding changes graph behavior
@@ -85,7 +85,7 @@ hard filtering is wrong here: `display: none` removes an element from fitting an
 interaction, makes a node a point for layout purposes, and hides its incident
 edges. Opacity, by contrast, preserves layout, fitting, and interaction.
 
-Archify is a fixed-geometry technical-diagram compiler. A semantic lens should
+ArchiPam is a fixed-geometry technical-diagram compiler. A semantic lens should
 therefore reduce contrast rather than delete nodes, alter bounds, or silently
 break authored routes.
 
@@ -97,7 +97,7 @@ graph. Nodes that fail a predicate disappear from the filtered collections, and
 their incident edges disappear automatically. This is a strong model for graph
 applications that want a real subgraph.
 
-It is excessive for Archify. The compiled diagram is the authoritative view;
+It is excessive for ArchiPam. The compiled diagram is the authoritative view;
 creating a second topology would complicate focus, shortest paths, stories,
 camera bounds, and export semantics. Borrow predicate-like determinism, but keep
 one graph and one geometry.
@@ -197,6 +197,6 @@ one graph and one geometry.
 Build **Semantic Lens** next. It is the rare post-Reading-Depth feature that makes
 the graph feel richer while making the implementation conceptually smaller: one
 viewer-derived semantic index, one compact interaction surface, and no new
-authoring burden. It turns Archify's existing colors and node kinds from passive
+authoring burden. It turns ArchiPam's existing colors and node kinds from passive
 decoration into a question-answering tool, while preserving the zero-dependency
 technical-diagram compiler boundary.

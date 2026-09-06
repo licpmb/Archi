@@ -23,7 +23,7 @@ fifth preset, theme DSL, or graph-state feature.
   switched at runtime and coordinate canvas, node, edge, state, and animation
   styling. Theme choice is explicit rather than hidden behind repeated clicks.
 
-Archify already has the stronger invariant for this use case: Classic, Flow,
+ArchiPam already has the stronger invariant for this use case: Classic, Flow,
 Blueprint, and Editorial render the exact same canonical SVG geometry and
 semantic identity. The missing piece is a visible choice surface.
 

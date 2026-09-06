@@ -5,13 +5,13 @@ Status: implementation-ready research recommendation
 
 ## Executive decision
 
-Build **First-fold Proof Aperture**: make a meaningful slice of Archify's
+Build **First-fold Proof Aperture**: make a meaningful slice of ArchiPam's
 existing live, checked artifact visible in the initial viewport, then start its
 one-shot story only when the artifact itself becomes visible.
 
 Do **not** add another viewer feature in Round 40.
 
-Archify already has the richer product: three live proof choices, five typed
+ArchiPam already has the richer product: three live proof choices, five typed
 renderers, three visual presets, progressive reading depth, Semantic Camera,
 Semantic Radar, Finder, Relationship Lens, direct relationship inspection,
 Route Probe, Route Journey, chapter stories, Story Follow, Story Director,
@@ -87,9 +87,9 @@ earning attention.
 | Best Round 40 choice | **Yes** | No; explicitly defer |
 
 This is also the feature-envy guard. Fireworks' animated grid is effective
-because it is visible proof, not because Archify must copy twelve styles or a
+because it is visible proof, not because ArchiPam must copy twelve styles or a
 GIF renderer. Adding another interaction to an already dense viewer would be
-imitating surface breadth. Making Archify's own stronger artifact visible is
+imitating surface breadth. Making ArchiPam's own stronger artifact visible is
 the adapted product lesson.
 
 ## Current-worktree evidence
@@ -105,7 +105,7 @@ the adapted product lesson.
 - a link to the full Presentation artifact; and
 - bilingual labels plus arrow-key, Home, and End tab navigation.
 
-[`archify/test/landing.test.mjs`](../archify/test/landing.test.mjs) verifies that
+[`archipam/test/landing.test.mjs`](../archipam/test/landing.test.mjs) verifies that
 the three choices resolve to real Gallery manifest entries, retain their
 expected presets, node/edge counts, named views, green checks, files, and
 keyboard contract. The proof itself is not speculative marketing content.
@@ -140,7 +140,7 @@ canvas is below the fold spends the best motion before it can explain anything.
 ### The README proof is already strong
 
 All README languages already lead with the generated
-`docs/assets/archify-live-proof.gif`, backed by a receipt and focused tests.
+`docs/assets/archipam-live-proof.gif`, backed by a receipt and focused tests.
 Round 40 does not need another GIF, poster, or style grid. The remaining gap is
 specific to the web landing viewport.
 
@@ -158,7 +158,7 @@ settle into an operating hold
 
 **Borrow:** output must be judgeable before the long explanation; motion must
 arrive while the output is visible.
-**Adapt:** expose Archify's existing real HTML proof rather than copying a
+**Adapt:** expose ArchiPam's existing real HTML proof rather than copying a
 twelve-style GIF wall.
 **Skip:** additional styles, a scene-specific GIF renderer, persistent ambient
 motion, and broad UML claims.
@@ -172,7 +172,7 @@ explicitly treats production-looking output as the evidence for the language
 [official examples](https://d2lang.com/examples/overview/)).
 
 **Borrow:** put working output adjacent to the promise.
-**Adapt:** Archify already has a richer interactive artifact, so reveal it
+**Adapt:** ArchiPam already has a richer interactive artifact, so reveal it
 instead of adding another static example.
 **Skip:** another playground, editor, language surface, or layout engine.
 
@@ -187,7 +187,7 @@ instead of separate products
 
 **Borrow:** the fastest route to trust is promise → visible model → real
 preview.
-**Adapt:** keep Archify's current three proof tabs and full artifact link.
+**Adapt:** keep ArchiPam's current three proof tabs and full artifact link.
 **Skip:** React, Mantine, XYFlow, an editor runtime, and a new model DSL.
 
 ### React Flow — interactive examples demonstrate the actual primitive
@@ -199,7 +199,7 @@ examples index makes visible examples the navigation surface for capabilities
 [official examples](https://reactflow.dev/examples)).
 
 **Borrow:** demonstrate the real interaction surface.
-**Adapt:** retain Archify's read-only, generated artifact and keyboard proof
+**Adapt:** retain ArchiPam's read-only, generated artifact and keyboard proof
 tabs.
 **Skip:** draggable/editable nodes, connection handles, component APIs, and a
 showcase directory expansion.
@@ -244,7 +244,7 @@ or motion used as a prerequisite for comprehension.
 | Borrow | Let readers judge real output during the first impression. |
 | Borrow | Start finite proof motion only when the proof can be seen. |
 | Borrow | Keep the diagram canvas, not surrounding chrome, as the visual owner. |
-| Adapt | Reuse the three checked Archify artifacts and existing tab semantics. |
+| Adapt | Reuse the three checked ArchiPam artifacts and existing tab semantics. |
 | Adapt | Create first-fold room by tightening vertical rhythm, not by shrinking or faking the diagram. |
 | Adapt | Use one-shot Intersection Observer activation with a safe fallback. |
 | Skip | Another Viewer panel, button, mode, minimap, inspector, or playback system. |
@@ -399,11 +399,11 @@ hit the target.
 
 Implement **First-fold Proof Aperture** now.
 
-Archify does not need another capability to become more convincing in this
+ArchiPam does not need another capability to become more convincing in this
 round. It needs the capability already built to appear at the moment a new
 reader decides whether to care. This directly adapts the strongest lesson from
 Fireworks, D2, LikeC4, React Flow, and Structurizr—show the real diagram early
-and let the canvas own attention—while preserving Archify's narrower, stronger
+and let the canvas own attention—while preserving ArchiPam's narrower, stronger
 boundary: one checked, self-contained, interactive artifact rather than a
 style catalogue or editor platform.
 

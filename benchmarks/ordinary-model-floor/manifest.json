@@ -7,27 +7,27 @@
     {
       "case": "cases/web-runtime.architecture.case.json",
       "prompt": "prompts/web-runtime.architecture.md",
-      "reference_fixture": "../../archify/examples/web-app.architecture.json"
+      "reference_fixture": "../../archipam/examples/web-app.architecture.json"
     },
     {
       "case": "cases/agent-tool-call.workflow.case.json",
       "prompt": "prompts/agent-tool-call.workflow.md",
-      "reference_fixture": "../../archify/examples/agent-tool-call.workflow.json"
+      "reference_fixture": "../../archipam/examples/agent-tool-call.workflow.json"
     },
     {
       "case": "cases/cache-miss.sequence.case.json",
       "prompt": "prompts/cache-miss.sequence.md",
-      "reference_fixture": "../../archify/examples/cache-miss-request.sequence.json"
+      "reference_fixture": "../../archipam/examples/cache-miss-request.sequence.json"
     },
     {
       "case": "cases/product-analytics.dataflow.case.json",
       "prompt": "prompts/product-analytics.dataflow.md",
-      "reference_fixture": "../../archify/examples/product-analytics.dataflow.json"
+      "reference_fixture": "../../archipam/examples/product-analytics.dataflow.json"
     },
     {
       "case": "cases/agent-run.lifecycle.case.json",
       "prompt": "prompts/agent-run.lifecycle.md",
-      "reference_fixture": "../../archify/examples/agent-run.lifecycle.json"
+      "reference_fixture": "../../archipam/examples/agent-run.lifecycle.json"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 ## Question
 
-How can Archify become more useful in meetings and shared reviews without turning a diagram schema into a presentation-authoring system?
+How can ArchiPam become more useful in meetings and shared reviews without turning a diagram schema into a presentation-authoring system?
 
 ## External patterns reviewed
 
@@ -13,7 +13,7 @@ How can Archify become more useful in meetings and shared reviews without turnin
 
 ## Product decision
 
-Archify already has the more valuable primitive: typed named views over stable semantic IDs. Round 7 therefore adds a **Presentation Stage around existing views**, not a second slide schema.
+ArchiPam already has the more valuable primitive: typed named views over stable semantic IDs. Round 7 therefore adds a **Presentation Stage around existing views**, not a second slide schema.
 
 The stage:
 
@@ -27,7 +27,7 @@ The stage:
 
 ## Why this boundary matters
 
-A slide DSL would duplicate titles, sequencing, and focus data already present in `meta.views`, introduce another validation surface, and encourage authored presentations to drift from the architecture source. A viewer-only stage makes every existing diagram more useful while preserving Archify's single-file, zero-runtime-dependency output.
+A slide DSL would duplicate titles, sequencing, and focus data already present in `meta.views`, introduce another validation surface, and encourage authored presentations to drift from the architecture source. A viewer-only stage makes every existing diagram more useful while preserving ArchiPam's single-file, zero-runtime-dependency output.
 
 ## Validation contract
 

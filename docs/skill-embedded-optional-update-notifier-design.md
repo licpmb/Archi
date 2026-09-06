@@ -90,7 +90,7 @@ v0.1 不负责：
 | CLI/MCP 顺带检测 | 未来由原本必经的 CLI 或 MCP 调用附带检测结果 | 0 | 未实现；需单独评审 |
 | 宿主 Hook 调用 | 未来由 SessionStart 或 Plugin Hook 在会话边界调用 | 通常为 0 | 未实现；需单独评审 |
 
-v0.1 只有 Skill 激活调用路径。CLI/MCP 与 Hook 是可复用同一契约的未来适配点，不是当前 Archify 行为；它们不得在未经独立设计、测试和用户可见性评审时接入正常 CLI 输出。缓存只减少网络请求，不能消除当前纯 `SKILL.md` 模式下的 Agent 工具调用。对短小、纯提示词型 Skill，评审时需要确认该额外调用是否值得。
+v0.1 只有 Skill 激活调用路径。CLI/MCP 与 Hook 是可复用同一契约的未来适配点，不是当前 ArchiPam 行为；它们不得在未经独立设计、测试和用户可见性评审时接入正常 CLI 输出。缓存只减少网络请求，不能消除当前纯 `SKILL.md` 模式下的 Agent 工具调用。对短小、纯提示词型 Skill，评审时需要确认该额外调用是否值得。
 
 ### 5.2 运行时基线
 
@@ -101,7 +101,7 @@ MVP 建议使用无第三方依赖的 Node.js ESM 脚本，并声明 Node.js 18+
 建议发布包包含：
 
 ```text
-archify/
+archipam/
 ├── SKILL.md
 ├── skill-release.json
 └── scripts/
@@ -112,8 +112,8 @@ archify/
 外部组件：
 
 ```text
-https://tt-a1i.github.io/archify/skill-updates/archify/stable.json
-<system-cache-dir>/archify-skill/version-<version-sha256-prefix>/committed-<generation>/state.json
+https://licpmb.github.io/Archi/skill-updates/archipam/stable.json
+<system-cache-dir>/archipam-skill/version-<version-sha256-prefix>/committed-<generation>/state.json
 ```
 
 职责划分：
@@ -167,13 +167,13 @@ flowchart TD
 ```json
 {
   "schemaVersion": 1,
-  "skillId": "archify",
+  "skillId": "archipam",
   "channel": "stable",
   "version": "3.1.0",
   "source": {
-    "repository": "https://github.com/tt-a1i/archify"
+    "repository": "https://github.com/licpmb/Archi"
   },
-  "updateManifestUrl": "https://tt-a1i.github.io/archify/skill-updates/archify/stable.json"
+  "updateManifestUrl": "https://licpmb.github.io/Archi/skill-updates/archipam/stable.json"
 }
 ```
 
@@ -186,12 +186,12 @@ flowchart TD
 ```json
 {
   "schemaVersion": 1,
-  "skillId": "archify",
+  "skillId": "archipam",
   "channel": "stable",
   "version": "3.2.0",
   "publishedAt": "2026-08-28T08:00:00Z",
   "source": {
-    "repository": "https://github.com/tt-a1i/archify",
+    "repository": "https://github.com/licpmb/Archi",
     "ref": "v3.2.0",
     "treeSha": "8f11d3..."
   },
@@ -199,7 +199,7 @@ flowchart TD
     "sha256": "56da..."
   },
   "summary": "改进大型项目扫描与架构图布局",
-  "releaseNotes": "https://github.com/tt-a1i/archify/releases/tag/v3.2.0",
+  "releaseNotes": "https://github.com/licpmb/Archi/releases/tag/v3.2.0",
   "severity": "normal"
 }
 ```
@@ -215,10 +215,10 @@ flowchart TD
 | `publishedAt` | 必须是秒精度、真实日历日期的 UTC `YYYY-MM-DDTHH:mm:ssZ`；v0.1 以稳定版 annotated tag 的 tagger time 为权威值，运行时不把它用于调度或事件身份 |
 | `source.repository` | 必须匹配本地允许的官方仓库 |
 | `source.ref` | 必须精确等于 `v<version>`；只能验证，不能拼接成 shell 命令 |
-| `source.treeSha` | 必须是发布 tag 中 `archify/` 的 40 位小写 Git tree SHA |
-| `artifact.sha256` | 必须是发布 `archify.zip` 的 64 位小写 SHA-256；用于提醒事件身份 |
+| `source.treeSha` | 必须是发布 tag 中 `archipam/` 的 40 位小写 Git tree SHA |
+| `artifact.sha256` | 必须是发布 `archipam.zip` 的 64 位小写 SHA-256；用于提醒事件身份 |
 | `summary` | 必填纯文本，1–160 个字符；v0.1 校验但不直接输出远端文本 |
-| `releaseNotes` | 必须逐字节等于 `https://github.com/tt-a1i/archify/releases/tag/v<version>`，不接受显式端口、大小写变体、查询或片段 |
+| `releaseNotes` | 必须逐字节等于 `https://github.com/licpmb/Archi/releases/tag/v<version>`，不接受显式端口、大小写变体、查询或片段 |
 | `severity` | `normal` 或 `security`；两者都不触发自动安装 |
 
 响应体硬上限为 32 KiB，重定向禁用。非成功响应、错误媒体类型和声明超限的响应会先取消未读 body，再静默失败。
@@ -230,7 +230,7 @@ flowchart TD
 ```json
 {
   "schemaVersion": 1,
-  "skillId": "archify",
+  "skillId": "archipam",
   "installedVersion": "3.1.0",
   "check": {
     "nextCheckAt": "2026-08-31T08:00:00Z",
@@ -248,7 +248,7 @@ flowchart TD
     "version": "3.2.0",
     "targetDigest": "sha256:56da...",
     "severity": "normal",
-    "releaseNotes": "https://github.com/tt-a1i/archify/releases/tag/v3.2.0"
+    "releaseNotes": "https://github.com/licpmb/Archi/releases/tag/v3.2.0"
   }
 }
 ```
@@ -314,13 +314,13 @@ generation 只负责提交顺序，固定的 `active-claim` 负责网络请求�
 ```json
 {
   "status": "update_available",
-  "eventKey": "archify@sha256:56da...",
+  "eventKey": "archipam@sha256:56da...",
   "installedVersion": "3.1.0",
   "latestVersion": "3.2.0",
   "targetDigest": "sha256:56da...",
   "severity": "normal",
-  "summary": "Archify 3.2.0 is available; see the official release notes for details.",
-  "releaseNotes": "https://github.com/tt-a1i/archify/releases/tag/v3.2.0"
+  "summary": "ArchiPam 3.2.0 is available; see the official release notes for details.",
+  "releaseNotes": "https://github.com/licpmb/Archi/releases/tag/v3.2.0"
 }
 ```
 
@@ -331,7 +331,7 @@ generation 只负责提交顺序，固定的 `active-claim` 负责网络请求�
 Agent 只在提醒已经对用户可见后运行 `--ack "<eventKey>"`。成功 stdout 为：
 
 ```json
-{"status":"acknowledged","eventKey":"archify@sha256:56da..."}
+{"status":"acknowledged","eventKey":"archipam@sha256:56da..."}
 ```
 
 无效、过期或竞争失败的确认使用上面的 `silent` 协议，不联网，也不改变安装内容。
@@ -388,23 +388,23 @@ installation guidance without executing an update in this v0.1 workflow.
 
 该段只定义状态到行为的映射。HTTP、缓存、版本比较和安全校验全部由脚本负责，避免不同 Agent 自行解释实现细节。
 
-用户或宿主可设置 `ARCHIFY_UPDATE_CHECK_DISABLED=1` 完全关闭检查；CLI 将直接返回 `silent/disabled`，不联网也不读写提醒状态。
+用户或宿主可设置 `ARCHIPAM_UPDATE_CHECK_DISABLED=1` 完全关闭检查；CLI 将直接返回 `silent/disabled`，不联网也不读写提醒状态。
 
 ## 14. 用户体验
 
 ### 14.1 普通更新
 
-> ⬆ Archify Skill v3.2.0 可用，你正在使用 v3.1.0。
+> ⬆ ArchiPam Skill v3.2.0 可用，你正在使用 v3.1.0。
 >
-> 有可用的新版本；详情请查看官方发布说明。[查看变更说明](https://github.com/tt-a1i/archify/releases/tag/v3.2.0)
+> 有可用的新版本；详情请查看官方发布说明。[查看变更说明](https://github.com/licpmb/Archi/releases/tag/v3.2.0)
 >
 > 是否升级由你决定；本次任务继续使用当前版本。
 
 ### 14.2 安全更新
 
-> ⚠ Archify Skill 发布了安全更新 v3.2.1，你正在使用 v3.1.0。
+> ⚠ ArchiPam Skill 发布了安全更新 v3.2.1，你正在使用 v3.1.0。
 >
-> 建议查看安全说明后决定是否升级。[查看安全说明](https://github.com/tt-a1i/archify/releases/tag/v3.2.1)
+> 建议查看安全说明后决定是否升级。[查看安全说明](https://github.com/licpmb/Archi/releases/tag/v3.2.1)
 >
 > 当前版本保持不变。
 
@@ -420,7 +420,7 @@ v0.1 只实现“忽略”和“查看变更”。Snooze/Skip 不预留运行时
 
 ### 15.1 最小网络披露
 
-检查器在成功检查后的 72 小时 ±20% TTL 到期时，才会再次向固定的 `https://tt-a1i.github.io/archify/skill-updates/archify/stable.json` 执行静态无条件 `GET`；失败后若 Skill 再次被激活，则在首次 6 小时、后续 24 小时退避到期时允许重试。它不回传服务端 `ETag`，也不上传：
+检查器在成功检查后的 72 小时 ±20% TTL 到期时，才会再次向固定的 `https://licpmb.github.io/Archi/skill-updates/archipam/stable.json` 执行静态无条件 `GET`；失败后若 Skill 再次被激活，则在首次 6 小时、后续 24 小时退避到期时允许重试。它不回传服务端 `ETag`，也不上传：
 
 - 本地安装版本。
 - Agent 宿主名称。
@@ -537,10 +537,10 @@ v0.1 达到以下条件后可进入小范围发布：
 
 本仓库原先由 `main:/docs` 直接发布；该模式不会等待普通 CI，因此不能承载 manifest 的发布门禁。启用本方案前，仓库管理员必须在 **Settings → Pages → Build and deployment → Source** 将来源一次性切换为 **GitHub Actions**。仓库内的 `deploy-pages` job 只在 `main` push 上运行，并显式依赖全部测试、ZIP freshness、包内 smoke 与 published-manifest 门禁；切换前不得发布新的 stable manifest。稳定版必须按以下顺序发布：
 
-1. 发布准备提交更新包版本、Changelog 与确定性 `archify.zip`，但 `docs/skill-updates/archify/stable.json` 仍保留紧邻的上一稳定版。
-2. stable tag 工作流拒绝任何已经等于或高于待发布版本的公共 manifest，然后烟测并创建带 `archify.zip` 资产的 GitHub Release。
-3. Release 成功后，单独提交 manifest 跟进变更，填入该 tag 的 `archify` tree SHA、最终 Release 资产 SHA-256，以及 annotated tag 的 canonical UTC tagger time。GitHub Release `published_at` 只作为运营观测值，不进入 v0.1 运行时身份。
-4. 后续 commit 更新 `stable.json`。CI 通过 GitHub API 要求 manifest 精确等于当前 latest stable Release（不是任意历史 Release），确认目标非 draft、非 prerelease，下载其中的 `archify.zip`，并要求它逐字节等于目标 tag 根目录提交的 `archify.zip`。从首个携带确定性构建器的 v2.16.0 起，CI 还会在独立 worktree 从该 tag 重建 ZIP，并再次逐字节比较；仅历史 bootstrap v2.15.0 允许以 tagged blob 作为闭环。最后再把资产 SHA-256 与 manifest、目标 tag 的 `archify` tree 同时核对。该门禁证明的是 manifest 部署时点的 Release 资产、tagged ZIP、确定性重建结果与 manifest 一致；如果仓库尚未启用 GitHub immutable releases，资产在部署后替换不会自动触发复验，Release 页面因而可能暴露与 manifest digest 不同的字节。v0.1 将其列为发布运营残余风险：维护者不得替换已发布资产，任何资产变更都必须使用新版本、新 tag 和新 manifest；公开启用前应优先启用并验证 immutable release。发布准备阶段可暂时保留上一版，而新 Release 建立后的下一次 `main` push 必须完成 manifest 跟进，不能无限期滞后。
+1. 发布准备提交更新包版本、Changelog 与确定性 `archipam.zip`，但 `docs/skill-updates/archipam/stable.json` 仍保留紧邻的上一稳定版。
+2. stable tag 工作流拒绝任何已经等于或高于待发布版本的公共 manifest，然后烟测并创建带 `archipam.zip` 资产的 GitHub Release。
+3. Release 成功后，单独提交 manifest 跟进变更，填入该 tag 的 `archipam` tree SHA、最终 Release 资产 SHA-256，以及 annotated tag 的 canonical UTC tagger time。GitHub Release `published_at` 只作为运营观测值，不进入 v0.1 运行时身份。
+4. 后续 commit 更新 `stable.json`。CI 通过 GitHub API 要求 manifest 精确等于当前 latest stable Release（不是任意历史 Release），确认目标非 draft、非 prerelease，下载其中的 `archipam.zip`，并要求它逐字节等于目标 tag 根目录提交的 `archipam.zip`。从首个携带确定性构建器的 v2.16.0 起，CI 还会在独立 worktree 从该 tag 重建 ZIP，并再次逐字节比较；仅历史 bootstrap v2.15.0 允许以 tagged blob 作为闭环。最后再把资产 SHA-256 与 manifest、目标 tag 的 `archipam` tree 同时核对。该门禁证明的是 manifest 部署时点的 Release 资产、tagged ZIP、确定性重建结果与 manifest 一致；如果仓库尚未启用 GitHub immutable releases，资产在部署后替换不会自动触发复验，Release 页面因而可能暴露与 manifest digest 不同的字节。v0.1 将其列为发布运营残余风险：维护者不得替换已发布资产，任何资产变更都必须使用新版本、新 tag 和新 manifest；公开启用前应优先启用并验证 immutable release。发布准备阶段可暂时保留上一版，而新 Release 建立后的下一次 `main` push 必须完成 manifest 跟进，不能无限期滞后。
 5. 只有全部 CI job 成功，`deploy-pages` 才上传 `docs/` artifact 并公开新候选；部署前还会确认本次 `GITHUB_SHA` 仍是远端 `main`，因此完成较晚的旧 workflow run 不能把站点回滚。PR、失败或已过时的 `main` push 与分支发布源都没有部署路径。
 
 release identity 只允许公共 manifest 等于最新稳定版，或在稳定版发布准备窗口中暂时等于紧邻的上一稳定版；更旧版本不能借两阶段流程长期滞后。工作流失败时，公共 manifest 仍指向上一条完整 Release，不会提醒用户访问尚不存在的发布说明。

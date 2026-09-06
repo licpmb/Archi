@@ -2,7 +2,7 @@
 
 ## Reader problem
 
-Archify can already find a node, frame its neighborhood, name incoming and
+ArchiPam can already find a node, frame its neighborhood, name incoming and
 outgoing relationships, preview the exact edge, and play authored story paths.
 The selected node itself is still under-explained. A reader sees a label and a
 relationship count, but must inspect the canvas again to recover its technology,

@@ -2,20 +2,20 @@
 
 ## Reader problem
 
-Archify could deep-link a named view and manually play a complete guided story, but a shared `#view=` URL opened on a still frame. The landing-page proof selector had a more serious mismatch: its link named a guided view while the embedded artifact loaded only the generic diagram. Ambient trace loops also meant a proof grid could keep moving long after it had communicated its point.
+ArchiPam could deep-link a named view and manually play a complete guided story, but a shared `#view=` URL opened on a still frame. The landing-page proof selector had a more serious mismatch: its link named a guided view while the embedded artifact loaded only the generic diagram. Ambient trace loops also meant a proof grid could keep moving long after it had communicated its point.
 
 The product needed a compact “show me this chapter” contract, not another animation system.
 
 ## Patterns worth borrowing
 
 - [`fireworks-tech-graph`](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) demonstrates the marketing value of showing motion before explaining it, but also reinforces that the motion needs a clear visual subject rather than a wall of simultaneous effects.
-- [React Flow's animated-edge examples](https://reactflow.dev/examples/edges/animating-edges) bind animation to the real computed path and keep animation lifecycle separate from path calculation. Archify keeps that separation: Story Trail owns viewer motion while typed renderers remain geometry compilers.
+- [React Flow's animated-edge examples](https://reactflow.dev/examples/edges/animating-edges) bind animation to the real computed path and keep animation lifecycle separate from path calculation. ArchiPam keeps that separation: Story Trail owns viewer motion while typed renderers remain geometry compilers.
 - [WCAG 2.2.2: Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) requires a pause/stop/hide mechanism for qualifying auto-starting moving content that lasts more than five seconds. A single 3.2-second chapter stays below that boundary and leaves a stable reading surface.
 - [MDN's `prefers-reduced-motion` reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion) and [`matchMedia()` reference](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) provide the CSS and JavaScript sides of the same operating-system preference.
 
 The useful borrowing is **motion with an explicit subject, lifetime, and handoff back to the reader**.
 
-## Archify decision
+## ArchiPam decision
 
 `?play=1#view=<id>` is a viewer-only share contract:
 
@@ -31,4 +31,4 @@ The useful borrowing is **motion with an explicit subject, lifetime, and handoff
 
 ## What we deliberately did not borrow
 
-Archify does not autoplay all gallery cards, add scroll-triggered timelines, loop shared chapters, auto-advance a hidden carousel, or introduce an animation schema. Manual Play remains the deliberate full-story control; share autoplay is one bounded demonstration followed by a still diagram.
+ArchiPam does not autoplay all gallery cards, add scroll-triggered timelines, loop shared chapters, auto-advance a hidden carousel, or introduce an animation schema. Manual Play remains the deliberate full-story control; share autoplay is one bounded demonstration followed by a still diagram.

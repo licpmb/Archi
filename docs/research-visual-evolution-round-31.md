@@ -10,7 +10,7 @@ strictly as a preview of **chapter-focus membership**, not graph mutation and no
 chapter activation.
 
 When a reader hovers with a hover-capable pointer or keyboard-focuses an inactive
-chapter, Archify should show which stable node IDs would **stay in focus**, **enter
+chapter, ArchiPam should show which stable node IDs would **stay in focus**, **enter
 focus**, and **leave focus**. The chapter rail should show the corresponding exact
 counts. During preview, the active chapter, URL, focus selection, Story Beat,
 camera transform, mobile scroller, and canonical SVG must remain unchanged. An
@@ -29,15 +29,15 @@ This is worthwhile because the substrate and the user need are both real:
 - a preview therefore explains the common continuity case and truthfully warns
   about the clean-cut case before the reader commits.
 
-No inspected primary source ships this exact Archify interaction as a package.
+No inspected primary source ships this exact ArchiPam interaction as a package.
 The recommendation is a synthesis of their stronger primitives: stable identity,
 separate hover/selection/viewport state, explicit matched/unmatched semantics,
 cancelable transient work, and accessible hover/focus disclosure.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 The present viewer already has the necessary facts and owners in
-[`Archify.guidedViews`](../archify/assets/template.html#L5424-L6252):
+[`ArchiPam.guidedViews`](../archipam/assets/template.html#L5424-L6252):
 
 - `views[]` contains stable `id`, authored `label`, `note`, and ordered `focus`;
 - `activeIndex` is the sole selected-chapter owner;
@@ -83,7 +83,7 @@ data changes unless the new update overrides it
 
 **Borrow:** transient state separate from selection, bounded intent delay,
 cancel-by-ID/latest-intent semantics, and persistence while the revealed content
-is inspected. **Adapt:** Archify needs one preview generation over stable SVG IDs,
+is inspected. **Adapt:** ArchiPam needs one preview generation over stable SVG IDs,
 not LikeC4's XState/XYFlow model. **Skip:** importing its actor stack, mutating
 layout data, or making hover a navigation event.
 
@@ -100,7 +100,7 @@ View demonstrates the alternative of rendering a complete upcoming-slide preview
 **Adapt:** compute three focus sets on one persistent SVG; do not match by label,
 DOM order, proximity, kind, or geometry. **Skip:** a full next-chapter thumbnail,
 DOM snapshots, cloned SVG, implicit matching, or preview animation. A thumbnail
-would duplicate rendering and hide the precise semantic delta Archify can provide.
+would duplicate rendering and hide the precise semantic delta ArchiPam can provide.
 
 ### D2 and TALA: board semantics and layout are separate concerns
 
@@ -125,7 +125,7 @@ containers, clusters, and label collision avoidance
 engine, not a chapter-state or hover-preview model.
 
 **Borrow:** the idea that current→next semantics are explicit and stable identity
-matters. **Adapt:** derive membership from independent Archify `focus` arrays; do
+matters. **Adapt:** derive membership from independent ArchiPam `focus` arrays; do
 not invent D2 step inheritance. **Skip:** full-board opacity loops, relayout,
 TALA integration, a new board schema, or calling any layout engine during preview.
 
@@ -177,7 +177,7 @@ long-press preview, or tap-once-preview/tap-twice-activate.
 
 ## Borrow / adapt / skip summary
 
-| Decision | Archify contract |
+| Decision | ArchiPam contract |
 |---|---|
 | Borrow | LikeC4's separate transient hover state and cancelable delayed work. |
 | Borrow | reveal.js's explicit stable matching and truthful unmatched boundary. |
@@ -248,7 +248,7 @@ labels remain unambiguous.
    that target dismissed until its hover/focus trigger genuinely ends. Preview
    Escape takes precedence over the existing Escape-to-Show-all behavior.
 10. Focus, hover, and Escape do not write `activeIndex`, `aria-current`,
-    `aria-pressed`, URL/hash/history, `Archify.focus`, Story Trail data,
+    `aria-pressed`, URL/hash/history, `ArchiPam.focus`, Story Trail data,
     `storyBeatIndex`, camera state, SVG transform, or scroller offsets.
 11. Starting preview pauses active Story playback once, using the existing pause
     path, because two simultaneous explanations are misleading. Leaving preview
@@ -300,7 +300,7 @@ labels remain unambiguous.
 
 ## Suggested implementation shape
 
-Keep this inside the existing template-level `Archify.guidedViews` module so all
+Keep this inside the existing template-level `ArchiPam.guidedViews` module so all
 renderers inherit one implementation:
 
 - add pure `normalizeViewFocus(view)` and `chapterDelta(from, to)` helpers;

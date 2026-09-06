@@ -14,22 +14,22 @@ function git(args) {
   return result.stdout.trim();
 }
 
-test('the repository still has exactly one checked-in Archify SKILL.md and no generated DSH payload', () => {
+test('the repository still has exactly one checked-in ArchiPam SKILL.md and no generated DSH payload', () => {
   const skillFiles = git(['ls-files', '*SKILL.md']).split('\n').filter(Boolean);
-  assert.deepEqual(skillFiles, ['archify/SKILL.md']);
+  assert.deepEqual(skillFiles, ['archipam/SKILL.md']);
   assert.equal(fs.existsSync(path.join(repoRoot, 'integrations/deepseek-harness/skills')), false);
   const trackedSkills = git(['ls-files', 'integrations/deepseek-harness/skills']);
   assert.equal(trackedSkills, '');
 });
 
-test('Archify core does not import, detect, or branch on DeepSeek Harness', () => {
+test('ArchiPam core does not import, detect, or branch on DeepSeek Harness', () => {
   const grep = spawnSync('git', [
     'grep',
     '-n',
     '-E',
-    'deepseek-harness|@deepseek-ai/dsh|DSH_HOME|DSH_AGENTS_HOME|archify-dsh',
+    'deepseek-harness|@deepseek-ai/dsh|DSH_HOME|DSH_AGENTS_HOME|archipam-dsh',
     '--',
-    'archify',
+    'archipam',
     'scripts/build-zip.sh',
     'scripts/package-smoke.mjs',
   ], { cwd: repoRoot, encoding: 'utf8' });
@@ -37,18 +37,19 @@ test('Archify core does not import, detect, or branch on DeepSeek Harness', () =
   assert.equal(grep.stdout.trim(), '');
 });
 
-test('full-depth Skills CLI discovery still finds only one skill named archify', () => {
+test('full-depth Skills CLI discovery still finds only one skill named archipam', () => {
   const result = spawnSync('npx', ['-y', 'skills', 'add', repoRoot, '--list', '--full-depth'], {
     cwd: repoRoot,
     encoding: 'utf8',
   });
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  const names = [...result.stdout.matchAll(/^\s*[-*]\s+(\S+)/gm)].map((match) => match[1])
-    .filter((name) => name === 'archify' || /archify/i.test(name));
+  const output = `${result.stdout}\n${result.stderr}`.replace(/\u001b\[[0-?]*[ -\/]*[@-~]/g, '');
+  const names = [...output.matchAll(/^\s*[-*]\s+(\S+)/gm)].map((match) => match[1])
+    .filter((name) => name === 'archipam' || /archipam/i.test(name));
   const unique = new Set(
-    [...result.stdout.matchAll(/\barchify\b/gi)].map((match) => match[0].toLowerCase()),
+    [...output.matchAll(/\barchipam\b/gi)].map((match) => match[0].toLowerCase()),
   );
-  assert.ok(result.stdout.includes('archify'), result.stdout);
-  assert.equal(unique.size, 1, result.stdout);
-  assert.ok(names.length <= 1 || new Set(names).size === 1, result.stdout);
+  assert.ok(output.includes('archipam'), output);
+  assert.equal(unique.size, 1, output);
+  assert.ok(names.length <= 1 || new Set(names).size === 1, output);
 });

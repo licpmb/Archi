@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "generator": "scripts/build-readme-showcase.mjs",
+  "output": "docs/assets/archipam-live-proof.gif",
+  "width": 960,
+  "height": 540,
+  "fps": 10,
+  "frameCount": 54,
+  "durationSeconds": 5.4,
+  "bytes": 1704333,
+  "sha256": "edc974b62a0e719c240c3124a4df63eb78aca1201e93131cd29b6967cceb28ec",
+  "scenes": [
+    {
+      "id": "signal-flow",
+      "artifact": "docs/gallery/artifacts/agent-tool-call.workflow.html",
+      "artifactSha256": "b4b6b37cb67ce3e3664c014b8d0883bf4ce1c51a3faad497a9b6f58b94860354",
+      "view": "happy-path",
+      "eyebrow": "WORKFLOW · SIGNAL FLOW",
+      "title": "Agent Tool Call",
+      "receipt": "12 nodes · 11 edges · 9/9 checks"
+    },
+    {
+      "id": "blueprint",
+      "artifact": "docs/gallery/artifacts/production-deployment.architecture.html",
+      "artifactSha256": "58263beed77d3d6e6bbee6d6c1b60279a7241e2379889c726e000d48a7b9959b",
+      "view": "request-boundary",
+      "eyebrow": "ARCHITECTURE · BLUEPRINT",
+      "title": "Production Deployment",
+      "receipt": "12 nodes · 12 edges · 9/9 checks"
+    },
+    {
+      "id": "classic",
+      "artifact": "docs/gallery/artifacts/cache-miss.sequence.html",
+      "artifactSha256": "01d1c8416b71d863ad22593244bbc44226a1b12ed329b7b0b31d6b769a13b8ed",
+      "view": "cache-fallback",
+      "eyebrow": "SEQUENCE · CLASSIC",
+      "title": "Cache Miss Request",
+      "receipt": "7 participants · 12 messages · 9/9 checks"
+    }
+  ]
+}

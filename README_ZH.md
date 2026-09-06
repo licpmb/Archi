@@ -2,13 +2,13 @@
   <a href="./README.md">English</a> · <strong>简体中文</strong>
 </p>
 
-![Archify 主视觉](docs/assets/archify-readme-hero.png)
+![ArchiPam 主视觉](docs/assets/archipam-readme-hero.png)
 
-# Archify
+# ArchiPam
 
 **在对话里，把代码仓库或系统描述变成漂亮、可靠、可交互的系统地图。**
 
-Archify 是一套基于 Node.js 的渲染与校验系统，并以 Agent Skill 的形式支持 Raven、Cursor、Claude Code、Codex CLI 和 OpenCode。Agent 负责生成 Typed JSON IR，Archify 再校验并确定性编译为便携、独立的 HTML/SVG 成品。
+ArchiPam 是一套基于 Node.js 的渲染与校验系统，并以 Agent Skill 的形式支持 Raven、Cursor、Claude Code、Codex CLI 和 OpenCode。Agent 负责生成 Typed JSON IR，ArchiPam 再校验并确定性编译为便携、独立的 HTML/SVG 成品。
 
 - **打开就是成品** —— 五种技术图、四套视觉预设、深浅主题、内置品牌徽标，以及显式启用的有限动态
 - **合并前先看清架构变化** —— 把两份已校验快照对比为 Before / Delta / After，准确区分新增、删除、语义变化、移动和重路由
@@ -21,46 +21,46 @@ Archify 是一套基于 Node.js 的渲染与校验系统，并以 Agent Skill �
 
 **当前稳定版本：** `v2.16.0`。详见[版本历史](CHANGELOG.md#2160--2026-08-30)。
 
-**[在线项目页](https://tt-a1i.github.io/archify/)** · **[场景选图指南](https://tt-a1i.github.io/archify/guide.html)** · **[Proof Lab](https://tt-a1i.github.io/archify/gallery.html)**
+**[在线项目页](https://licpmb.github.io/Archi/)** · **[场景选图指南](https://licpmb.github.io/Archi/guide.html)** · **[Proof Lab](https://licpmb.github.io/Archi/gallery.html)**
 
 ```bash
-npx skills add tt-a1i/archify -g
+npx skills add licpmb/Archi -g
 ```
-使用 Cursor？打开[可切换 Agent 的快速开始页](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture)，即可获得准确的全局或当前仓库安装命令。
+使用 Cursor？打开[可切换 Agent 的快速开始页](https://licpmb.github.io/Archi/start.html?agent=cursor&type=architecture)，即可获得准确的全局或当前仓库安装命令。
 
 **不需要绑定代码库：**在任意 Agent 对话里描述系统即可。
 
 ## ❤️ 赞助伙伴
 
 <table>
-  <tr><td align="center" width="240"><a href="https://apinebula.ai/ref/wywnaATT"><img src="docs/assets/sponsors/apinebula-archify.jpg" alt="APINEBULA" width="200" /></a><br/><strong><a href="https://apinebula.ai/ref/wywnaATT">APINEBULA</a></strong></td><td>感谢 APINEBULA 赞助 Archify。APINEBULA 通过统一接口提供 Claude、GPT、Gemini 等主流模型。通过 <a href="https://apinebula.ai/ref/wywnaATT">Archify 专属链接</a>注册并填写优惠码 <strong><code>Archify</code></strong>，即可享受<strong>9 折优惠</strong>。</td></tr>
-  <tr><td align="center" width="240"><a href="https://github.com/EverMind-AI/Raven"><img src="docs/assets/sponsors/evermind-archify-raven.png" alt="Archify × Raven" width="200" /></a><br/><strong><a href="https://github.com/EverMind-AI">EverMind</a> · <a href="https://github.com/EverMind-AI/Raven">Raven</a></strong></td><td>感谢 EverMind 赞助 Archify。EverMind 专注 Agent 记忆基础设施，旗下 <a href="https://github.com/EverMind-AI/Raven"><strong>Raven</strong></a> 已支持 Archify Skill，让 Raven 工作流可以直接生成经过验证的交互式系统地图。</td></tr>
+  <tr><td align="center" width="240"><a href="https://apinebula.ai/ref/wywnaATT"><img src="docs/assets/sponsors/apinebula-archipam.jpg" alt="APINEBULA" width="200" /></a><br/><strong><a href="https://apinebula.ai/ref/wywnaATT">APINEBULA</a></strong></td><td>感谢 APINEBULA 赞助 ArchiPam。APINEBULA 通过统一接口提供 Claude、GPT、Gemini 等主流模型。通过 <a href="https://apinebula.ai/ref/wywnaATT">ArchiPam 专属链接</a>注册并填写优惠码 <strong><code>ArchiPam</code></strong>，即可享受<strong>9 折优惠</strong>。</td></tr>
+  <tr><td align="center" width="240"><a href="https://github.com/EverMind-AI/Raven"><img src="docs/assets/sponsors/evermind-archipam-raven.png" alt="ArchiPam × Raven" width="200" /></a><br/><strong><a href="https://github.com/EverMind-AI">EverMind</a> · <a href="https://github.com/EverMind-AI/Raven">Raven</a></strong></td><td>感谢 EverMind 赞助 ArchiPam。EverMind 专注 Agent 记忆基础设施，旗下 <a href="https://github.com/EverMind-AI/Raven"><strong>Raven</strong></a> 已支持 ArchiPam Skill，让 Raven 工作流可以直接生成经过验证的交互式系统地图。</td></tr>
 </table>
 
-> 想赞助 Archify？[欢迎通过邮件联系我们。](mailto:2801884530@qq.com)
+> 想赞助 ArchiPam？[欢迎通过邮件联系我们。](mailto:2801884530@qq.com)
 
-## 看看 Archify 能做什么
+## 看看 ArchiPam 能做什么
 
-下面都是真实生成的 Archify 成品，不是产品效果图。点击画面即可打开对应的可分享交互状态。
+下面都是真实生成的 ArchiPam 成品，不是产品效果图。点击画面即可打开对应的可分享交互状态。
 
 <p align="center">
-  <a href="https://tt-a1i.github.io/archify/gallery.html"><img src="docs/assets/archify-live-proof.gif" alt="三个经过验证的 Archify 成品依次展示 Signal Flow、Blueprint 和 Classic 预设" width="960"/></a>
+  <a href="https://licpmb.github.io/Archi/gallery.html"><img src="docs/assets/archipam-live-proof.gif" alt="三个经过验证的 ArchiPam 成品依次展示 Signal Flow、Blueprint 和 Classic 预设" width="960"/></a>
   <br/>
-  <sub><strong>三个真实生成、校验通过的成品。</strong> Signal Flow · Blueprint · Classic · <a href="https://tt-a1i.github.io/archify/gallery.html">打开可交互验证作品集 ↗</a></sub>
+  <sub><strong>三个真实生成、校验通过的成品。</strong> Signal Flow · Blueprint · Classic · <a href="https://licpmb.github.io/Archi/gallery.html">打开可交互验证作品集 ↗</a></sub>
 </p>
 
 | 引导故事 | 路径探查 | 语义角色对比 |
 |---|---|---|
-| [![Agent 工作流正在播放一个作者章节](docs/assets/archify-demo-story.png)](https://tt-a1i.github.io/archify/gallery/artifacts/agent-tool-call.workflow.html?theme=dark&present=1&play=1#view=happy-path) | [![缓存未命中时从 Web App 到 Postgres 的路径](docs/assets/archify-demo-route.png)](https://tt-a1i.github.io/archify/gallery/artifacts/cache-miss.sequence.html?theme=dark&present=1#route=web~db) | [![生产架构中后端与数据库角色的真实关系](docs/assets/archify-demo-lens.png)](https://tt-a1i.github.io/archify/gallery/artifacts/production-deployment.architecture.html?theme=dark&present=1#lens=backend~database) |
+| [![Agent 工作流正在播放一个作者章节](docs/assets/archipam-demo-story.png)](https://licpmb.github.io/Archi/gallery/artifacts/agent-tool-call.workflow.html?theme=dark&present=1&play=1#view=happy-path) | [![缓存未命中时从 Web App 到 Postgres 的路径](docs/assets/archipam-demo-route.png)](https://licpmb.github.io/Archi/gallery/artifacts/cache-miss.sequence.html?theme=dark&present=1#route=web~db) | [![生产架构中后端与数据库角色的真实关系](docs/assets/archipam-demo-lens.png)](https://licpmb.github.io/Archi/gallery/artifacts/production-deployment.architecture.html?theme=dark&present=1#lens=backend~database) |
 | 播放一次有限的命名章节。 | 检查最短的作者有向路径。 | 对比语义角色之间的真实流量。 |
 
-[Proof Lab](https://tt-a1i.github.io/archify/gallery.html) 收录全部 11 个仓库内场景、JSON 源、命名视图和校验回执。
+[Proof Lab](https://licpmb.github.io/Archi/gallery.html) 收录全部 11 个仓库内场景、JSON 源、命名视图和校验回执。
 
 ### 从真实仓库读出来，不是只靠 Prompt 画出来
 
-[![根据公开仓库 mco-org/mco 生成的 MCO 运行时架构图](docs/assets/mco-runtime-share-card.png)](https://tt-a1i.github.io/archify/cases/mco-runtime.architecture.html?theme=dark&present=1#view=dispatch-path)
+[![根据公开仓库 mco-org/mco 生成的 MCO 运行时架构图](docs/assets/mco-runtime-share-card.png)](https://licpmb.github.io/Archi/cases/mco-runtime.architecture.html?theme=dark&present=1#view=dispatch-path)
 
-Archify 追踪 [`mco-org/mco`](https://github.com/mco-org/mco) 的 `9f1a1cf` 版本并生成这张校验地图。**[打开成品 ↗](https://tt-a1i.github.io/archify/cases/mco-runtime.architecture.html?theme=dark&present=1#view=dispatch-path)** · [追踪下游 ↗](https://tt-a1i.github.io/archify/cases/mco-runtime.architecture.html?theme=dark#focus=router&reach=downstream) · [Typed Source](docs/cases/mco-runtime.architecture.json)
+ArchiPam 追踪 [`mco-org/mco`](https://github.com/mco-org/mco) 的 `9f1a1cf` 版本并生成这张校验地图。**[打开成品 ↗](https://licpmb.github.io/Archi/cases/mco-runtime.architecture.html?theme=dark&present=1#view=dispatch-path)** · [追踪下游 ↗](https://licpmb.github.io/Archi/cases/mco-runtime.architecture.html?theme=dark#focus=router&reach=downstream) · [Typed Source](docs/cases/mco-runtime.architecture.json)
 
 ## 预览
 
@@ -68,17 +68,17 @@ Archify 追踪 [`mco-org/mco`](https://github.com/mco-org/mco) 的 `9f1a1cf` 版
 
 | 深色 | 浅色 |
 |---|---|
-| ![深色主题](docs/assets/archify-dark.png) | ![浅色主题](docs/assets/archify-light.png) |
+| ![深色主题](docs/assets/archipam-dark.png) | ![浅色主题](docs/assets/archipam-light.png) |
 
 Export 菜单支持复制 PNG，并下载静态或动态格式：
 
-![导出菜单](docs/assets/archify-menu.png)
+![导出菜单](docs/assets/archipam-menu.png)
 
 需要用于 README、Release 或社交平台的标准 1200×630 图片时，使用 **Copy Share Card**。
 
 路径解析后，**Export → Route Share Card** 会把真实路径下载为 1200×630 PNG，并保留完整拓扑上下文。
 
-![Route Share Card：突出 Users 到 API Server 的精确路径，同时保留完整架构作为上下文](docs/assets/archify-route-share-card.png)
+![Route Share Card：突出 Users 到 API Server 的精确路径，同时保留完整架构作为上下文](docs/assets/archipam-route-share-card.png)
 
 完成 authored `Upstream` 或 `Downstream` reach 后，**Export → Reach Share Card** 会捕获这次阅读结果，但不冒充运行时影响分析。
 
@@ -91,42 +91,42 @@ Export 菜单支持复制 PNG，并下载静态或动态格式：
 ### 1. 安装
 
 ```bash
-npx skills add tt-a1i/archify -g
+npx skills add licpmb/Archi -g
 ```
 
 显式、非交互地安装到 Cursor：
 
 ```bash
-npx -y skills add tt-a1i/archify --skill archify --agent cursor --global --copy --yes
+npx -y skills add licpmb/Archi --skill archipam --agent cursor --global --copy --yes
 ```
 
 如果只想临时体验：
 
 ```bash
-npx skills use tt-a1i/archify@archify --agent codex
+npx skills use licpmb/Archi@archipam --agent codex
 ```
 
-DeepSeek Harness（社区集成、显式启用）：运行 `dsh plugin --profile web add @tt-a1i/archify-dsh@0.1.0`；参见[兼容范围、限制与安全说明](integrations/deepseek-harness/README.md)。[Agent 切换器](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture)只为 `cursor`、`codex`、`claude-code` 和 `opencode` 生成命令。Raven 仅支持 ZIP 手动安装：将 [`archify.zip`](archify.zip) 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify`；Raven 不属于切换器目标。
+DeepSeek Harness（社区集成、显式启用）：运行 `dsh plugin --profile web add @licpmb/archipam-dsh@0.1.0`；参见[兼容范围、限制与安全说明](integrations/deepseek-harness/README.md)。[Agent 切换器](https://licpmb.github.io/Archi/start.html?agent=cursor&type=architecture)只为 `cursor`、`codex`、`claude-code` 和 `opencode` 生成命令。Raven 仅支持 ZIP 手动安装：将 [`archipam.zip`](archipam.zip) 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archipam`；Raven 不属于切换器目标。
 
-安装后的 Skill 包含一个低频、失败静默的发布检查，它最多只显示可选更新提醒，绝不会自行下载或安装更新。一次成功检查后，下次网络请求通常约在 72 小时（±20%）后发出；检查失败后，活跃使用可能在首次 6 小时、后续 24 小时退避到期时重试。请求只访问 `https://tt-a1i.github.io/archify/skill-updates/archify/stable.json`。服务端会自然获得 IP、请求时间和常规 HTTP 元数据；检查器不会发送本地版本、Agent、项目数据、用户输入、账户/设备标识，也不会保存或回传 ETag。是否更新以及何时更新始终由你决定。如需完全关闭检查（包括网络请求和提醒状态写入），请在 Agent 环境中设置 `ARCHIFY_UPDATE_CHECK_DISABLED=1`。
+安装后的 Skill 包含一个低频、失败静默的发布检查，它最多只显示可选更新提醒，绝不会自行下载或安装更新。一次成功检查后，下次网络请求通常约在 72 小时（±20%）后发出；检查失败后，活跃使用可能在首次 6 小时、后续 24 小时退避到期时重试。请求只访问 `https://licpmb.github.io/Archi/skill-updates/archipam/stable.json`。服务端会自然获得 IP、请求时间和常规 HTTP 元数据；检查器不会发送本地版本、Agent、项目数据、用户输入、账户/设备标识，也不会保存或回传 ETag。是否更新以及何时更新始终由你决定。如需完全关闭检查（包括网络请求和提醒状态写入），请在 Agent 环境中设置 `ARCHIPAM_UPDATE_CHECK_DISABLED=1`。
 
 ### 2. 直接从描述开始——不需要代码库
 
 ```text
-用 Archify 画出：Browser -> API -> Redis 缓存 -> PostgreSQL 回源。
+用 ArchiPam 画出：Browser -> API -> Redis 缓存 -> PostgreSQL 回源。
 ```
 
 需要源码证据时，打开仓库后改用：
 
 ```text
-分析这个仓库，然后使用 archify 生成一张高层运行时架构图。
+分析这个仓库，然后使用 archipam 生成一张高层运行时架构图。
 只保留 8–12 个核心组件，突出一条主要路径，并标出外部依赖与信任边界。
 辅助信息放进说明卡片，不要继续增加连线。
 ```
 
 ### 3. 在对话中细调
 
-继续说：`增加 Redis`、`把鉴权移到左侧`、`突出回滚路径`。Archify 会保留 Typed Source，只修改相关部分。
+继续说：`增加 Redis`、`把鉴权移到左侧`、`突出回滚路径`。ArchiPam 会保留 Typed Source，只修改相关部分。
 
 ## 选择合适的图表
 
@@ -141,40 +141,40 @@ DeepSeek Harness（社区集成、显式启用）：运行 `dsh plugin --profile
 做生产部署评审时，Architecture 可以按需启用 `deployment-ownership`
 工程画像：负责人、单一区域归属、数据库私有边界或边界穿越机制缺失时会直接阻断。
 它不会被静默开启，只校验作者写入的事实，不代表线上基础设施已经核验。可查看
-[通过校验的部署证明](https://tt-a1i.github.io/archify/gallery.html#proof-deployment-ownership)。
+[通过校验的部署证明](https://licpmb.github.io/Archi/gallery.html#proof-deployment-ownership)。
 
 做设计或 PR 评审时，Architecture Delta 生成已校验的 Before / Delta / After 和机器回执。精确选择任一作者变更，或播放一次有限 Review；全程只读，不推断影响、风险或合并安全。
 
-`node archify/bin/archify.mjs compare architecture base.json head.json architecture-delta.html --json`
+`node archipam/bin/archipam.mjs compare architecture base.json head.json architecture-delta.html --json`
 
 [![Architecture Delta：展示作者明确写出的新增、删除、变化和移动](docs/assets/architecture-delta-proof.jpg)](examples/checkout-platform-delta.html)
 
-不知道选哪一种？打开[交互式场景指南](https://tt-a1i.github.io/archify/guide.html)，或直接询问零依赖 CLI：
+不知道选哪一种？打开[交互式场景指南](https://licpmb.github.io/Archi/guide.html)，或直接询问零依赖 CLI：
 
 ```bash
-node archify/bin/archify.mjs guide "展示带 Redis 缓存未命中的 API 请求"
-node archify/bin/archify.mjs guide "梳理 Kafka Topic、消费者组、重放和死信队列" --json
+node archipam/bin/archipam.mjs guide "展示带 Redis 缓存未命中的 API 请求"
+node archipam/bin/archipam.mjs guide "梳理 Kafka Topic、消费者组、重放和死信队列" --json
 ```
 
 Workflow 用泳道保持主路径清晰：
 
-![Workflow 示例](docs/assets/archify-workflow.png)
+![Workflow 示例](docs/assets/archipam-workflow.png)
 
 Sequence 解释一次交互随时间如何推进：
 
-![Sequence 示例](docs/assets/archify-sequence.png)
+![Sequence 示例](docs/assets/archipam-sequence.png)
 
 Data Flow 突出数据移动和敏感边界：
 
-![Data Flow 示例](docs/assets/archify-dataflow.png)
+![Data Flow 示例](docs/assets/archipam-dataflow.png)
 
 Lifecycle 区分正常进展、等待、重试和终态：
 
-![Lifecycle 示例](docs/assets/archify-lifecycle.png)
+![Lifecycle 示例](docs/assets/archipam-lifecycle.png)
 
-Architecture 示例：[`Web App`](examples/web-app.html) · [`Archify Pipeline`](examples/archify-repo.html) · [`Grid 布局`](examples/archify-repo-grid.html) · [`桌面 Agent`](examples/maka-architecture.html)
+Architecture 示例：[`Web App`](examples/web-app.html) · [`ArchiPam Pipeline`](examples/archipam-repo.html) · [`Grid 布局`](examples/archipam-repo-grid.html) · [`桌面 Agent`](examples/maka-architecture.html)
 
-## 为什么用 Archify
+## 为什么用 ArchiPam
 
 - **用布局判断代替通用自动布局** —— Agent 根据故事选择层级、留白、线路和强调关系；共享的自动端点会确定性展开，不再让多支箭头堆在同一个中点。
 - **Typed JSON IR** —— 每种 Renderer 模式都有 Schema 和可复现的源文件。
@@ -185,7 +185,7 @@ Architecture 示例：[`Web App`](examples/web-app.html) · [`Archify Pipeline`]
 - **只在需要时附源码证据** —— 有证据的 Architecture 节点会显示 `SRC n`，并可打开由 Git 校验、固定到公开 commit 的文件与行号；普通成品不携带源码信息。
 - **结果默认便携** —— 一个 HTML 文件即可分享；导出永远是完整原图，不携带临时 Viewer 状态。
 
-Archify 不是通用绘图编辑器，也不是 Mermaid 主题；它负责把技术意图变成可交流的成品。
+ArchiPam 不是通用绘图编辑器，也不是 Mermaid 主题；它负责把技术意图变成可交流的成品。
 
 ## 工作原理
 
@@ -200,13 +200,13 @@ Archify 不是通用绘图编辑器，也不是 Mermaid 主题；它负责把技
 仓库常用命令：
 
 ```bash
-cd archify
-node bin/archify.mjs doctor
-node bin/archify.mjs demo /tmp/archify-demo
-node bin/archify.mjs guide "展示 CI/CD 检查、审批、部署和回滚"
-node bin/archify.mjs validate workflow examples/agent-tool-call.workflow.json --quality showcase --json
-node bin/archify.mjs preview workflow examples/agent-tool-call.workflow.json /tmp/workflow.html --quality showcase
-node bin/archify.mjs deliver workflow examples/agent-tool-call.workflow.json /tmp/workflow.html --quality showcase --open --json
+cd archipam
+node bin/archipam.mjs doctor
+node bin/archipam.mjs demo /tmp/archipam-demo
+node bin/archipam.mjs guide "展示 CI/CD 检查、审批、部署和回滚"
+node bin/archipam.mjs validate workflow examples/agent-tool-call.workflow.json --quality showcase --json
+node bin/archipam.mjs preview workflow examples/agent-tool-call.workflow.json /tmp/workflow.html --quality showcase
+node bin/archipam.mjs deliver workflow examples/agent-tool-call.workflow.json /tmp/workflow.html --quality showcase --open --json
 ```
 
 `preview` 是显式启用的桌面创作模式，不是默认后台服务：它只在随机端口监听 `127.0.0.1`，只观察指定 JSON，失败时保留上一份验证输出，并通过 Ctrl-C 停止。测试或准备手动打开打印出的本地 URL 时可加 `--no-open`。生成的 HTML 不会携带 Preview Runtime。
@@ -246,33 +246,33 @@ node bin/archify.mjs deliver workflow examples/agent-tool-call.workflow.json /tm
 
 稳定链接可以恢复 `#focus=<id>`、`#focus=<id>&reach=upstream|downstream`、`#relation=<id>`、`#route=<source>~<target>`、`#lens=<kind>~<kind>` 和 `#view=<view-id>`。读者触发的动态有限运行、遵守 `prefers-reduced-motion`，并且不会进入标准导出。
 
-完整生成与 Viewer 契约请查看 [`archify/SKILL.md`](archify/SKILL.md)。
+完整生成与 Viewer 契约请查看 [`archipam/SKILL.md`](archipam/SKILL.md)。
 
 ## 安装方式
 
 | 使用位置 | 安装位置或方法 | 能力 |
 |---|---|---|
-| **Raven** | ZIP 手动安装：将 `archify.zip` 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify` | 完整 Renderer + Validation 工作流 |
+| **Raven** | ZIP 手动安装：将 `archipam.zip` 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archipam` | 完整 Renderer + Validation 工作流 |
 | **Claude Code** | `~/.claude/skills/` 或 `.claude/skills/` | 完整 Renderer + Validation 工作流 |
 | **Codex CLI** | `~/.agents/skills/` 或 `.agents/skills/` | 完整 Renderer + Validation 工作流 |
 | **opencode** | `~/.config/opencode/skills/`、`.opencode/skills/` 或 `.agents/skills/` | 完整 Renderer + Validation 工作流 |
-| **Claude.ai** | Settings → Capabilities → Skills 中上传 `archify.zip` | 取决于沙箱是否提供 Node.js |
-| **Project Knowledge** | 把 `archify.zip` 上传到项目 | Prompt 驱动的 Architecture Fallback |
+| **Claude.ai** | Settings → Capabilities → Skills 中上传 `archipam.zip` | 取决于沙箱是否提供 Node.js |
+| **Project Knowledge** | 把 `archipam.zip` 上传到项目 | Prompt 驱动的 Architecture Fallback |
 Claude.ai 中的上传入口：
 
 ![Claude Skills 设置](docs/assets/claude-skills-settings.png)
 
-**DeepSeek Harness：** 面向开发者预览版 `@deepseek-ai/dsh@0.1.0-rc.6` 的社区集成，不是 DeepSeek 官方产品；Node `^22.19.0 || >=24.0.0`。安装：`dsh plugin --profile web add @tt-a1i/archify-dsh@0.1.0`；调用：`Use the archify skill to map this repository's runtime architecture.`；卸载：`dsh plugin --profile web remove @tt-a1i/archify-dsh`。没有遥测；shell 文件不会自动进入 Web Produced Files，请返回精确工作区路径。[详情](integrations/deepseek-harness/README.md)。
+**DeepSeek Harness：** 面向开发者预览版 `@deepseek-ai/dsh@0.1.0-rc.6` 的社区集成，不是 DeepSeek 官方产品；Node `^22.19.0 || >=24.0.0`。安装：`dsh plugin --profile web add @licpmb/archipam-dsh@0.1.0`；调用：`Use the archipam skill to map this repository's runtime architecture.`；卸载：`dsh plugin --profile web remove @licpmb/archipam-dsh`。没有遥测；shell 文件不会自动进入 Web Produced Files，请返回精确工作区路径。[详情](integrations/deepseek-harness/README.md)。
 
 ## 参考与边界
 
-- [Schema 说明](archify/schemas/README.md)
-- [Skill 与 Renderer 契约](archify/SKILL.md)
-- [示例](archify/examples/)
+- [Schema 说明](archipam/schemas/README.md)
+- [Skill 与 Renderer 契约](archipam/SKILL.md)
+- [示例](archipam/examples/)
 - [Agent 编图手册](docs/authoring-cookbook.zh-CN.md) · [English](docs/authoring-cookbook.md)
 - [版本历史](CHANGELOG.md)
 - [路线图](ROADMAP.md)
-- [自动生成的 Proof Lab](https://tt-a1i.github.io/archify/gallery.html)
+- [自动生成的 Proof Lab](https://licpmb.github.io/Archi/gallery.html)
 
 自动 Mermaid Parser、通用自动布局、托管分享服务和 WYSIWYG 编辑器目前都不在产品范围内。
 
@@ -282,10 +282,10 @@ Claude.ai 中的上传入口：
 
 ## 参与贡献
 
-欢迎提交 Issue、Pull Request 和真实场景图。请先阅读[贡献指南](CONTRIBUTING.md)；遇到问题时使用可复现 Bug 表单，也可以通过[社区 Showcase 表单](https://github.com/tt-a1i/archify/issues/new?template=showcase.yml)提交已验证成品。
+欢迎提交 Issue、Pull Request 和真实场景图。请先阅读[贡献指南](CONTRIBUTING.md)；遇到问题时使用可复现 Bug 表单，也可以通过[社区 Showcase 表单](https://github.com/licpmb/Archi/issues/new?template=showcase.yml)提交已验证成品。
 
-较大的功能或行为调整请先通过 Issue 对齐价值、兼容边界和非目标，再基于最新 `main` 开发。一个 PR 尽量只解决一个问题；核心代码和回归测试先行，生成物最后统一重建。Archify 坚持 Agent-first，优先完善稳定的机器可读诊断和现有权威合同，避免新增容易与 CLI 漂移的重复说明。&nbsp;·&nbsp;[LINUX&nbsp;DO](https://linux.do)
+较大的功能或行为调整请先通过 Issue 对齐价值、兼容边界和非目标，再基于最新 `main` 开发。一个 PR 尽量只解决一个问题；核心代码和回归测试先行，生成物最后统一重建。ArchiPam 坚持 Agent-first，优先完善稳定的机器可读诊断和现有权威合同，避免新增容易与 CLI 漂移的重复说明。&nbsp;·&nbsp;[LINUX&nbsp;DO](https://linux.do)
 
 ## Star History
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tt-a1i/archify/star-history/assets/star-history-dark.svg" /><img alt="Star History" src="https://raw.githubusercontent.com/tt-a1i/archify/star-history/assets/star-history-light.svg" /></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/licpmb/Archi/star-history/assets/star-history-dark.svg" /><img alt="Star History" src="https://raw.githubusercontent.com/licpmb/Archi/star-history/assets/star-history-light.svg" /></picture></p>

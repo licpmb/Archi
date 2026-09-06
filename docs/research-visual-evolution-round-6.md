@@ -9,7 +9,7 @@ Date: 2026-07-19
 
 ## Decision
 
-Archify should not chase a large style count. It should offer a small set of audience-specific identities that preserve the same semantic IDs, SVG geometry, guided views, export path, and validators.
+ArchiPam should not chase a large style count. It should offer a small set of audience-specific identities that preserve the same semantic IDs, SVG geometry, guided views, export path, and validators.
 
 The third preset is `blueprint`:
 

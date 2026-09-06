@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SCENARIO_RECIPES, startPromptsFor } from '../archify/recipes/scenarios.mjs';
+import { SCENARIO_RECIPES, startPromptsFor } from '../archipam/recipes/scenarios.mjs';
 import { copySiteAssets } from './copy-site-assets.mjs';
 import { diagramTypeCopyReplacements } from './site-copy.mjs';
 
@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const templatePath = path.join(__dirname, 'start-template.html');
 const outputPath = path.resolve(process.argv[2] || path.join(repoRoot, 'docs/start.html'));
-const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'archify/package.json'), 'utf8'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'archipam/package.json'), 'utf8'));
 
 const START_RECIPE_IDS = Object.freeze({
   architecture: 'system-overview',
@@ -51,7 +51,7 @@ const startJson = JSON.stringify(startData)
 
 const replacements = {
   ...diagramTypeCopyReplacements(),
-  '[[ARCHIFY_VERSION]]': packageJson.version,
+  '[[ARCHIPAM_VERSION]]': packageJson.version,
   '[[START_JSON]]': startJson,
 };
 

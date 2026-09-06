@@ -9,9 +9,9 @@ Date: 2026-07-23
 
 The valuable pattern is not the phrase "blast radius." It is the fast answer to a reader's next question after selecting a node: what authored relationships lead here, and where can they lead next?
 
-## Archify's bounded response
+## ArchiPam's bounded response
 
-Archify adds **Authored Reachability** to the existing Semantic Passport:
+ArchiPam adds **Authored Reachability** to the existing Semantic Passport:
 
 - `Upstream` follows authored relationships toward the focused node.
 - `Downstream` follows authored relationships away from the focused node.

@@ -8,15 +8,15 @@ Status: implementation-ready research recommendation
 Accept the hypothesis and build **Direct Relationship Pin** as the next bounded
 viewer slice.
 
-Archify already exposes authored relationships in every typed renderer and can
+ArchiPam already exposes authored relationships in every typed renderer and can
 explain them precisely after a reader focuses a node. The remaining orientation
 gap is the first step: a visible line still behaves like illustration, so the
 reader must infer which node to focus, open its Relationship Lens, and then find
 the matching row. The current viewer has enough semantic identity and existing
 chrome to remove that detour without becoming an editor
-([relationship renderer contract](../archify/renderers/shared/cli.mjs),
-[current Relationship Lens](../archify/assets/template.html),
-[current relationship tests](../archify/test/relationship-lens.test.mjs)).
+([relationship renderer contract](../archipam/renderers/shared/cli.mjs),
+[current Relationship Lens](../archipam/assets/template.html),
+[current relationship tests](../archipam/test/relationship-lens.test.mjs)).
 
 Round 34 should make the authored line itself a forgiving, accessible entry point:
 
@@ -39,40 +39,40 @@ selection, a context menu, a new floating inspector, or serialized viewport
 state.
 
 The primary-source evidence does not point to a higher-value competing
-orientation interaction. Archify already has node focus, one-hop intent,
+orientation interaction. ArchiPam already has node focus, one-hop intent,
 fewest-hop routes, semantic-kind comparison, chapter stories, beat navigation,
 an overview map, and exact-moment links. Direct relationship activation is the
 remaining basic graph noun that is visible but not directly operable.
 
 ## Focused research question
 
-> Should an Archify reader be able to interact with an authored relationship
+> Should an ArchiPam reader be able to interact with an authored relationship
 > directly, and if so how should hit area, focus, touch, transient preview,
 > pinned state, deep-link identity, motion, and export cleanliness work without adding
 > another editor-like surface?
 
 This note uses first-party documentation, first-party source, and W3C guidance as
-of 2026-07-20. Product conclusions and proposed Archify behavior are explicitly
+of 2026-07-20. Product conclusions and proposed ArchiPam behavior are explicitly
 marked as recommendations or inferences rather than vendor claims.
 
-## Current Archify baseline
+## Current ArchiPam baseline
 
 ### Relationships already have compiled semantic identity
 
 All five typed renderers emit `data-edge-from`, `data-edge-to`, an optional
 `data-edge-label`, and a `data-edge-key`. The shared helper performs only escaping
 and attribute emission; it does not alter the visible geometry
-([shared renderer helper](../archify/renderers/shared/cli.mjs)). The current
+([shared renderer helper](../archipam/renderers/shared/cli.mjs)). The current
 regression suite verifies that each source relationship receives one unique key
 across architecture, workflow, sequence, dataflow, and lifecycle output, even
 when more than one SVG element represents the same relationship
-([relationship renderer tests](../archify/test/relationship-lens.test.mjs)).
+([relationship renderer tests](../archipam/test/relationship-lens.test.mjs)).
 
 The Round 34 audit artifact contains 11 unique authored relationships and zero
 focusable/direct edge targets. Nodes are already focusable buttons, so this is a
 measured interaction asymmetry rather than a speculative feature gap
 ([current workflow gallery artifact](gallery/artifacts/agent-tool-call.workflow.html),
-[shared node accessibility helper](../archify/renderers/shared/cli.mjs)).
+[shared node accessibility helper](../archipam/renderers/shared/cli.mjs)).
 
 The duplication matters. An edge can have a primary path plus a separate label
 group carrying the same semantic attributes, and sequence relationships can be a
@@ -81,7 +81,7 @@ must de-duplicate by `data-edge-key` and derive geometry from the primary edge
 shape; it must not turn every matching label/detail element into a separate focus
 stop
 ([current generated gallery artifact](gallery/artifacts/agent-tool-call.workflow.html),
-[current relationship geometry helper](../archify/assets/template.html)).
+[current relationship geometry helper](../archipam/assets/template.html)).
 
 ### The explanation surface already exists
 
@@ -91,15 +91,15 @@ source, target, direction, neighbor, and label. Hover or focus previews the exac
 edge and both endpoints; row activation follows the neighbor. The list supports
 `ArrowUp`, `ArrowDown`, `Home`, and `End`, and its touch layout keeps the active
 row visible
-([Relationship Lens implementation](../archify/assets/template.html),
-[Relationship Lens tests](../archify/test/relationship-lens.test.mjs)).
+([Relationship Lens implementation](../archipam/assets/template.html),
+[Relationship Lens tests](../archipam/test/relationship-lens.test.mjs)).
 
 The gap is consequently not “invent an edge inspector.” It is “let the line open
-the inspector state Archify already has.” Reusing the existing panel is important
+the inspector state ArchiPam already has.” Reusing the existing panel is important
 because the viewer already has toolbar menus, diagram navigation, Guided Story,
 the Semantic Lens, Route Probe, focus passport, overview map, and presentation or
 embed variants
-([shared viewer chrome](../archify/assets/template.html)).
+([shared viewer chrome](../archipam/assets/template.html)).
 
 ### Preview, motion, and canonical output are already separated
 
@@ -108,16 +108,16 @@ the live SVG, highlights the exact relationship and endpoints, and may add one
 finite pulse overlay. Reduced motion and embed suppress the pulse. Canonical SVG
 export removes preview attributes and runtime overlays, while CSS changes only
 opacity, filter, and stroke emphasis rather than coordinates or transforms
-([preview and pulse implementation](../archify/assets/template.html),
-[export-clean regression tests](../archify/test/relationship-lens.test.mjs),
-[pulse regression tests](../archify/test/relationship-pulse.test.mjs)).
+([preview and pulse implementation](../archipam/assets/template.html),
+[export-clean regression tests](../archipam/test/relationship-lens.test.mjs),
+[pulse regression tests](../archipam/test/relationship-pulse.test.mjs)).
 
 The Motion Governor already recognizes `data-relationship-preview-active` as the
 `relationship` owner, after higher-priority story, chapter, and route states. A
 new direct pin should reuse that owner rather than introduce another animation
 channel
-([Motion Governor implementation](../archify/assets/template.html),
-[Motion Governor tests](../archify/test/motion-governor.test.mjs)).
+([Motion Governor implementation](../archipam/assets/template.html),
+[Motion Governor tests](../archipam/test/motion-governor.test.mjs)).
 
 ### Current URL state has one semantic owner, but relationships lack durable IDs
 
@@ -125,14 +125,14 @@ Focus, route, semantic Lens, and guided chapter state each replace the fragment
 with their own semantic mode. Round 33 allows `view` and `beat` together because
 the beat is a coordinate inside that chapter, but unrelated modes do not
 accumulate in the same URL
-([focus, route, Lens, and Guided Story hash readers](../archify/assets/template.html),
+([focus, route, Lens, and Guided Story hash readers](../archipam/assets/template.html),
 [Round 33 decision](research-visual-evolution-round-33.md)).
 
 A relationship pin would need to follow that rule, but the current relationship
 key is the source-array position passed to `focusEdgeAttrs()`, not a
 schema-required author-controlled ID
-([shared renderer helper](../archify/renderers/shared/cli.mjs),
-[typed renderer examples](../archify/examples)). Therefore Round 34 should keep
+([shared renderer helper](../archipam/renderers/shared/cli.mjs),
+[typed renderer examples](../archipam/examples)). Therefore Round 34 should keep
 the pin as in-page viewer state and leave the URL unchanged. A relationship link
 that can silently retarget after source reordering is worse than no relationship
 link.
@@ -175,14 +175,14 @@ give each de-duplicated relationship one semantic focus target; support click,
 tap, `Enter`, `Space`, and `Escape`; derive the accessible name from real source,
 target, and label metadata.
 
-**Adapt:** Archify is a viewer, so activation means “inspect/pin this authored
+**Adapt:** ArchiPam is a viewer, so activation means “inspect/pin this authored
 relationship,” not select for deletion, reconnection, or editing. Keep the
 visible edge style and the compiled graph immutable.
 
 **Skip:** deletion keys, reconnect handles, drag editing, multi-selection,
 editable labels, edge z-index mutation, React state, and the default generic
 “group” semantics. A pin behaves as a two-state command, so a toggle-button
-contract is clearer for Archify.
+contract is clearer for ArchiPam.
 
 ### 2. Cytoscape.js: touch selection is normal, but canvas rendering needs an application accessibility layer
 
@@ -223,7 +223,7 @@ renderer and documented APIs, not an official accessibility claim
 relationship at a time; background activation clears the pin; keep transient
 input events separate from durable selection.
 
-**Adapt:** Archify already has SVG and can create genuine focusable DOM targets,
+**Adapt:** ArchiPam already has SVG and can create genuine focusable DOM targets,
 so it should not inherit the keyboard and screen-reader limitations of a canvas
 renderer.
 
@@ -256,7 +256,7 @@ transient preview/highlight, and pinned semantic selection. Keep interaction
 width stable in screen space rather than allowing zoom to make edges impossible
 to target.
 
-**Adapt:** Archify needs one pinned relationship, not yFiles' editor command
+**Adapt:** ArchiPam needs one pinned relationship, not yFiles' editor command
 selection. The existing Relationship Lens can present the pinned state while
 the invisible hit geometry remains independent of the authored edge.
 
@@ -275,7 +275,7 @@ The relationship list already supplies an equivalent target for each edge once
 a node is focused, but direct manipulation should still aim for a 24 CSS-pixel
 interaction corridor rather than rely on the equivalent-target exception. A
 non-scaling invisible stroke is the closest SVG analogue to yFiles' view-space
-radius. This is an Archify implementation recommendation based on the W3C and
+radius. This is an ArchiPam implementation recommendation based on the W3C and
 yFiles guidance, not a W3C prescription for a specific SVG technique.
 
 The ARIA Authoring Practices button pattern says `Space` and `Enter` activate a
@@ -291,7 +291,7 @@ The APG Toolbar Pattern documents roving focus as a way to keep a group of three
 or more controls to one Tab stop: arrows move among controls and optional `Home`
 and `End` move to the first and last control
 ([W3C APG Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)).
-Archify should borrow the focus-management technique, not claim that diagram
+ArchiPam should borrow the focus-management technique, not claim that diagram
 edges visually constitute a toolbar: wrap them in a labelled relationship group,
 keep exactly one relationship button at `tabindex=0`, put the others at `-1`,
 and document the arrow-key instruction with `aria-describedby`.
@@ -313,7 +313,7 @@ element `data.id` as the unique element identifier
 ([official React Flow Edge API](https://reactflow.dev/api-reference/types/edge),
 [official Cytoscape.js data API](https://js.cytoscape.org/#collection/data)).
 
-**Borrow later:** if Archify adds relationship links, use an author-controlled
+**Borrow later:** if ArchiPam adds relationship links, use an author-controlled
 unique ID. Never derive durable identity from DOM order, path geometry, label
 position, or endpoints alone; parallel relationships make `from→to` insufficient.
 
@@ -337,9 +337,9 @@ schema decision backed by usage evidence.
 | Are edges expected to be directly operable in mature graph viewers? | React Flow and yFiles make edges clickable/selectable; Cytoscape normalizes taps on graph elements. | Yes. Direct relationship activation is a normal graph interaction, not editor-only novelty. |
 | Should the visible line become thick? | React Flow separates the visual edge from a 20-pixel invisible helper; yFiles uses a view-space hit radius. | No. Add viewer-only hit geometry and preserve the authored stroke. |
 | Is hover enough? | yFiles separates highlight from selection; Cytoscape separates pointer events from selected state; touch has no durable hover. | No. Preview transiently, then offer a pinned state. |
-| Should pin create new UI? | Archify already has an exact Relationship Lens row and is chrome-dense. | No. Reuse and contextualize the existing Lens. |
+| Should pin create new UI? | ArchiPam already has an exact Relationship Lens row and is chrome-dense. | No. Reuse and contextualize the existing Lens. |
 | Should keyboard users still go through a node first? | React Flow exposes edge focus/activation; APG documents roving focus to reduce Tab stops. | No. Make every de-duplicated relationship operable, but keep only one at a time in the page Tab order. |
-| Is current identity sufficient for a deep link? | Graphviz requires author-controlled unique IDs; Archify's key is a source-order number. | No. Keep the pin local in Round 34 and do not emit a relation URL. |
+| Is current identity sufficient for a deep link? | Graphviz requires author-controlled unique IDs; ArchiPam's key is a source-order number. | No. Keep the pin local in Round 34 and do not emit a relation URL. |
 | Is another orientation feature more valuable first? | Node, neighborhood, route, kind, chapter, beat, overview, and exact story-moment orientation already exist; direct authored edges are the remaining non-operable visible semantic primitive. | No competing gap has stronger evidence in the current viewer. |
 
 ### Verdict on the audited implementation contract
@@ -530,7 +530,7 @@ Direct Relationship Pin remains viewer-only:
 - do not serialize pin state into PNG, SVG, WebM, GIF, or source JSON;
 - do not add a schema field, migration, server, storage, dependency, or editor
   API; and
-- expose at most a small read-only `Archify.relationship` receipt/API for testing
+- expose at most a small read-only `ArchiPam.relationship` receipt/API for testing
   and embedding parity.
 
 ## Explicit borrow / adapt / skip decision
@@ -740,7 +740,7 @@ Proceed with **Direct Relationship Pin** exactly as the bounded contract above.
 
 The feature is small in UI surface but high in perceived quality: it makes the
 diagram answer the question a reader naturally asks when pointing at a line,
-works with mouse, touch, and keyboard, and composes with Archify's existing
+works with mouse, touch, and keyboard, and composes with ArchiPam's existing
 semantic Lens instead of adding more chrome. It also strengthens the
 product's defining boundary: compiled semantic meaning becomes easier to inspect,
 while authored geometry and canonical output remain deterministic and clean.

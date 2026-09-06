@@ -12,7 +12,7 @@ showing without asking the reader to decode glow, direction, or graph geometry.
 
 The current Story Follow Camera makes the active neighborhood readable. The
 missing layer is semantic narration. A moving camera can answer “where should I
-look?” but not always “what happened here?” Archify already owns the facts needed
+look?” but not always “what happened here?” ArchiPam already owns the facts needed
 to answer that second question:
 
 - stable current and previous node IDs and labels;
@@ -31,7 +31,7 @@ role, so a reader can watch and understand without guessing.
 
 ## Why this is the next gap
 
-Archify has already solved the surrounding navigation layers:
+ArchiPam has already solved the surrounding navigation layers:
 
 - Semantic Camera and Story Follow Camera handle local framing.
 - Story Beat Navigator exposes every authored stop.
@@ -73,13 +73,13 @@ signature rather than a generic effect sprayed over arbitrary topology
 **Borrow:** semantic specificity, a settled reading interval, immutable source
 geometry, and fail-closed behavior.
 
-**Adapt:** Archify should express semantic specificity as exact, readable beat
+**Adapt:** ArchiPam should express semantic specificity as exact, readable beat
 copy beside its already bounded motion. The strip can use real edge labels and
 node responsibilities without creating twelve scene-specific runtimes.
 
 **Skip:** copying twelve styles, packet trains, ECG heads, halos, per-scene
 metadata, or GIF-only timelines. Those are validated fixture contracts in that
-project, not general facts Archify can safely infer from its five typed IRs.
+project, not general facts ArchiPam can safely infer from its five typed IRs.
 
 ### 2. Structurizr: a story is stepped, reader-controlled, and quieter in presentation
 
@@ -101,7 +101,7 @@ step controls; keep presentation visually quiet.
 add a second toolbar or open an inspection panel on every automatic beat.
 
 **Skip:** hiding all not-yet-revealed topology and copying Structurizr's complete
-workspace navigation model. Archify's full static truth and local framing are
+workspace navigation model. ArchiPam's full static truth and local framing are
 already stronger safeguards against lost context.
 
 ### 3. LikeC4: a dynamic step can carry explanatory notes
@@ -115,7 +115,7 @@ layer in addition to ordered endpoints.
 
 **Borrow:** the concept that a step may explain its technical meaning.
 
-**Adapt now:** derive a concise explanation only from Archify's existing edge
+**Adapt now:** derive a concise explanation only from ArchiPam's existing edge
 label and node metadata.
 
 **Skip now:** a new author-controlled beat-note schema and Markdown renderer.
@@ -172,7 +172,7 @@ disableable and identifies `prefers-reduced-motion` as a sufficient technique
 **Borrow:** do not repeatedly announce automatic beat changes; manual changes
 may be announced politely; captions need a stable, high-contrast reading surface.
 
-**Adapt:** retain Archify's current pause-on-focus behavior and Live/Still owner.
+**Adapt:** retain ArchiPam's current pause-on-focus behavior and Live/Still owner.
 The strip may use a 120–160ms opacity-only entrance in Live; Still and
 `prefers-reduced-motion` switch content immediately.
 
@@ -184,7 +184,7 @@ or speech-like announcements on every autoplay beat.
 | Candidate | User value | Density cost | Truth/risk | Decision |
 |---|---|---:|---|---|
 | Fourth or fifth visual preset | More screenshots | High CSS and renderer QA surface | Mostly cosmetic; duplicates competitor breadth | **Skip now** |
-| Per-diagram packet/train/ECG motion signatures | High spectacle | Low chrome, very high runtime surface | Needs explicit semantics Archify does not currently own | **Adapt later** |
+| Per-diagram packet/train/ECG motion signatures | High spectacle | Low chrome, very high runtime surface | Needs explicit semantics ArchiPam does not currently own | **Adapt later** |
 | Auto-hiding Presentation HUD | More canvas | Low | Helpful polish, but does not explain a beat | **Later** |
 | Runtime collapse/expand | Less visible topology | Medium | Changes perceived graph truth and camera assumptions | **Skip** |
 | Active-subgraph foreground cloning | Cleaner crossings | Low chrome, high DOM complexity | Marker, z-order, hit-target, and export risks | **Only after measured occlusion** |
@@ -339,7 +339,7 @@ render differently by surface.
 ### Invented causality
 
 If `A · B` becomes “A calls B” without one exact forward edge and label, the
-feature has violated Archify's trust boundary. Fail closed to relation class,
+feature has violated ArchiPam's trust boundary. Fail closed to relation class,
 endpoints, and existing metadata.
 
 ### Caption becomes a second Passport

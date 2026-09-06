@@ -3,7 +3,7 @@ Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Reader gap
 
-Archify already supports authored Story Trails, one-hop Intent Trace, durable
+ArchiPam already supports authored Story Trails, one-hop Intent Trace, durable
 node focus, relationship inspection, search, and overview navigation. Those
 surfaces answer “what is this?”, “what touches it?”, and “what story did the
 author prepare?” They do not answer an unplanned reader question that appears
@@ -18,19 +18,19 @@ component to that one?**
   editing model, or scene expansion.
 - [Cytoscape.js graph algorithms](https://js.cytoscape.org/#collection/algorithms)
   return an ordered path containing both nodes and the edges between them, and
-  let the caller explicitly choose directed traversal. Archify should likewise
+  let the caller explicitly choose directed traversal. ArchiPam should likewise
   preserve authored direction and exact edge identity instead of merely
   highlighting a set of connected nodes.
 - [Graphology's shortest-path package](https://graphology.github.io/standard-library/shortest-path.html)
   exposes an unweighted shortest path and returns `null` when no path exists.
-  Archify has no authored costs, so “fewest real relationship hops” is a more
+  ArchiPam has no authored costs, so “fewest real relationship hops” is a more
   honest contract than inventing weights from screen distance or color.
 - [yFiles shortest-path documentation](https://docs.yworks.com/yfiles-html/api/ShortestPath/)
   separates graph analysis from the visual highlight applied to the result and
   treats directed traversal as an explicit property. Its
   [selection/focus/highlight model](https://docs.yworks.com/yfiles-html/dguide/view/view_selection.html)
   also keeps transient highlights independent from focus and selection. That
-  matches Archify's existing separation between Intent Trace, Focus, Story,
+  matches ArchiPam's existing separation between Intent Trace, Focus, Story,
   and exported geometry.
 
 ## Borrow / skip decision
@@ -53,7 +53,7 @@ component to that one?**
 - No second path source in JSON. The compiled semantic relationships remain
   the only topology contract.
 
-## Archify implementation
+## ArchiPam implementation
 
 **Route Probe** is a viewer-only mode available from `PATH` or <kbd>R</kbd>.
 

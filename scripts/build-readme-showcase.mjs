@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const assetsRoot = path.join(repoRoot, 'docs', 'assets');
-const outputPath = path.resolve(process.argv[2] || path.join(assetsRoot, 'archify-live-proof.gif'));
+const outputPath = path.resolve(process.argv[2] || path.join(assetsRoot, 'archipam-live-proof.gif'));
 const receiptPath = outputPath.replace(/\.gif$/i, '.json');
 const width = 960;
 const height = 540;
@@ -65,7 +65,7 @@ function executable(file) {
 }
 
 function commandPath(command) {
-  const result = spawnSync('sh', ['-c', 'command -v "$1"', 'archify-showcase', command], {
+  const result = spawnSync('sh', ['-c', 'command -v "$1"', 'archipam-showcase', command], {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'ignore'],
   });
@@ -74,7 +74,7 @@ function commandPath(command) {
 
 function findChrome() {
   const candidates = [
-    process.env.ARCHIFY_CHROME,
+    process.env.ARCHIPAM_CHROME,
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
     commandPath('google-chrome'),
@@ -117,12 +117,12 @@ function wrapperHtml(scene, index) {
 </style>
 </head>
 <body>
-  <iframe src="${esc(artifactUrl)}" title="${esc(scene.title)} generated Archify artifact"></iframe>
+  <iframe src="${esc(artifactUrl)}" title="${esc(scene.title)} generated ArchiPam artifact"></iframe>
   <div class="edge"></div>
   <div class="topbar">
     <div class="brand">
       <svg class="mark" viewBox="0 0 28 28" fill="none" aria-hidden="true"><polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="rgba(8,51,68,.8)" stroke="#22d3ee" stroke-width="1.5"/><polygon points="14,7 21,11 21,19 14,23 7,19 7,11" stroke="rgba(34,211,238,.45)"/><circle cx="14" cy="15" r="2.5" fill="#22d3ee"/></svg>
-      <span>ARCHIFY</span><span class="live">LIVE PROOF</span>
+      <span>ARCHIPAM</span><span class="live">LIVE PROOF</span>
     </div>
     <div class="count"><strong>${String(index + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}</strong></div>
   </div>
@@ -132,9 +132,9 @@ function wrapperHtml(scene, index) {
   </div>
   <div class="fade"></div>
   <script>
-    window.__archifyShowcaseReady=false;
+    window.__archipamShowcaseReady=false;
     const frame=document.querySelector('iframe');
-    frame.addEventListener('load',()=>setTimeout(()=>{window.__archifyShowcaseReady=true},260),{once:true});
+    frame.addEventListener('load',()=>setTimeout(()=>{window.__archipamShowcaseReady=true},260),{once:true});
   </script>
 </body>
 </html>`;
@@ -244,7 +244,7 @@ async function captureFrames(chromePath, tempRoot) {
     '--disable-renderer-backgrounding', '--force-device-scale-factor=1',
     `--window-size=${width},${height}`, `--user-data-dir=${profileRoot}`, 'about:blank',
   ];
-  if (typeof process.getuid === 'function' && process.getuid() === 0) chromeArgs.unshift('--no-sandbox');
+  if ((typeof process.getuid === 'function' && process.getuid() === 0) || process.env.ARCHIPAM_CHROME_NO_SANDBOX === '1') chromeArgs.unshift('--no-sandbox');
 
   const chrome = spawn(chromePath, chromeArgs, { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] });
   let chromeErrors = '';
@@ -256,7 +256,7 @@ async function captureFrames(chromePath, tempRoot) {
     const targets = await cdp.send('Target.getTargets');
     let target = targets.targetInfos?.find(item => item.type === 'page');
     if (!target) {
-      const created = await cdp.send('Target.createTarget', { url: 'about:blank', width, height });
+      const created = await cdp.send('Target.createTarget', { url: 'about:blank' });
       target = { targetId: created.targetId };
     }
     const attached = await cdp.send('Target.attachToTarget', { targetId: target.targetId, flatten: true });
@@ -275,7 +275,7 @@ async function captureFrames(chromePath, tempRoot) {
       const navigation = await cdp.send('Page.navigate', { url: pathToFileURL(wrapperPath).href }, sessionId);
       if (navigation.errorText) throw new Error(`${scene.id}: ${navigation.errorText}`);
       await loaded;
-      await evaluate(cdp, sessionId, `new Promise((resolve,reject)=>{const end=Date.now()+12000;const poll=()=>window.__archifyShowcaseReady?resolve(true):Date.now()>end?reject(new Error('artifact load timeout')):setTimeout(poll,40);poll()})`, true);
+      await evaluate(cdp, sessionId, `new Promise((resolve,reject)=>{const end=Date.now()+12000;const poll=()=>window.__archipamShowcaseReady?resolve(true):Date.now()>end?reject(new Error('artifact load timeout')):setTimeout(poll,40);poll()})`, true);
 
       for (let i = 0; i < framesPerScene; i += 1) {
         const fade = i === 0 ? 0.82 : i === 1 ? 0.38 : i === framesPerScene - 1 ? 0.42 : 0;
@@ -295,7 +295,20 @@ async function captureFrames(chromePath, tempRoot) {
     throw error;
   } finally {
     cdp.failAll(new Error('capture finished'));
-    chrome.kill('SIGTERM');
+    if (chrome.exitCode === null && chrome.signalCode === null) {
+      chrome.kill('SIGTERM');
+      await Promise.race([
+        new Promise(resolve => chrome.once('exit', resolve)),
+        sleep(3000),
+      ]);
+      if (chrome.exitCode === null && chrome.signalCode === null) {
+        chrome.kill('SIGKILL');
+        await Promise.race([
+          new Promise(resolve => chrome.once('exit', resolve)),
+          sleep(1000),
+        ]);
+      }
+    }
   }
 }
 
@@ -320,9 +333,9 @@ async function main() {
     if (!fs.existsSync(artifact)) throw new Error(`${scene.id}: missing ${scene.artifact}; run node scripts/build-gallery.mjs`);
   }
   const chromePath = findChrome();
-  if (!chromePath) throw new Error('Chrome or Chromium is required. Set ARCHIFY_CHROME to its executable path.');
+  if (!chromePath) throw new Error('Chrome or Chromium is required. Set ARCHIPAM_CHROME to its executable path.');
   const ffmpeg = requireCommand('ffmpeg', 'Install it with your system package manager.');
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-readme-showcase-'));
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-readme-showcase-'));
   try {
     const { framesRoot, frameCount } = await captureFrames(chromePath, tempRoot);
     buildGif(ffmpeg, framesRoot);
@@ -352,7 +365,7 @@ async function main() {
     console.log(outputPath);
     console.log(receiptPath);
   } finally {
-    fs.rmSync(tempRoot, { recursive: true, force: true });
+    fs.rmSync(tempRoot, { recursive: true, force: true, maxRetries: 8, retryDelay: 125 });
   }
 }
 

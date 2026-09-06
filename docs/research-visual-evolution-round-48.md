@@ -6,7 +6,7 @@ Scope: desktop-first, finite semantic motion on one exact authored relationship.
 ## Question
 
 Round 47 made node roles recognizable before the reader reaches their labels.
-The remaining motion gap is similar: Archify's exact-edge Directional Flow Pulse
+The remaining motion gap is similar: ArchiPam's exact-edge Directional Flow Pulse
 is truthful and stable, but every relationship currently moves as the same
 dashed light streak. Can the moving mark explain *what kind of traffic it is*
 without adding controls, looping decoration, or schema?
@@ -26,9 +26,9 @@ while source routes, nodes, labels, containers, markers, and camera stay fixed.
 Primary source:
 [Focused SVG-to-GIF Motion](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/motion-effects.md)
 
-### Current Archify contract
+### Current ArchiPam contract
 
-`archify/assets/template.html` already owns one strong exact-edge surface:
+`archipam/assets/template.html` already owns one strong exact-edge surface:
 
 - relationship hover/focus resolves a stable `data-edge-key`;
 - only matching authored `path`, `line`, or `polyline` geometry is cloned;

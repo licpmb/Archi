@@ -25,7 +25,7 @@ whole-diagram opening
   -> compact shelf again
 ```
 
-The reason to do this now is measurable. Archify has accumulated a powerful
+The reason to do this now is measurable. ArchiPam has accumulated a powerful
 story system, but its inactive controls are occupying the space in which a new
 reader should first see the diagram.
 
@@ -34,13 +34,13 @@ reader should first see the diagram.
 ### The cold state spends space on actions that cannot yet work
 
 The generated viewer always renders the complete Story Director before the
-diagram (`archify/assets/template.html`, current lines 3642–3679). Its first
+diagram (`archipam/assets/template.html`, current lines 3642–3679). Its first
 row contains Previous, the generic `Explore this system` description, and Next;
 its action row contains Play story, Copy moment, and Show all; the chapter rail
 then occupies a final row.
 
 The current `render()` function already exposes the exact state needed for a
-bounded solution (`archify/assets/template.html`, current lines 7327–7342):
+bounded solution (`archipam/assets/template.html`, current lines 7327–7342):
 
 - `activeIndex === -1` writes `data-active-view="all"`;
 - Previous is disabled;
@@ -50,7 +50,7 @@ bounded solution (`archify/assets/template.html`, current lines 7327–7342):
 
 The mobile stylesheet makes the cost larger rather than smaller. At widths up
 to `720px`, the actions become a three-column second row and Previous/Next keep
-`2.75rem` controls (`archify/assets/template.html`, current lines 2737–2755).
+`2.75rem` controls (`archipam/assets/template.html`, current lines 2737–2755).
 
 ### Fresh browser readback
 
@@ -97,7 +97,7 @@ Sources:
 - [Fireworks composition-quality contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/main/references/composition-quality-contract.md)
 
 **Borrow:** let the artifact itself remain the first proof.
-**Adapt:** compact Archify's inactive story surface while retaining its stronger
+**Adapt:** compact ArchiPam's inactive story surface while retaining its stronger
 semantic chapter entrances.
 **Skip:** copying twelve styles, a GIF pipeline, or Fireworks' complete geometry
 contract as a substitute for this measured first-view problem.
@@ -119,9 +119,9 @@ Sources:
 - [Structurizr presentation mode](https://docs.structurizr.com/ui/diagrams/presentation)
 
 **Borrow:** make story progress controls contextual and keep the canvas primary.
-**Adapt:** Archify should preserve Play and every named chapter before
+**Adapt:** ArchiPam should preserve Play and every named chapter before
 activation, then reveal its richer director after activation.
-**Skip:** hiding all navigation, requiring fullscreen, or reducing Archify to
+**Skip:** hiding all navigation, requiring fullscreen, or reducing ArchiPam to
 only Previous/Next.
 
 ### LikeC4 — viewer capability is independently configurable
@@ -135,7 +135,7 @@ control as mandatory chrome.
 Source: [LikeC4 React components](https://likec4.dev/tooling/react/)
 
 **Borrow:** capability and visibility are separate decisions.
-**Adapt:** use Archify's existing semantic state, not a new host configuration,
+**Adapt:** use ArchiPam's existing semantic state, not a new host configuration,
 to decide whether director-only controls are relevant.
 **Skip:** a React integration layer, host API, or configurable control matrix.
 
@@ -345,13 +345,13 @@ Validate a freshly generated guided workflow artifact, not only the template.
 
 Proceed with **Story Shelf** for Round 42.
 
-Archify does not need another diagram feature to look richer. It needs its
+ArchiPam does not need another diagram feature to look richer. It needs its
 existing richness to arrive in the right order. The compact cold shelf keeps
 the two honest story entrances—Play and named chapters—while giving the
 diagram back a meaningful part of the first viewport. Once the reader expresses
 story intent, the complete director returns with no behavior loss.
 
 Keep **Clean Flow Gate** as the next research candidate. Fireworks' current
-composition contract exposes a real gap in Archify's uneven cross-renderer
+composition contract exposes a real gap in ArchiPam's uneven cross-renderer
 geometry checks, but that deserves an explicit legitimate-junction and
 diagnostic contract rather than being smuggled into a visual-density slice.

@@ -1,11 +1,11 @@
 # Visual evolution round 8: semantic Node Finder
 
 Date: 2026-07-19
-Status: implemented on `codex/archify-visual-evolution`
+Status: implemented on `codex/archipam-visual-evolution`
 
 ## Problem
 
-Archify can focus a node after the reader sees it, and guided views can lead a reader through authored paths. A reader opening an unfamiliar or wide diagram still has no direct answer to “where is Redis?”, “which node owns audit?”, or “show me the worker.”
+ArchiPam can focus a node after the reader sees it, and guided views can lead a reader through authored paths. A reader opening an unfamiliar or wide diagram still has no direct answer to “where is Redis?”, “which node owns audit?”, or “show me the worker.”
 
 ## External patterns reviewed
 
@@ -18,7 +18,7 @@ Archify can focus a node after the reader sees it, and guided views can lead a r
 
 Add a semantic Node Finder, not a persistent minimap.
 
-Archify's authored diagrams intentionally stay bounded—architecture guidance recommends roughly 8–12 core components, and the other renderers use constrained lanes, stages, or participants. A minimap would permanently spend diagram area to summarize a graph that already fits on one authored canvas. Search solves the actual unfamiliarity problem without adding another visual layer.
+ArchiPam's authored diagrams intentionally stay bounded—architecture guidance recommends roughly 8–12 core components, and the other renderers use constrained lanes, stages, or participants. A minimap would permanently spend diagram area to summarize a graph that already fits on one authored canvas. Search solves the actual unfamiliarity problem without adding another visual layer.
 
 The finder:
 

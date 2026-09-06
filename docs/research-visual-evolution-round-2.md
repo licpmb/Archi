@@ -1,10 +1,10 @@
-# Archify visual evolution research — round 2
+# ArchiPam visual evolution research — round 2
 
 Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Executive decision
 
-Archify should absorb **viewer intelligence**, **stable semantic identity**, and
+ArchiPam should absorb **viewer intelligence**, **stable semantic identity**, and
 **proof-first presentation** from adjacent projects. It should not absorb their
 canvas-editor architecture, diagram-language breadth, or dependency stacks.
 
@@ -22,11 +22,11 @@ focus contract: agents edit the typed IR by semantic ID while preserving
 untouched identity, and readers click or keyboard-focus a node, dim unrelated
 elements, expose its immediate relationships, and create a shareable deep link.
 This adds the “large diagrams are safely refinable and explorable” benefit
-associated with graph canvases without turning Archify into one.
+associated with graph canvases without turning ArchiPam into one.
 
 ## Round 2 implementation status
 
-The `codex/archify-visual-evolution` branch now implements the first candidate
+The `codex/archipam-visual-evolution` branch now implements the first candidate
 as a dependency-free viewer contract across all five renderers:
 
 - deterministic node DOM IDs and relationship endpoint hooks;
@@ -43,7 +43,7 @@ as a dependency-free viewer contract across all five renderers:
 The bounded `meta.views` experiment is now implemented across all five typed
 renderers. A real workflow fixture proves the contract with three reader paths,
 while schema, semantic, geometry-invariance, gallery, zero-install, and browser
-checks keep it inside Archify's read-only viewer boundary.
+checks keep it inside ArchiPam's read-only viewer boundary.
 
 The follow-on [round 3 playback study](research-visual-evolution-round-3.md)
 adds a user-triggered, fixed-camera Play/Pause presentation over those existing
@@ -111,7 +111,7 @@ What it proves:
   ([interactive exporter](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/main/scripts/export-interactive-html.py),
   [viewer implementation](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/main/scripts/interactive_html.py)).
 - Motion is deliberately constrained by semantic roles and scene contracts,
-  but its optional GIF path is a substantially heavier stack than Archify's
+  but its optional GIF path is a substantially heavier stack than ArchiPam's
   browser-native WebM path
   ([motion contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/main/references/motion-effects.md),
   [motion implementation](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/main/scripts/motion.py)).
@@ -124,7 +124,7 @@ Borrow now:
 
 Borrow later:
 
-- a scenario suitability guide that tells users which Archify renderer and
+- a scenario suitability guide that tells users which ArchiPam renderer and
   visual treatment fits a request.
 
 Skip:
@@ -171,7 +171,7 @@ Borrow later:
 Skip:
 
 - drag, resize, connect, lasso, whiteboard, collaborative editing, and a React
-  runtime. Those solve canvas-authoring problems outside Archify's boundary.
+  runtime. Those solve canvas-authoring problems outside ArchiPam's boundary.
 
 ### 3. Cytoscape.js
 
@@ -194,7 +194,7 @@ What it proves:
   ([package manifest](https://github.com/cytoscape/cytoscape.js/blob/unstable/package.json),
   [distribution documentation](https://js.cytoscape.org/)).
 - Its default visual renderer uses the browser Canvas API. That enables large,
-  rich graphs, but Canvas does not itself give Archify the semantic DOM and
+  rich graphs, but Canvas does not itself give ArchiPam the semantic DOM and
   screen-reader surface that its SVG output can preserve
   ([official renderer note](https://blog.js.cytoscape.org/2025/01/13/webgl-preview/)).
 
@@ -231,7 +231,7 @@ What it proves:
   [image export](https://g6.antv.antgroup.com/api/export-image)).
 - Its extension surface includes minimaps, fisheye, tooltips, history, timebars,
   and edge bundling. That is useful evidence about mature graph-viewer needs,
-  but also evidence that the full engine is much broader than Archify needs
+  but also evidence that the full engine is much broader than ArchiPam needs
   ([plugin overview](https://g6.antv.antgroup.com/en/manual/plugin/overview),
   [official examples](https://g6.antv.antgroup.com/en/examples)).
 
@@ -248,7 +248,7 @@ Borrow later:
 
 Skip:
 
-- embedding G6 or its plugin ecosystem. Archify can implement the small,
+- embedding G6 or its plugin ecosystem. ArchiPam can implement the small,
   read-only subset with its existing semantic SVG and vanilla browser runtime.
 
 ### 5. D2
@@ -285,7 +285,7 @@ What it proves:
 Borrow now:
 
 - the conceptual split between an overview, alternate scenario, and ordered
-  walkthrough; use it to shape Archify recipes and examples.
+  walkthrough; use it to shape ArchiPam recipes and examples.
 
 Borrow later:
 
@@ -320,7 +320,7 @@ What it proves:
   `strict` disabling click functionality and `sandbox` isolating rendering
   ([usage and security levels](https://github.com/mermaid-js/mermaid/blob/develop/docs/config/usage.md)).
 - Mermaid is embeddable through ESM/CDN and offers a smaller “tiny” build, but
-  the full package has a broad runtime dependency graph. Archify should copy
+  the full package has a broad runtime dependency graph. ArchiPam should copy
   its contracts, not embed it
   ([usage guide](https://github.com/mermaid-js/mermaid/blob/develop/docs/config/usage.md),
   [package manifest](https://github.com/mermaid-js/mermaid/blob/develop/packages/mermaid/package.json)).
@@ -358,7 +358,7 @@ What it proves:
 - The JavaScript distribution supports Web Workers and ships a browser-ready
   bundled build. Its package declares no runtime dependencies, though the
   bundled layout engine is still materially larger and more complex than
-  Archify's current renderer-specific geometry
+  ArchiPam's current renderer-specific geometry
   ([elkjs usage](https://github.com/kieler/elkjs),
   [package manifest](https://github.com/kieler/elkjs/blob/master/package.json)).
 - The project's own FAQ points to recurring difficulty preserving previous
@@ -383,7 +383,7 @@ Skip:
 
 ## Cross-repository comparison
 
-| Capability | Best evidence | Archify interpretation |
+| Capability | Best evidence | ArchiPam interpretation |
 |---|---|---|
 | Stable IDs | React Flow node IDs; Cytoscape JSON IDs; Mermaid deterministic seeds | Keep typed IR IDs stable and emit deterministic semantic hooks into SVG/HTML |
 | Semantic zoom/focus | React Flow contextual zoom; G6 fixed element size; Cytoscape collection fit; D2 linked layers | Add read-only focus and progressive detail first; multi-board drill-down later |
@@ -556,7 +556,7 @@ Verification path:
 
 The differentiator should become sharper, not broader:
 
-> Archify compiles typed technical intent into a deterministic, validated,
+> ArchiPam compiles typed technical intent into a deterministic, validated,
 > self-contained diagram that is beautiful at a glance and explorable by
 > semantic identity.
 

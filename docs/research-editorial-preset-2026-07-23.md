@@ -5,7 +5,7 @@ Status: implementation decision for `codex/visual-proof-evolution`
 
 ## Why this slice
 
-Archify already has the deeper reading product: exact semantic identity, search,
+ArchiPam already has the deeper reading product: exact semantic identity, search,
 route and reach inspection, guided stories, source evidence, stable export, and
 five validated diagram modes. The remaining first-impression gap is visual
 choice. A new reader can recognize only three visual identities before learning
@@ -26,7 +26,7 @@ routing and spacing comparable. The useful product lesson is that a style must
 be visible, named, and executable rather than described as a loose palette.
 
 - **Borrow:** one named, memorable visual identity with an explicit audience.
-- **Adapt:** keep Archify's exact existing SVG geometry and semantic palette;
+- **Adapt:** keep ArchiPam's exact existing SVG geometry and semantic palette;
   express the identity through CSS variables, publication typography, material,
   and chrome.
 - **Skip:** a large style matrix, vendor icon catalogue, renderer-specific
@@ -53,7 +53,7 @@ coherent during selection, focus, and animation—not only in a static screensho
 
 - **Borrow:** verify the style across interaction and export states.
 - **Adapt:** exercise Route and Reach cards, Story, trace motion, dark/light,
-  and canonical SVG through Archify's existing gates.
+  and canonical SVG through ArchiPam's existing gates.
 - **Skip:** a graph runtime, editable nodes, WebGL, new dependencies, or a
   second state owner.
 
@@ -71,7 +71,7 @@ launch notes, and narrative technical documentation:
 - low-radius panels and quiet shadows instead of generic glass cards.
 
 It is intentionally not “Notion style” or a Fireworks clone. It aligns with
-Archify's own landing-page paper identity and remains recognizable in both dark
+ArchiPam's own landing-page paper identity and remains recognizable in both dark
 and light themes.
 
 ## Stability contract

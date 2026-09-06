@@ -4,7 +4,7 @@ Date: 2026-07-20
 
 ## Question
 
-How can Archify borrow the appeal of richer animated diagram products without weakening its strongest boundary: one offline, inspectable, deterministic HTML artifact built from authored semantics?
+How can ArchiPam borrow the appeal of richer animated diagram products without weakening its strongest boundary: one offline, inspectable, deterministic HTML artifact built from authored semantics?
 
 ## Primary-source read
 
@@ -23,7 +23,7 @@ Relevant current claims:
 
 ### Cytoscape.js animation API
 
-Cytoscape’s graph animation API separates ordered animation, viewport framing, pause/stop, and progress. Queued animations run in order; pause keeps current progress; stop removes work from queues; viewport fit/center is an explicit animation target. This reinforces a small ownership model for Archify: one finite route scheduler, one exact current position, one camera request, and immediate cancellation on manual navigation.
+Cytoscape’s graph animation API separates ordered animation, viewport framing, pause/stop, and progress. Queued animations run in order; pause keeps current progress; stop removes work from queues; viewport fit/center is an explicit animation target. This reinforces a small ownership model for ArchiPam: one finite route scheduler, one exact current position, one camera request, and immediate cancellation on manual navigation.
 
 Source: <https://js.cytoscape.org/#animations>
 
@@ -35,13 +35,13 @@ Source: <https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide>
 
 ### MDN — prefers-reduced-motion
 
-`prefers-reduced-motion` is a widely available signal for removing, reducing, or replacing non-essential animation. Large panning and scaling are specifically relevant vestibular triggers. Archify should retain manually inspectable route positions under reduced motion while disabling automatic journey playback and using instant camera framing.
+`prefers-reduced-motion` is a widely available signal for removing, reducing, or replacing non-essential animation. Large panning and scaling are specifically relevant vestibular triggers. ArchiPam should retain manually inspectable route positions under reduced motion while disabling automatic journey playback and using instant camera framing.
 
 Source: <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion>
 
 ## Borrow / adapt / skip
 
-| Decision | What | Archify interpretation |
+| Decision | What | ArchiPam interpretation |
 | --- | --- | --- |
 | Borrow | Semantic, finite motion | Animate one exact authored incoming edge for one route position; never synthesize a relationship. |
 | Borrow | Bounded visual QA | Keep deterministic tests, rebuild generated examples, then inspect desktop/mobile/embed/export in the real browser. |

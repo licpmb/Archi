@@ -7,7 +7,7 @@ Status: implementation-ready research recommendation
 
 Build **Shareable Story Moment** as the next bounded viewer slice.
 
-Archify can already restore a named chapter, one focused node, one authored route,
+ArchiPam can already restore a named chapter, one focused node, one authored route,
 or one semantic-kind Lens from a URL. Round 32 also made every Story Trail beat a
 direct native control, but deliberately left the selected beat out of the URL.
 The missing product moment is now narrow and visible: a reader can stop a story on
@@ -15,7 +15,7 @@ exactly “Tool Router, beat 4 of 8” but cannot send another person a link tha
 on that same semantic node, exact adjacent relationship, receipt, and chapter
 camera. These are current viewer contracts, not inferred capabilities
 ([current README](../README.md),
-[current shared viewer source](../archify/assets/template.html)).
+[current shared viewer source](../archipam/assets/template.html)).
 
 Round 33 should extend the existing guided-view fragment grammar from:
 
@@ -31,7 +31,7 @@ to:
 
 and add one **Copy moment** action to the existing Guided Story chrome. The
 chapter ID names the authored projection; the stable node ID names one unique
-resolved stop inside that projection. On load, Archify rebuilds the current node,
+resolved stop inside that projection. On load, ArchiPam rebuilds the current node,
 past/pending beat states, and exact adjacent relationship from canonical compiled
 data. It does not serialize visual output, authored graph data, a pixel camera,
 timer progress, or runtime overlays.
@@ -43,7 +43,7 @@ This is the useful intersection of the primary-source patterns:
   precise presentation moment recoverable.
 - React Flow proves that raw nodes, edges, and viewport can be serialized when the
   product is an editor, but that is intentionally the wrong ownership boundary for
-  Archify.
+  ArchiPam.
 - D2 proves that named boards/steps can be linked or exported, but a new board per
   beat would move narrative state into the authored diagram language.
 - Fireworks' current offline viewer keeps pan/zoom only in memory and its GIF is a
@@ -63,13 +63,13 @@ This note uses current first-party documentation and source as of 2026-07-20.
 Where a conclusion depends on the absence of a documented or implemented state
 channel, it is marked as an inference rather than presented as a vendor claim.
 
-## Current Archify baseline
+## Current ArchiPam baseline
 
 ### What already has stable URL identity
 
 The shared viewer currently supports these semantic entry points
 ([viewer README contract](../README.md),
-[viewer URL writers and readers](../archify/assets/template.html)):
+[viewer URL writers and readers](../archipam/assets/template.html)):
 
 | State | Current address | Restored meaning |
 |---|---|---|
@@ -85,10 +85,10 @@ Each semantic subsystem parses the fragment with `URLSearchParams`, but its
 current writer replaces the fragment with its own top-level mode rather than
 combining unrelated modes. That makes the fragment a single semantic ownership
 channel, not a bag of simultaneous selections
-([focus writer](../archify/assets/template.html),
-[guided-view writer](../archify/assets/template.html),
-[route writer](../archify/assets/template.html),
-[Lens writer](../archify/assets/template.html)).
+([focus writer](../archipam/assets/template.html),
+[guided-view writer](../archipam/assets/template.html),
+[route writer](../archipam/assets/template.html),
+[Lens writer](../archipam/assets/template.html)).
 
 ### What is intentionally not recoverable yet
 
@@ -97,12 +97,12 @@ stable node ID, classifies only the exact authored relationship(s) between
 adjacent stops, and exposes a read-only receipt. Direct beat activation currently
 keeps `#view=` unchanged
 ([Round 32 contract](research-visual-evolution-round-32.md),
-[current Story Beat implementation](../archify/assets/template.html)).
+[current Story Beat implementation](../archipam/assets/template.html)).
 
 The camera runtime stores transform state separately and derives automatic framing
 from semantic node bounds. Manual pan/zoom is not written to the URL, and canonical
 export resets/removes viewer-only state
-([Semantic Camera and export implementation](../archify/assets/template.html)).
+([Semantic Camera and export implementation](../archipam/assets/template.html)).
 
 The useful gap is therefore not “save everything.” It is “give the one selected
 Story beat a stable semantic address.”
@@ -170,7 +170,7 @@ separately
 **Borrow:** the URL should name an authored, compiler-stable projection rather
 than a rendered camera rectangle. Keep `viewId` as the first half of identity.
 
-**Adapt:** Archify's exact Story moment needs one narrower coordinate inside that
+**Adapt:** ArchiPam's exact Story moment needs one narrower coordinate inside that
 view. The already validated stable node ID supplies it without a new authored
 beat ID.
 
@@ -205,7 +205,7 @@ becomes visible or hidden
 **Borrow:** a deep link can be “named container + one incremental position,” and
 playback is an orthogonal, explicit choice rather than implicit in the position.
 
-**Adapt:** use a stable node ID instead of a numeric fragment index. Archify node
+**Adapt:** use a stable node ID instead of a numeric fragment index. ArchiPam node
 IDs already survive label changes and give the exact adjacent-edge classifier all
 the information it needs; a numeric `beat=4` would silently retarget after a view
 reorder.
@@ -232,18 +232,18 @@ an optional `selected` property
 closed when IDs no longer resolve.
 
 **Skip:** serializing nodes, edges, positions, selected flags, or raw viewport
-coordinates into an Archify link. In React Flow those values are the editable
-flow; in Archify the JSON IR and compiled SVG are canonical, and runtime state
+coordinates into an ArchiPam link. In React Flow those values are the editable
+flow; in ArchiPam the JSON IR and compiled SVG are canonical, and runtime state
 must not become a second graph source.
 
 **Reason to skip pixel viewport:** the same `x/y/zoom` describes different visible
 content when the artifact is opened at a different container width, mobile
-breakpoint, embed size, browser zoom, or Presentation chrome. Archify can instead
+breakpoint, embed size, browser zoom, or Presentation chrome. ArchiPam can instead
 derive an appropriate camera from the same semantic chapter nodes on the current
-device. This is an Archify design inference based on React Flow's explicitly
-pixel/zoom viewport model and Archify's current semantic camera implementation
+device. This is an ArchiPam design inference based on React Flow's explicitly
+pixel/zoom viewport model and ArchiPam's current semantic camera implementation
 ([React Flow viewport definition](https://reactflow.dev/learn/concepts/terms-and-definitions#viewport),
-[Archify camera source](../archify/assets/template.html)).
+[ArchiPam camera source](../archipam/assets/template.html)).
 
 ### 5. D2: named boards are linkable, but board-per-beat is too much authoring
 
@@ -265,7 +265,7 @@ The CLI also accepts a named `--target` board for deterministic export
 **Borrow:** a semantic sub-position should have an authored/stable identity and
 be independently targetable.
 
-**Adapt:** Archify's view is already the board and its existing stable node ID is
+**Adapt:** ArchiPam's view is already the board and its existing stable node ID is
 already the step identity. Restore viewer emphasis over one graph rather than
 compile another board.
 
@@ -295,7 +295,7 @@ internal implementation could represent one.
 state should be declared in the URL rather than recovered from parent-page
 pixels.
 
-**Adapt:** Archify can go one useful step further and document the story beat as a
+**Adapt:** ArchiPam can go one useful step further and document the story beat as a
 stable subordinate ID because that state already exists in every generated HTML
 artifact.
 
@@ -305,7 +305,7 @@ model.
 
 ## Pattern comparison
 
-| Tool | Stable semantic address | Exact incremental position | Raw viewport snapshot | Embed/autoplay meaning | Archify judgment |
+| Tool | Stable semantic address | Exact incremental position | Raw viewport snapshot | Embed/autoplay meaning | ArchiPam judgment |
 |---|---|---|---|---|---|
 | Fireworks | File/slug only | No current viewer contract | In-memory only | Offline viewer is static; GIF loops as media | Borrow self-contained delivery; skip state model |
 | LikeC4 | Named `viewId` in view/embed route | No documented walkthrough step in share URL | Not part of current share/embed builder | Embed is a view with padding/theme | Borrow stable view identity |
@@ -313,7 +313,7 @@ model.
 | React Flow | Application-defined | Application-defined | Nodes/edges/viewport can be serialized | Application-defined | Borrow restore discipline; skip editable snapshot |
 | D2 | Named target board/internal link | Step is another composed board | No viewer snapshot contract | Animated SVG/GIF advances boards | Borrow targetability; skip board-per-beat |
 | Structurizr | Diagram key; optional perspective/tags | Animation controls, no documented embed step | Layout belongs to workspace/editor | Live iframe is keyed by diagram | Borrow diagram key + semantic modifier |
-| Archify now | `focus`, `route`, `lens`, `view` | Beat is in memory only | Derived camera, no URL snapshot | `play=1` is bounded chapter scope | Add `view + beat`, preserve everything else |
+| ArchiPam now | `focus`, `route`, `lens`, `view` | Beat is in memory only | Derived camera, no URL snapshot | `play=1` is bounded chapter scope | Add `view + beat`, preserve everything else |
 
 ## Candidate comparison
 

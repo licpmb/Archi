@@ -4,7 +4,7 @@ Research date: 2026-07-20 (Asia/Shanghai) Status: stable relationship links sele
 
 ## Executive verdict
 
-Archify should **not** add another minimap, another semantic-zoom layer, or another standalone search panel in Round 35. Those capabilities already exist in the shared viewer:
+ArchiPam should **not** add another minimap, another semantic-zoom layer, or another standalone search panel in Round 35. Those capabilities already exist in the shared viewer:
 
 - Semantic Radar is a runtime-built overview with a live viewport rectangle;
 - MAP / READ / FULL already provide deterministic semantic zoom;
@@ -26,7 +26,7 @@ The shipped Round 35 slice deliberately takes the report's smaller identity cand
 
 ## Research question
 
-What should Archify borrow from current graph viewers and technical-diagram projects to help a reader understand a complex graph faster while preserving:
+What should ArchiPam borrow from current graph viewers and technical-diagram projects to help a reader understand a complex graph faster while preserving:
 
 - one stable authored topology;
 - static readability before, during, and after interaction;
@@ -41,7 +41,7 @@ What should Archify borrow from current graph viewers and technical-diagram proj
 
 This recommendation uses:
 
-1. a direct audit of the current Archify worktree after Round 34;
+1. a direct audit of the current ArchiPam worktree after Round 34;
 2. the current public `fireworks-tech-graph` repository and source at commit `50c819d68fd4fee330b3010988cd13e98b678d44`;
 3. official React Flow / XYFlow documentation;
 4. official Cytoscape.js documentation;
@@ -51,19 +51,19 @@ This recommendation uses:
 
 No secondary article is used as evidence for a product or API claim. External URLs listed in the source register were requested on 2026-07-20. All returned HTTP 200 at the time of research.
 
-## Current Archify audit: do not solve an already-solved problem
+## Current ArchiPam audit: do not solve an already-solved problem
 
 ### Semantic Radar already covers overview and minimap navigation
 
-The shared template contains a viewer-only Semantic Radar at [`archify/assets/template.html`](../archify/assets/template.html). It derives simplified rectangles from stable semantic node bounds rather than cloning the canonical SVG. It tracks the logical viewport through desktop pan/zoom and mobile contained horizontal scroll. It can focus a stable node, recenter the main diagram, and expose keyboard panning. The cross-renderer contract is covered by [`archify/test/semantic-radar.test.mjs`](../archify/test/semantic-radar.test.mjs). React Flow describes its MiniMap as an SVG overview of every node plus the current viewport, with optional click, pan, zoom, semantic color, and an accessible name ([official MiniMap reference](https://reactflow.dev/api-reference/components/minimap)). That external pattern is already substantially adapted in Archify. Adding a second overview would duplicate orientation state and increase panel competition without creating a new reader answer.
+The shared template contains a viewer-only Semantic Radar at [`archipam/assets/template.html`](../archipam/assets/template.html). It derives simplified rectangles from stable semantic node bounds rather than cloning the canonical SVG. It tracks the logical viewport through desktop pan/zoom and mobile contained horizontal scroll. It can focus a stable node, recenter the main diagram, and expose keyboard panning. The cross-renderer contract is covered by [`archipam/test/semantic-radar.test.mjs`](../archipam/test/semantic-radar.test.mjs). React Flow describes its MiniMap as an SVG overview of every node plus the current viewport, with optional click, pan, zoom, semantic color, and an accessible name ([official MiniMap reference](https://reactflow.dev/api-reference/components/minimap)). That external pattern is already substantially adapted in ArchiPam. Adding a second overview would duplicate orientation state and increase panel competition without creating a new reader answer.
 
 ### Semantic zoom already covers level of detail
 
-The shared viewer has deterministic MAP, READ, and FULL thresholds. Renderers identify context and fine detail explicitly. Semantic intent can reveal exact matching detail even when the rest of the map stays quiet. Print and canonical export force full information. The cross-renderer contract is covered by [`archify/test/semantic-zoom.test.mjs`](../archify/test/semantic-zoom.test.mjs). A second zoom policy, density heuristic, or fisheye lens would compete with the existing detail state and risk moving or distorting deliberate geometry.
+The shared viewer has deterministic MAP, READ, and FULL thresholds. Renderers identify context and fine detail explicitly. Semantic intent can reveal exact matching detail even when the rest of the map stays quiet. Print and canonical export force full information. The cross-renderer contract is covered by [`archipam/test/semantic-zoom.test.mjs`](../archipam/test/semantic-zoom.test.mjs). A second zoom policy, density heuristic, or fisheye lens would compete with the existing detail state and risk moving or distorting deliberate geometry.
 
 ### Finder already covers node search
 
-Node Finder indexes node ID, label, semantic type, sublabel, context, tag, and visible node text. It also becomes a reachability-aware Route Probe endpoint picker. The current contract lives in [`archify/test/finder.test.mjs`](../archify/test/finder.test.mjs). Relationship-aware search remains a plausible later adaptation, especially now that Direct Relationship Pin exists, but another search surface is not the next highest-value interaction.
+Node Finder indexes node ID, label, semantic type, sublabel, context, tag, and visible node text. It also becomes a reachability-aware Route Probe endpoint picker. The current contract lives in [`archipam/test/finder.test.mjs`](../archipam/test/finder.test.mjs). Relationship-aware search remains a plausible later adaptation, especially now that Direct Relationship Pin exists, but another search surface is not the next highest-value interaction.
 
 ### Route Probe already contains the data needed for a journey
 
@@ -79,7 +79,7 @@ Route Probe reads exact compiled `data-edge-from` and `data-edge-to` semantics. 
 - a camera fit over all result nodes;
 - a stable `#route=<source>~<target>` link.
 
-Its current node chips are non-interactive `span` elements. That is the concrete unused affordance Round 35 should activate. The existing contract is covered by [`archify/test/route-probe.test.mjs`](../archify/test/route-probe.test.mjs).
+Its current node chips are non-interactive `span` elements. That is the concrete unused affordance Round 35 should activate. The existing contract is covered by [`archipam/test/route-probe.test.mjs`](../archipam/test/route-probe.test.mjs).
 
 ### Story Beats do not make Route Journey redundant
 
@@ -96,7 +96,7 @@ The public repository is [`yizhiyanhua-ai/fireworks-tech-graph`](https://github.
 
 ### Its offline viewer is intentionally basic
 
-The current single-file viewer exposes pan, zoom, reset, theme, copy SVG, and SVG / PNG / JPEG / WebP export ([viewer source](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/interactive_html.py#L215-L327)). The inspected viewer source does not implement a semantic minimap, graph search, relationship selection, shortest-path explorer, or route scrubber. Archify is already ahead on those viewer semantics. Copying that viewer would be a regression in interaction depth.
+The current single-file viewer exposes pan, zoom, reset, theme, copy SVG, and SVG / PNG / JPEG / WebP export ([viewer source](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/scripts/interactive_html.py#L215-L327)). The inspected viewer source does not implement a semantic minimap, graph search, relationship selection, shortest-path explorer, or route scrubber. ArchiPam is already ahead on those viewer semantics. Copying that viewer would be a regression in interaction depth.
 
 ### Its motion contract preserves the mental map
 
@@ -104,21 +104,21 @@ The project documents a constrained SVG-to-GIF pipeline rather than arbitrary an
 
 > Move the reading signal through fixed semantic geometry; do not move the geometry to manufacture excitement.
 
-Archify already adapted that lesson into finite relationship and route signals. Round 35 should apply it to a reader-controlled route sequence rather than add more ambient effects.
+ArchiPam already adapted that lesson into finite relationship and route signals. Round 35 should apply it to a reader-controlled route sequence rather than add more ambient effects.
 
 ### What not to copy from its motion delivery
 
-Its approved GIF timeline is a fixed rendered media artifact and loops indefinitely ([official motion contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/motion-effects.md#L27-L52)). Archify's HTML viewer can respond live to Still, reduced motion, visibility, keyboard focus, and reader pause. It should keep that advantage. No GIF runtime, Chromium dependency, FFmpeg dependency, style-specific carrier, or fixed movie timeline belongs in Route Journey.
+Its approved GIF timeline is a fixed rendered media artifact and loops indefinitely ([official motion contract](https://github.com/yizhiyanhua-ai/fireworks-tech-graph/blob/50c819d68fd4fee330b3010988cd13e98b678d44/references/motion-effects.md#L27-L52)). ArchiPam's HTML viewer can respond live to Still, reduced motion, visibility, keyboard focus, and reader pause. It should keep that advantage. No GIF runtime, Chromium dependency, FFmpeg dependency, style-specific carrier, or fixed movie timeline belongs in Route Journey.
 
 ## Primary-source findings from graph viewers
 
 ### Cytoscape.js: a path is an ordered semantic sequence
 
-Cytoscape.js documents shortest-path results as ordered collections. For Dijkstra, `pathTo(node)` starts with the source node and includes edges between nodes, so an edge at index `i` is bracketed by its previous and next node. Its A* result likewise returns an ordered `path` collection ([official Cytoscape.js algorithms documentation](https://js.cytoscape.org/#collection/algorithms)). The useful lesson for Archify is not to recompute a journey from geometry or labels. Use the already ordered semantic result.
+Cytoscape.js documents shortest-path results as ordered collections. For Dijkstra, `pathTo(node)` starts with the source node and includes edges between nodes, so an edge at index `i` is bracketed by its previous and next node. Its A* result likewise returns an ordered `path` collection ([official Cytoscape.js algorithms documentation](https://js.cytoscape.org/#collection/algorithms)). The useful lesson for ArchiPam is not to recompute a journey from geometry or labels. Use the already ordered semantic result.
 
 ### yFiles: exact ordered edges are authoritative
 
-yFiles defines a path as a sequence of edges connecting a sequence of nodes. Its shortest-path guide emphasizes exact path edges in a directed result ([official path-analysis guide](https://docs.yworks.com/yfiles-html/dguide/analysis-paths/)). The `Path` API exposes ordered `edges` and ordered `nodes`. It explicitly warns that nodes alone may be ambiguous when multi-edges exist ([official `Path` API](https://docs.yworks.com/yfiles-html/api/Path/)). This maps directly to a critical Archify invariant:
+yFiles defines a path as a sequence of edges connecting a sequence of nodes. Its shortest-path guide emphasizes exact path edges in a directed result ([official path-analysis guide](https://docs.yworks.com/yfiles-html/dguide/analysis-paths/)). The `Path` API exposes ordered `edges` and ordered `nodes`. It explicitly warns that nodes alone may be ambiguous when multi-edges exist ([official `Path` API](https://docs.yworks.com/yfiles-html/api/Path/)). This maps directly to a critical ArchiPam invariant:
 
 > Route Journey must step through the existing ordered `activeEdges`; it must never rediscover a hop by matching only consecutive endpoint IDs.
 
@@ -132,11 +132,11 @@ React Flow's `fitView` accepts a specific set of nodes plus optional duration, p
 
 React Flow's Edge type requires a unique string `id` ([official Edge reference](https://reactflow.dev/api-reference/types/edge)). Cytoscape.js uses `data.id` to uniquely identify every element and treats ID, source, and target as topology-defining normally immutable fields ([official Cytoscape.js element data documentation](https://js.cytoscape.org/#notation/elements-json), [official data API](https://js.cytoscape.org/#collection/data)). Graphviz lets the author provide an `id` for graph objects, including edges. It says uniqueness is the provider's responsibility, warns that `\E` is not unique for multiedges, and says its generated internal ID is unpredictable to the graph writer ([official Graphviz `id` attribute](https://graphviz.org/docs/attrs/id/)). These sources validate Round 34's decision not to create a relation permalink from source order, endpoints, label text, or geometry. They also show the correct later solution: an optional author-controlled edge identity with uniqueness validation.
 
-D3's official link-force API makes the same distinction indirectly: it assigns each link a zero-based runtime `index`, while named source and target resolution comes from an explicit node-ID accessor ([official D3 link-force reference](https://d3js.org/d3-force/link)). D3 does not define that link index as a durable public relationship identity. The Archify inference is therefore explicit: `data-edge-key` may remain a useful compiled-order key, but only a separate author-controlled relationship ID can honestly back `#relation=<id>`.
+D3's official link-force API makes the same distinction indirectly: it assigns each link a zero-based runtime `index`, while named source and target resolution comes from an explicit node-ID accessor ([official D3 link-force reference](https://d3js.org/d3-force/link)). D3 does not define that link index as a durable public relationship identity. The ArchiPam inference is therefore explicit: `data-edge-key` may remain a useful compiled-order key, but only a separate author-controlled relationship ID can honestly back `#relation=<id>`.
 
 ### Edge concentration trades exactness for density
 
-Graphviz's `concentrate=true` merges multiedges and makes partially parallel edges share portions of their paths. The partial-path feature is limited to `dot`, and the attribute only works for non-contiguous nodes ([official Graphviz `concentrate` attribute](https://graphviz.org/docs/attrs/concentrate/)). That can reduce line density in some automatically laid-out graphs. It is a poor match for Archify now because:
+Graphviz's `concentrate=true` merges multiedges and makes partially parallel edges share portions of their paths. The partial-path feature is limited to `dot`, and the attribute only works for non-contiguous nodes ([official Graphviz `concentrate` attribute](https://graphviz.org/docs/attrs/concentrate/)). That can reduce line density in some automatically laid-out graphs. It is a poor match for ArchiPam now because:
 
 - deliberate route geometry is part of the authored output;
 - Direct Relationship Pin needs one exact relationship target;
@@ -194,7 +194,7 @@ WCAG 2.2's minimum target guidance uses 24 by 24 CSS pixels unless an exception 
 
 Round 34 correctly refused to deep-link `data-edge-key` because that key is the source array position. Reordering relationships changes it. Endpoints are insufficient for parallel edges. Labels are editable and may be absent. Geometry is a presentation detail. React Flow, Cytoscape.js, and Graphviz all reinforce author-controlled unique element identity rather than derived display identity ([React Flow Edge](https://reactflow.dev/api-reference/types/edge), [Cytoscape.js elements](https://js.cytoscape.org/#notation/elements-json), [Graphviz ID](https://graphviz.org/docs/attrs/id/)).
 
-### Correct eventual Archify shape
+### Correct eventual ArchiPam shape
 
 Add an optional `id` to each relationship-bearing record:
 
@@ -308,7 +308,7 @@ Manual activation frames:
 - the current route node;
 - the next route node when present.
 
-That three-position window preserves direction context better than isolating one node. Use the existing Semantic Camera / `Archify.view.reveal` transaction. Use bounded padding and zoom limits. Do not store camera scale, transform, scroll offset, or pixel bounds in state or URL. On desktop Live mode, the existing bounded camera transition may run. On mobile contained scroll, use the existing horizontal reveal behavior. On Still or reduced motion, settle the target immediately.
+That three-position window preserves direction context better than isolating one node. Use the existing Semantic Camera / `ArchiPam.view.reveal` transaction. Use bounded padding and zoom limits. Do not store camera scale, transform, scroll offset, or pixel bounds in state or URL. On desktop Live mode, the existing bounded camera transition may run. On mobile contained scroll, use the existing horizontal reveal behavior. On Still or reduced motion, settle the target immediately.
 
 ### 8. Motion follows only the current exact edge
 
@@ -450,7 +450,7 @@ No duplicate graph array is needed. No stored viewport is needed. No persistent 
 4. Add `setJourneyIndex(index, options)` that updates only route substate.
 5. Resolve the exact incoming edge from `activeEdges[index - 1]`.
 6. Add current position and current edge attributes without hiding the full route.
-7. Reuse `Archify.view.reveal` for the previous/current/next semantic window.
+7. Reuse `ArchiPam.view.reveal` for the previous/current/next semantic window.
 8. Add Previous, Play/Pause, Next, and Overview controls to the current panel.
 9. Add one generation-owned scheduler with pause and stale-callback rejection.
 10. Reuse exact edge geometry for at most one finite journey overlay.
@@ -508,7 +508,7 @@ Round 35 is accepted only if all of the following are true.
 43. A one-hop route behaves truthfully and does not present a pointless autoplay loop.
 44. Empty, invalid, stale, or unreachable routes fail closed through existing Route Probe behavior.
 45. Focused tests cover all five renderers, parallel-edge exactness, keyboard, playback, pause, stale callbacks, Still, reduced motion, mobile, embed, print, URL restoration, and export cleanup.
-46. The complete Archify test, golden, schema, gallery, README-proof, and ZIP gates remain green after implementation.
+46. The complete ArchiPam test, golden, schema, gallery, README-proof, and ZIP gates remain green after implementation.
 
 ## In-app browser validation matrix
 
@@ -612,7 +612,7 @@ Mitigation: keep Candidate A documented as the next identity foundation when the
 - Moving nodes, labels, boundaries, or authored geometry.
 - Journey step, edge-array index, dwell, playback, or camera state in the URL.
 - A synthetic relationship permalink derived from order, endpoints, label, or path geometry.
-- GIF, FFmpeg, Puppeteer, React Flow, Cytoscape.js, yFiles, or Graphviz as a new Archify dependency.
+- GIF, FFmpeg, Puppeteer, React Flow, Cytoscape.js, yFiles, or Graphviz as a new ArchiPam dependency.
 - Editing, reconnecting, deleting, or reordering graph relationships.
 
 ## Source register and URL verification

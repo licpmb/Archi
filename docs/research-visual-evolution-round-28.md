@@ -4,7 +4,7 @@ Research date: 2026-07-20 (Asia/Shanghai)
 
 ## Product question
 
-Archify already compiles authored `guidedViews`, renders the active chapter's
+ArchiPam already compiles authored `guidedViews`, renders the active chapter's
 label and note, supports Previous / Next / Play / Show all, exposes `[` and `]`
 shortcuts, focuses the chapter's `focus` array, and draws a node-by-node story
 trail for the active chapter.
@@ -26,12 +26,12 @@ array; and delegate activation to the current `activate(index)` path.
 This is a discoverability and navigation improvement. It is not a new guided
 view model, a restore system, a carousel autoplay mode, or an export feature.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 ### The authored model already contains everything the rail needs
 
-[`Archify.guidedViews`](../archify/assets/template.html) parses the existing
-`archify-guided-views-data` payload into an ordered `views` array. Every entry
+[`ArchiPam.guidedViews`](../archipam/assets/template.html) parses the existing
+`archipam-guided-views-data` payload into an ordered `views` array. Every entry
 already has:
 
 - a stable `id` used by `#view=` deep links;
@@ -86,7 +86,7 @@ It also removes CSS transitions when reduced motion is requested
 
 **Borrow:** one viewer owner, native controls, a clean artifact boundary and a
 small surface. **Do not borrow:** the absence of authored chapter discovery, or
-direct live-SVG serialization as Archify's export implementation. Archify's
+direct live-SVG serialization as ArchiPam's export implementation. ArchiPam's
 canonical-clone cleanup is already stronger and must remain unchanged.
 
 ### 2. D2: named views need explicit semantics and a density guard
@@ -139,7 +139,7 @@ Those are not required for discovery.
 **Borrow:** authored names, direct selection, explicit current/total progress,
 native buttons and responsive treatment. **Do not borrow:** generic anonymous
 dots, a new autoplay loop, or animation attached to ordinary chapter
-selection. Archify already has deliberate Play/Pause ownership and should not
+selection. ArchiPam already has deliberate Play/Pause ownership and should not
 expand it.
 
 ### 4. Mapbox Storytelling: one chapter should own one coherent state
@@ -166,7 +166,7 @@ not work as expected in an iframe
 
 **Borrow:** stable authored names and one index-owned active chapter. **Do not
 borrow:** scroll-position activation, hidden trigger chapters, auto advance,
-ambient rotation, or full-page layout. The Archify rail must work by explicit
+ambient rotation, or full-page layout. The ArchiPam rail must work by explicit
 button activation and must not change the existing embed boundary.
 
 ### 5. Cytoscape.js: graph, viewport and export are separate contracts
@@ -183,7 +183,7 @@ an explicit `full` option
 
 **Borrow:** keep graph selection, viewport reveal and artifact export as
 distinct responsibilities. **Do not borrow:** a general graph-state snapshot
-or a current-viewport export option in this slice. The current Archify
+or a current-viewport export option in this slice. The current ArchiPam
 `activate(index)`, Show all, canonical export and embed behavior are already
 the product contract.
 
@@ -330,7 +330,7 @@ an additional direct route to the same `activate(index)` function.
 1. No schema or renderer change is needed; the rail is derived from the
    existing guided-view JSON in the shared viewer.
 2. Do not add or change canonical SVG attributes for the rail.
-3. Do not change `Archify.exporter`, export cleanup, canonicality receipts,
+3. Do not change `ArchiPam.exporter`, export cleanup, canonicality receipts,
    print output, or image dimensions.
 4. Do not change embed suppression or `?play=1` share-playback semantics.
 5. The rail remains runtime HTML with the existing `.guided-views` / `no-print`
@@ -402,11 +402,11 @@ an additional direct route to the same `activate(index)` function.
 ## Decision
 
 Implement the **Named Chapter Rail** as a shallow extension of
-`Archify.guidedViews`.
+`ArchiPam.guidedViews`.
 
 The desirable richness is not more ambient animation. It is making the
 author's existing narrative structure legible before commitment: readers can
 see what stories exist, how long each is, jump directly to one, understand
 where they are, and return to the whole graph. Reusing `views`, `focus`,
 `activeIndex`, `activate`, `showAll`, deliberate playback and existing export
-boundaries keeps the result attractive, stable and recognizably Archify.
+boundaries keeps the result attractive, stable and recognizably ArchiPam.

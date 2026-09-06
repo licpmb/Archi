@@ -16,7 +16,7 @@ and therefore cleared an in-progress route question.
 - [Neo4j Bloom's search bar](https://neo4j.com/docs/bloom-user-guide/current/bloom-visual-tour/search-bar/)
   describes Bloom as a search-first graph environment. Suggestions can be
   filtered and activated by keyboard as well as pointer, and the same search
-  surface can initiate graph actions. The useful lesson for Archify is to reuse
+  surface can initiate graph actions. The useful lesson for ArchiPam is to reuse
   one familiar navigator in the context of the current task instead of adding
   another endpoint modal.
 - [Neo4j Bloom's default actions](https://neo4j.com/docs/bloom-user-guide/current/bloom-appendix/bloom-appendix/)
@@ -26,7 +26,7 @@ and therefore cleared an in-progress route question.
   models source and sink separately and accepts explicit item collections for
   either side. Its
   [path analysis guide](https://docs.yworks.com/yfiles-html/dguide/analysis-paths/)
-  also keeps directed traversal explicit. Archify should therefore filter the
+  also keeps directed traversal explicit. ArchiPam should therefore filter the
   destination choice by authored direction, not merely search every node and
   explain failure afterward.
 - [yFiles' interaction guide](https://docs.yworks.com/yfiles-html/dguide/interaction-support/)
@@ -54,7 +54,7 @@ and therefore cleared an in-progress route question.
 - No undirected fallback and no distance inferred from pixels.
 - No schema, IR, layout, or canonical SVG changes.
 
-## Archify implementation
+## ArchiPam implementation
 
 While Route Probe is choosing a source or destination, <kbd>/</kbd>, the normal
 Finder control, or the receipt's contextual `Find start` / `Find target` action

@@ -4,7 +4,7 @@ Research date: 2026-07-19 (Asia/Shanghai)
 
 ## Reader gap
 
-Archify artifacts now support focus, relationship inspection, search, route
+ArchiPam artifacts now support focus, relationship inspection, search, route
 analysis, overview navigation, guided stories, presentation, motion, and export.
 The controls are compact, but a first-time reader still has to infer what
 `PATH`, `MAP`, the finder glyph, and several undocumented keyboard shortcuts
@@ -20,18 +20,18 @@ behind memory or documentation outside the artifact.
   query language.
 - [Neo4j Bloom's default actions and shortcuts](https://neo4j.com/docs/bloom-user-guide/current/bloom-appendix/bloom-appendix/)
   gives reader tasks such as Inspect, Path, Fit to selection, and Jump to item
-  explicit action names alongside shortcuts. Archify should likewise describe
+  explicit action names alongside shortcuts. ArchiPam should likewise describe
   outcomes instead of making users decode toolbar glyphs.
 - [React Flow Controls](https://reactflow.dev/api-reference/components/controls)
   keeps frequent viewport actions in a stable compact control group and allows
-  custom control buttons. Archify's existing diagram navigation should remain
+  custom control buttons. ArchiPam's existing diagram navigation should remain
   compact; a guide should open from it rather than replacing it.
 - [yFiles' shortcut reference](https://docs.yworks.com/yfiles-html/dguide/interaction-shortcuts/)
   treats viewport control, graph navigation, and selection as first-class
   keyboard interactions. Its
   [interaction guide](https://docs.yworks.com/yfiles-html/dguide/interaction-support/)
   also states that mouse, touch, stylus, and keyboard paths belong to the same
-  interaction system. Archify's guide therefore needs real buttons and working
+  interaction system. ArchiPam's guide therefore needs real buttons and working
   keys, not a static shortcut poster.
 
 ## Borrow / skip decision
@@ -55,7 +55,7 @@ behind memory or documentation outside the artifact.
   help from `?`, not an onboarding tax.
 - No schema, JSON IR, layout, or canonical SVG changes.
 
-## Archify implementation
+## ArchiPam implementation
 
 The viewer adds a `?` control and <kbd>?</kbd> shortcut for **Diagram Guide**.
 The compact command deck reports exact semantic node, relationship, and guided

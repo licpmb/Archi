@@ -7,7 +7,7 @@ Status: implementation-ready research recommendation
 
 Build **Story Beat Navigator** as the next bounded viewer slice.
 
-Archify already turns each authored `meta.views[].focus` list into a visible Story
+ArchiPam already turns each authored `meta.views[].focus` list into a visible Story
 Trail and can advance `past / active / pending` beat states during playback. The
 trail itself is still a row of non-interactive `<span>` labels, however. A reader
 can watch the story but cannot pause on a specific beat, revisit one exact step,
@@ -26,10 +26,10 @@ This is the sharper answer to the motion appeal of `fireworks-tech-graph`: motio
 that a user can stop, inspect, and resume from the same semantic moment, rather
 than another ambient or infinitely looping effect.
 
-## Why this slice is real in current Archify
+## Why this slice is real in current ArchiPam
 
 The implementation substrate already exists in
-[`Archify.guidedViews`](../archify/assets/template.html):
+[`ArchiPam.guidedViews`](../archipam/assets/template.html):
 
 - `renderStoryTrail(view)` resolves stable node IDs, renders ordered stops, marks
   nodes with `data-story-step`, and creates exact-path Story Trail overlays;
@@ -53,7 +53,7 @@ Parsing the current 11 generated Proof Lab artifacts gives:
   authored relationship.
 
 Those counts were derived from current
-`docs/gallery/artifacts/*.html`, using only `archify-guided-views-data` and exact
+`docs/gallery/artifacts/*.html`, using only `archipam-guided-views-data` and exact
 `data-edge-from` / `data-edge-to` endpoints. They prove both the common path case
 and the cases that must not be inferred:
 
@@ -81,7 +81,7 @@ The checked-in showcase manifest proves twelve 115-frame style samples and one
 
 **Borrow:** stable geometry, connector-only semantic motion, explicit route
 direction, and a readable settled state. **Adapt:** let deliberate beat activation
-request one finite signal over one exact Archify path, while the static beat
+request one finite signal over one exact ArchiPam path, while the static beat
 remains inspectable afterward. **Skip:** infinitely looping viewer motion, twelve
 scene-specific motion contracts, frame rendering, a GIF dependency, moving every
 eligible path at once, or hiding connectors before the reader can understand the
@@ -104,7 +104,7 @@ and restores the pre-walkthrough viewport when the walkthrough ends
 
 **Borrow:** direct step activation, exact `current / total`, persistent semantic
 states, previous/next continuity, and restoring rather than corrupting base state.
-**Adapt:** Archify already has an authored stable-ID node sequence, a fixed SVG,
+**Adapt:** ArchiPam already has an authored stable-ID node sequence, a fixed SVG,
 and one framed chapter, so its stops themselves can be the controls. **Skip:** a
 new dynamic-view schema, nested/parallel flow authoring, node/edge model mutation,
 XState, XYFlow, an outline panel, and per-beat viewport fitting.
@@ -120,7 +120,7 @@ fragment operations
 ([official navigation API](https://revealjs.com/api/)).
 
 **Borrow:** one integer playhead, direct indexed navigation, a single current
-state, and previous/next semantics. **Adapt:** Archify's authored `focus` order is
+state, and previous/next semantics. **Adapt:** ArchiPam's authored `focus` order is
 already the index; do not introduce another ordering field. **Skip:** hiding
 canonical nodes until their fragment is reached, slide replacement, URL fragment
 indices, full-deck state, and presentation dependencies.
@@ -137,7 +137,7 @@ inheriting steps
 **Borrow:** make the authored sequence visible and addressable as steps.
 **Adapt:** change only viewer emphasis over one persistent graph. **Skip:** board
 inheritance, new boards, SVG board swapping, opacity loops, layout or geometry
-recomputation, and any claim that prior Archify beats mutate the graph.
+recomputation, and any claim that prior ArchiPam beats mutate the graph.
 
 ### React Flow: focusability and camera movement are separate choices
 
@@ -191,7 +191,7 @@ every automatic beat through a live region.
 
 ## Borrow / adapt / skip summary
 
-| Decision | Archify contract |
+| Decision | ArchiPam contract |
 |---|---|
 | Borrow | Fireworks' fixed geometry and connector-only semantic signal. |
 | Borrow | LikeC4's explicit Previous / Next / current-total walkthrough control and active/processed/pending state. |
@@ -284,7 +284,7 @@ removed, deployed, or destroyed.
     first when present; otherwise Escape exits the active guided chapter. Do not
     add a hidden two-Escape beat mode.
 14. Expose a read-only deterministic receipt such as
-    `Archify.guidedViews.beat()` returning `{index, total, nodeId, relation,
+    `ArchiPam.guidedViews.beat()` returning `{index, total, nodeId, relation,
     edgeKeys}` for tests; do not expose mutation APIs or authoring syntax.
 
 ## Exact playback contract

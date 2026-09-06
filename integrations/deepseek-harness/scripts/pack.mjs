@@ -9,7 +9,7 @@ import { spawnCliSync } from './resolve-cli.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const integrationRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(integrationRoot, '..', '..');
-const DSH_RELEASE_REF = 'archify-dsh-v0.1.0';
+const DSH_RELEASE_REF = process.env.ARCHIPAM_DSH_SOURCE_REF || 'HEAD';
 
 function argValue(flag) {
   const index = process.argv.indexOf(flag);
@@ -27,6 +27,7 @@ function excludeFromCleanSkill(relative) {
   if (parts.some((part) => part.startsWith('.validator-check-'))) return true;
   if (parts.join('/') === 'scripts/generate-brand-marks.mjs') return true;
   if (parts.join('/') === 'scripts/generate-validators.mjs') return true;
+  if (['skill-release.json', 'scripts/check-update.mjs', 'scripts/update-contract.mjs'].includes(parts.join('/'))) return true;
   return false;
 }
 
@@ -65,7 +66,7 @@ function regularFiles(root, directory = root) {
   return files;
 }
 
-function stageCleanArchify(sourceRoot, dest) {
+function stageCleanArchiPam(sourceRoot, dest) {
   const validators = path.join(sourceRoot, 'renderers/shared/generated-validators.mjs');
   if (!fs.existsSync(validators)) {
     throw new Error(`generated validators are missing from ${DSH_RELEASE_REF}`);
@@ -76,6 +77,9 @@ function stageCleanArchify(sourceRoot, dest) {
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.copyFileSync(source, destination);
   }
+  const skillPath = path.join(dest, 'SKILL.md');
+  const skill = fs.readFileSync(skillPath, 'utf8').replace(/\n## Update awareness\n[\s\S]*?(?=\n## |$)/, '');
+  fs.writeFileSync(skillPath, skill);
   const packagePath = path.join(dest, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   delete pkg.scripts;
@@ -86,13 +90,13 @@ function stageCleanArchify(sourceRoot, dest) {
 
 const json = process.argv.includes('--json');
 const out = argValue('--out');
-const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-pack-'));
-const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), 'archify-dsh-source-'));
+const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-pack-'));
+const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), 'archipam-dsh-source-'));
 
 try {
   releaseSnapshot(snapshot);
   const releaseIntegration = path.join(snapshot, 'integrations', 'deepseek-harness');
-  stageCleanArchify(path.join(snapshot, 'archify'), path.join(stage, 'skills', 'archify'));
+  stageCleanArchiPam(path.join(snapshot, 'archipam'), path.join(stage, 'skills', 'archipam'));
   fs.copyFileSync(path.join(releaseIntegration, 'package.json'), path.join(stage, 'package.json'));
   fs.copyFileSync(path.join(releaseIntegration, 'cordis.patch.yml'), path.join(stage, 'cordis.patch.yml'));
   fs.cpSync(path.join(releaseIntegration, 'lib'), path.join(stage, 'lib'), { recursive: true });
@@ -124,7 +128,7 @@ try {
     } else if (parsed?.name) {
       packMeta = parsed;
     } else {
-      packMeta = Object.values(parsed || {}).find((entry) => entry?.name === '@tt-a1i/archify-dsh') || {};
+      packMeta = Object.values(parsed || {}).find((entry) => entry?.name === '@licpmb/archipam-dsh') || {};
     }
   } catch {
     packMeta = {};
@@ -137,7 +141,7 @@ try {
   fs.mkdirSync(path.dirname(destination), { recursive: true });
   fs.copyFileSync(path.join(stage, produced), destination);
   const result = {
-    name: packMeta.name || '@tt-a1i/archify-dsh',
+    name: packMeta.name || '@licpmb/archipam-dsh',
     version: packMeta.version || '0.1.0',
     filename: path.basename(destination),
     destination,

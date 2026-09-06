@@ -7,7 +7,7 @@ Status: research recommendation for the next bounded viewer slice
 
 Build a **Motion Governor** before adding another chapter transition effect.
 
-Archify now has enough good motion primitives. Its next visual-quality problem is
+ArchiPam now has enough good motion primitives. Its next visual-quality problem is
 that they do not yet have one conductor. A normal artifact can run a header pulse,
 Signal Flow scan, authored trace edges and nodes, and a reader-triggered story or
 route signal at the same time. Guided Story playback owns its own timer, but it
@@ -38,12 +38,12 @@ still has ungoverned infinite motion.
 
 This recommendation is based on:
 
-- the current `codex/archify-visual-evolution` worktree, not an older package;
+- the current `codex/archipam-visual-evolution` worktree, not an older package;
 - the complete visual-evolution trail: the initial Fireworks review plus Rounds
   2–28;
 - current viewer CSS and runtime ownership paths;
 - fixed open-source commits and official standards/product documentation;
-- the existing Archify boundary: one deterministic self-contained HTML artifact,
+- the existing ArchiPam boundary: one deterministic self-contained HTML artifact,
   one canonical SVG, zero runtime dependencies, stable semantic IDs, and no
   layout mutation in viewer interactions.
 
@@ -85,7 +85,7 @@ explicit question, have one owner, be finite where possible, and leave the
 canonical graph untouched. That discipline exists inside several individual
 features, but not yet at the whole-viewer level.
 
-## Current Archify evidence
+## Current ArchiPam evidence
 
 ### The viewer has several independent animation clocks
 
@@ -103,9 +103,9 @@ The shared template currently declares these visible moving surfaces:
 | Lens / Intent / Relationship pulses | explicit selection or preview | one finite pass | bounded reader question |
 
 The declarations are visible in the current template's
-[header and preset styling](../archify/assets/template.html#L519-L632),
-[Radar styling](../archify/assets/template.html#L705-L752), and
-[motion rules](../archify/assets/template.html#L2635-L2936).
+[header and preset styling](../archipam/assets/template.html#L519-L632),
+[Radar styling](../archipam/assets/template.html#L705-L752), and
+[motion rules](../archipam/assets/template.html#L2635-L2936).
 
 Ten of the eleven proof fixtures currently opt into trace motion, and five of
 those also use Signal Flow. The simultaneous-motion case is therefore a primary
@@ -121,9 +121,9 @@ Story Trail, while Signal Flow scan and the header pulse also keep running.
 
 Relevant current paths:
 
-- [ambient trace pause selectors](../archify/assets/template.html#L2933-L2936);
-- [manual Story start](../archify/assets/template.html#L5467-L5483);
-- [chapter activation and Semantic Camera reveal](../archify/assets/template.html#L5536-L5555).
+- [ambient trace pause selectors](../archipam/assets/template.html#L2933-L2936);
+- [manual Story start](../archipam/assets/template.html#L5467-L5483);
+- [chapter activation and Semantic Camera reveal](../archipam/assets/template.html#L5536-L5555).
 
 This does not corrupt state, but it weakens direction. The reader sees more than
 one moving explanation and must infer which motion belongs to the selected
@@ -140,7 +140,7 @@ The result is a collection of good per-feature fallbacks rather than one
 inspectable effective policy. A user without an OS-level reduced-motion setting
 also has no visible way to stop automatic motion.
 
-See the current [reduced-motion block](../archify/assets/template.html#L2998-L3047)
+See the current [reduced-motion block](../archipam/assets/template.html#L2998-L3047)
 and the feature-specific media-query reads around Guided Views, Intent Trace,
 Relationship Pulse, and Semantic Camera.
 
@@ -148,22 +148,22 @@ Relationship Pulse, and Semantic Camera.
 
 Guided playback already pauses on `visibilitychange`, which is correct. Ambient
 CSS trace and decorative preset motion have no shared hidden-page state. Browsers
-may throttle them, but Archify has not expressed an application invariant.
+may throttle them, but ArchiPam has not expressed an application invariant.
 
 Embed mode hides most chrome and pauses authored trace, yet the Signal Flow
 container scan is not governed by the embed trace selector. The normal embed
 should be still; `?embed=1&play=1#view=...` should permit exactly the requested
 bounded Story and nothing else.
 
-### The existing `Archify.motion` name is already taken
+### The existing `ArchiPam.motion` name is already taken
 
-`Archify.motion` is the public WebM recording surface with `canRecord()` and
+`ArchiPam.motion` is the public WebM recording surface with `canRecord()` and
 `recordWebm()`. A governor must not replace or silently change this API. Use a
-distinct owner such as `Archify.motionGovernor` and keep explicit motion export
+distinct owner such as `ArchiPam.motionGovernor` and keep explicit motion export
 separate from live-viewer preference.
 
-See [the current recording implementation](../archify/assets/template.html#L3920-L4025)
-and [animation contract tests](../archify/test/animation.test.mjs).
+See [the current recording implementation](../archipam/assets/template.html#L3920-L4025)
+and [animation contract tests](../archipam/test/animation.test.mjs).
 
 ## Primary-source findings
 
@@ -176,7 +176,7 @@ essential
 ([SC 2.2.2](https://www.w3.org/TR/WCAG22/#pause-stop-hide),
 [Understanding 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)).
 
-WAI Technique G186 is unusually direct for Archify: the control must be
+WAI Technique G186 is unusually direct for ArchiPam: the control must be
 keyboard-accessible, named, and near the top or adjacent to the motion, and **one
 control may stop all moving or blinking content on the page**
 ([G186](https://www.w3.org/WAI/WCAG22/Techniques/general/G186)).
@@ -184,7 +184,7 @@ control may stop all moving or blinking content on the page**
 WCAG 2.3.3 also says non-essential motion triggered by interaction can be
 disabled
 ([Animation from Interactions](https://www.w3.org/TR/WCAG22/#animation-from-interactions)).
-It is Level AAA, but it matches Archify's stated quality target and existing
+It is Level AAA, but it matches ArchiPam's stated quality target and existing
 reduced-motion behavior.
 
 **Borrow:** one obvious top-level control; all automatic movement must obey it;
@@ -235,7 +235,7 @@ transitions for reduced motion but exposes no page-level motion controller
 motion roles, and a clean viewer/export boundary.
 
 **Skip:** treating an infinite showcase loop as the default live reading mode.
-Archify's interactive artifact can offer reader control that a GIF cannot.
+ArchiPam's interactive artifact can offer reader control that a GIF cannot.
 
 ### 4. Mapbox shows that a new camera owner replaces the old one and motion is optional
 
@@ -253,7 +253,7 @@ falls through to an immediate jump
 camera motion must never be marked essential for a technical diagram.
 
 **Skip:** dramatic fly arcs, prolonged zoom-out, inertial scene travel, or a
-second persistent camera model. Archify's current 480ms bounded fit is enough.
+second persistent camera model. ArchiPam's current 480ms bounded fit is enough.
 
 ### 5. reveal.js demonstrates stable matching and mandatory cleanup between transitions
 
@@ -294,7 +294,7 @@ Its embed and export pages deliberately disable or fix interactive viewer state
 position for the first transition phase, cap duration, and cut when continuity
 cannot be proved.
 
-**Skip now:** adding this extra movement before Archify can guarantee that
+**Skip now:** adding this extra movement before ArchiPam can guarantee that
 ambient trace, scan, pulse, route, and Story do not compete with it. Also skip
 LikeC4's graph replacement, state-machine/framework stack, and viewport history.
 
@@ -352,7 +352,7 @@ Use viewer-only HTML state, never SVG authoring state:
 Expose a distinct runtime object:
 
 ```js
-Archify.motionGovernor = {
+ArchiPam.motionGovernor = {
   mode(),
   owner(),
   setMode("live" | "still", options),
@@ -362,8 +362,8 @@ Archify.motionGovernor = {
 }
 ```
 
-Keep the existing `Archify.motion.canRecord()` and
-`Archify.motion.recordWebm()` export surface untouched.
+Keep the existing `ArchiPam.motion.canRecord()` and
+`ArchiPam.motion.recordWebm()` export surface untouched.
 
 ### 2. Initialization before first paint
 
@@ -537,7 +537,7 @@ only the current authored Story can move.
 #### WebM
 
 - Preserve the existing explicit `Download WebM — 6s motion` action and
-  `Archify.motion` API.
+  `ArchiPam.motion` API.
 - Recording is an explicit export request, not ambient viewer playback; the
   Governor must not rename, corrupt, or serialize itself into the recording.
 - A reader in Still does not need to watch live canvas motion in order to produce
@@ -603,8 +603,8 @@ only the current authored Story can move.
    motion toggle.
 7. The root exposes exactly one effective `data-motion` value and at most one
    `data-motion-owner` value.
-8. `Archify.motionGovernor` exists without replacing or renaming
-   `Archify.motion` WebM methods.
+8. `ArchiPam.motionGovernor` exists without replacing or renaming
+   `ArchiPam.motion` WebM methods.
 
 ### Owner arbitration and cleanup
 
@@ -688,7 +688,7 @@ only the current authored Story can move.
 46. PNG, JPEG, WebP, copied PNG, and standalone SVG remain non-empty and
     deterministic under Live and Still.
 47. Explicit WebM recording remains available for trace artifacts through the
-    existing `Archify.motion` API and contains no Governor UI/state.
+    existing `ArchiPam.motion` API and contains no Governor UI/state.
 48. Embed, print, canonical SVG, raster output, schema, validators, renderer
     geometry, stable IDs, and package dependencies are unchanged in meaning.
 

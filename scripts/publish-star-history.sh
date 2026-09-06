@@ -22,7 +22,7 @@ for chart in "$light_chart" "$dark_chart"; do
 done
 
 temp_root="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
-snapshot_dir="$(mktemp -d "${temp_root%/}/archify-star-history.XXXXXX")"
+snapshot_dir="$(mktemp -d "${temp_root%/}/archipam-star-history.XXXXXX")"
 mv -- "$light_chart" "$snapshot_dir/light.svg"
 mv -- "$dark_chart" "$snapshot_dir/dark.svg"
 
