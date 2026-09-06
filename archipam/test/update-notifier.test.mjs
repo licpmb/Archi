@@ -764,13 +764,12 @@ test('a saturated exact acknowledgement history never returns an unacknowledgeab
   assert.equal(requests, 1, 'capacity rejection should commit a bounded retry delay');
 });
 
-test('capacity backoff withdraws a stale candidate while preserving its late acknowledgement', async (t) => {
+test('a valid replacement that fits supersedes the stale candidate safely', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
   const staleDigest = `sha256:${'b'.repeat(64)}`;
   const replacementDigest = `sha256:${'c'.repeat(64)}`;
   const state = cachedStateWithHistory({ offeredDigests: [staleDigest] });
-  state.check.consecutiveFailures = 10;
   state.candidate = {
     version: '2.16.0',
     targetDigest: staleDigest,
@@ -803,20 +802,19 @@ test('capacity backoff withdraws a stale candidate while preserving its late ack
     eventKey: staleEventKey,
   });
 
-  assert.deepEqual({ refresh, cached, lateAcknowledgement }, {
-    refresh: { status: 'silent', reason: 'cache-unavailable' },
-    cached: { status: 'silent', reason: 'cache-valid' },
-    lateAcknowledgement: { status: 'acknowledged', eventKey: staleEventKey },
-  });
+  assert.equal(refresh.status, 'update_available');
+  assert.equal(refresh.targetDigest, replacementDigest);
+  assert.deepEqual(cached, refresh);
+  assert.deepEqual(lateAcknowledgement, { status: 'silent', reason: 'invalid-acknowledgement' });
   assert.equal(requests, 1);
   assert.ok(committedStateFiles(testFixture).every(
     (target) => fs.statSync(target).size <= maxCacheStateBytes,
   ));
   const persisted = JSON.parse(fs.readFileSync(statePath(testFixture), 'utf8'));
-  assert.equal(Object.hasOwn(persisted, 'candidate'), false);
+  assert.equal(persisted.candidate.targetDigest, replacementDigest);
   assert.deepEqual(persisted.notification, {
-    offeredDigests: [],
-    acknowledgedDigests: [...exactHistory, staleDigest],
+    offeredDigests: [replacementDigest],
+    acknowledgedDigests: exactHistory,
   });
 });
 
@@ -866,12 +864,11 @@ test('a 64 KiB state can be acknowledged but a 64 KiB plus one state is ignored'
   }
 });
 
-test('a boundary offer remains acknowledgeable without pruning exact history', async (t) => {
+test('a boundary offer is withheld when its acknowledgement closure cannot fit', async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
   const targetDigest = `sha256:${'d'.repeat(64)}`;
   const state = cachedStateWithHistory();
-  state.check.consecutiveFailures = 10;
   let index = 0;
   while (true) {
     state.notification.acknowledgedDigests.push(historyDigest(index));
@@ -896,12 +893,7 @@ test('a boundary offer remains acknowledgeable without pruning exact history', a
   const fetchImpl = async () => response(remoteReleaseForVersion('2.16.0', 'd'.repeat(64)));
 
   const offered = await checkForUpdate(options(testFixture, fetchImpl));
-  assert.equal(offered.status, 'update_available');
-  assert.deepEqual(await acknowledgeUpdate({
-    releasePath: testFixture.releasePath,
-    cacheDirectory: testFixture.cacheDirectory,
-    eventKey: offered.eventKey,
-  }), { status: 'acknowledged', eventKey: offered.eventKey });
+  assert.deepEqual(offered, { status: 'silent', reason: 'cache-unavailable' });
 
   assert.ok(committedStateFiles(testFixture).every(
     (target) => fs.statSync(target).size <= maxCacheStateBytes,
@@ -910,12 +902,12 @@ test('a boundary offer remains acknowledgeable without pruning exact history', a
     JSON.parse(fs.readFileSync(statePath(testFixture), 'utf8')).notification,
     {
       offeredDigests: [],
-      acknowledgedDigests: [...exactHistory, targetDigest],
+      acknowledgedDigests: exactHistory,
     },
   );
   assert.deepEqual(await checkForUpdate(options(testFixture, fetchImpl)), {
     status: 'silent',
-    reason: 'already-notified',
+    reason: 'cache-valid',
   });
 });
 
