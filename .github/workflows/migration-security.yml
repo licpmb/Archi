@@ -49,7 +49,7 @@ jobs:
             exit 1
           fi
           cat "$RUNNER_TEMP/stdout.log" "$RUNNER_TEMP/stderr.log" > "$RUNNER_TEMP/error.log"
-          if grep -Eq 'file:///|[[:space:]]at[[:space:]].*\(|node:internal|/home/runner/work/' "$RUNNER_TEMP/error.log"; then
+          if grep -Eq 'file:///|^[[:space:]]*at[[:space:]].*\(|node:internal|/home/runner/work/' "$RUNNER_TEMP/error.log"; then
             echo '::error::renderer error output exposed an internal stack trace or filesystem path'
             cat "$RUNNER_TEMP/error.log"
             exit 1
