@@ -1,10 +1,4 @@
-<p align="center">
-  <strong>English</strong> · <a href="./README_ZH.md">简体中文</a>
-</p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/31352?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-31352" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/31352" alt="ArchiPam on Trendshift" width="250" height="55"/></a>
-</p>
 
 ![ArchiPam product preview](docs/assets/archipam-readme-hero.png)
 
