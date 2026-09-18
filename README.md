@@ -29,15 +29,6 @@ Using Cursor? Open the [agent-aware quick start](https://licpmb.github.io/Archi/
 
 **No repository is required:** describe the system in any agent chat.
 
-## ❤️ Sponsors
-
-<table>
-  <tr><td align="center" width="240"><a href="https://apinebula.ai/ref/wywnaATT"><img src="docs/assets/sponsors/apinebula-archipam.jpg" alt="APINEBULA" width="200" /></a><br/><strong><a href="https://apinebula.ai/ref/wywnaATT">APINEBULA</a></strong></td><td>APINEBULA sponsors ArchiPam with one API for Claude, GPT, Gemini, and more. <a href="https://apinebula.ai/ref/wywnaATT">Register through ArchiPam</a> and use <strong><code>ArchiPam</code></strong> for <strong>10% off</strong>.</td></tr>
-  <tr><td align="center" width="240"><a href="https://github.com/EverMind-AI/Raven"><img src="docs/assets/sponsors/evermind-archipam-raven.png" alt="ArchiPam × Raven" width="200" /></a><br/><strong><a href="https://github.com/EverMind-AI">EverMind</a> · <a href="https://github.com/EverMind-AI/Raven">Raven</a></strong></td><td>EverMind sponsors ArchiPam and builds memory infrastructure for agents. Its <a href="https://github.com/EverMind-AI/Raven"><strong>Raven</strong></a> harness supports ArchiPam as a Skill for verified, interactive system maps.</td></tr>
-</table>
-
-> Want to sponsor ArchiPam? [Contact us by email.](mailto:2801884530@qq.com)
-
 ## See ArchiPam in action
 
 These are generated ArchiPam artifacts, not product mockups. Click a frame to open its live, shareable state.
